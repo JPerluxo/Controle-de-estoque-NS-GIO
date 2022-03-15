@@ -6,7 +6,6 @@
 package com.controleestoquensgio.models;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.*;
 
@@ -17,18 +16,19 @@ public class LicencaModel implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID lic_id;
+    @Column(name="lic_id")
+    private int id;
 
-    @Column(nullable = false, length = 50)
+    @Column(name="lic_descricao", nullable = false, length = 50)
     private String  descricao;
 
     
-    public UUID getLic_id() {
-        return lic_id;
+    public int getId() {
+        return id;
     }
 
-    public void setLic_id(UUID lic_id) {
-        this.lic_id = lic_id;
+    public void setId(int id) {
+        this.id = id;
     }
     
     public void setDescricao (String descricao){

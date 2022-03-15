@@ -13,10 +13,8 @@ public class ProgramaDto {
     @NotBlank
     private String descricao;
 
-    @NotBlank
     private String observacao;
     
-    @NotBlank
     private LicencaDto licenca;
 
     public String getDescricao() {

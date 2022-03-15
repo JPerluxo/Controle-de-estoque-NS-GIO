@@ -1,7 +1,6 @@
 package com.controleestoquensgio.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -29,8 +28,8 @@ public class ImagemService {
         return imagemRpt.findAll(pageable);
     }
 
-    public Optional<ImagemModel> findById(UUID img_id) {
-        return imagemRpt.findById(img_id);
+    public Optional<ImagemModel> findById(Integer id) {
+        return imagemRpt.findById(id);
     }
 
     @Transactional

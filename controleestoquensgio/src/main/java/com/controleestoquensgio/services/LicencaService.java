@@ -1,7 +1,6 @@
 package com.controleestoquensgio.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -29,8 +28,8 @@ public class LicencaService {
         return licencaRpt.findAll(pageable);
     }
 
-    public Optional<LicencaModel> findById(UUID lic_id) {
-        return licencaRpt.findById(lic_id);
+    public Optional<LicencaModel> findById(Integer id) {
+        return licencaRpt.findById(id);
     }
 
     @Transactional

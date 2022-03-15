@@ -1,7 +1,6 @@
 package com.controleestoquensgio.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -29,8 +28,8 @@ public class ProgramaService {
         return programaRpt.findAll(pageable);
     }
 
-    public Optional<ProgramaModel> findById(UUID prg_id) {
-        return programaRpt.findById(prg_id);
+    public Optional<ProgramaModel> findById(Integer id) {
+        return programaRpt.findById(id);
     }
 
     @Transactional

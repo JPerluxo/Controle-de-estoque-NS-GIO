@@ -7,7 +7,7 @@
 package com.controleestoquensgio.models;
 
 import java.io.Serializable;
-import java.util.UUID;
+
 
 import javax.persistence.*;
 
@@ -18,23 +18,24 @@ public class ProgramaModel implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID prg_id;
+    @Column(name="prg_id")
+    private int id;
 
-    @Column(nullable = false, length = 50)
-    private String  descricao;
+    @Column(name="prg_descricao", nullable = false, length = 50)
+    private String descricao;
 
-    @Column(nullable = false, length = 200)
+    @Column(name="prg_observacao", length = 200)
     private String observacao;
     
     @ManyToOne
     private LicencaModel licenca;
 
-    public UUID getPrg_id() {
-        return prg_id;
+    public int getId() {
+        return id;
     }
-
-    public void setPrg_id(UUID prg_id) {
-        this.prg_id = prg_id;
+    
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescricao() {

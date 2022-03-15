@@ -13,8 +13,7 @@ public class ImagemDto {
 
     @NotBlank
     private String  descricao;
-
-    @NotBlank
+    
     private List<ProgramaDto> programas;
 
     public List<ProgramaDto> getProgramas() {

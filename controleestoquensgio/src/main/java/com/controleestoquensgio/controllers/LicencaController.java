@@ -1,7 +1,7 @@
 package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
-import java.util.UUID;
+
 
 import javax.validation.Valid;
 import com.controleestoquensgio.models.LicencaModel;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque", "/"})
+@RequestMapping(value = {"/controle-estoque/licenca", "/"})
 public class LicencaController {
 
     final LicencaService licencaSvc;
@@ -39,12 +39,12 @@ public class LicencaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<LicencaModel>> getAll(@PageableDefault(page = 0, size = 10, sort = "lic_id", direction = Sort.Direction.ASC) Pageable pageable){
+    public ResponseEntity<Page<LicencaModel>> getAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(licencaSvc.findAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOne(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(id);
         if(!licencaModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
@@ -53,7 +53,7 @@ public class LicencaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(id);
         if(!licencaModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
@@ -62,24 +62,17 @@ public class LicencaController {
         return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
     }
 
-    /*@PutMapping("/{id}")
-    public ResponseEntity<Object> updateParkingSpot(@PathVariable(value = "id") UUID id,
-                                                    @RequestBody @Valid ParkingSpotDto parkingSpotDto){
-        Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
-        if(!parkingSpotModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found");
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable(value = "id") int id,
+                                         @RequestBody @Valid LicencaDto licencaDto){
+        Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(id);
+        if(!licencaModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
         }
 
-        var parkingSpotModel = parkingSpotModelOptional.get();
-        parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
-        parkingSpotModel.setLicensePlateCar(parkingSpotDto.getLicensePlateCar());
-        parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
-        parkingSpotModel.setBrandCar(parkingSpotDto.getBrandCar());
-        parkingSpotModel.setColorCar(parkingSpotDto.getColorCar());
-        parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
-        parkingSpotModel.setApartment(parkingSpotDto.getApartment());
-        parkingSpotModel.setBlock(parkingSpotDto.getBlock());
+        var licencaModel = licencaModelOptional.get();
+        licencaModel.setDescricao(licencaDto.getDescricao());
 
-        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel));
-    }*/
+        return ResponseEntity.status(HttpStatus.OK).body(licencaSvc.save(licencaModel));
+    }
 }

@@ -7,7 +7,6 @@ package com.controleestoquensgio.models;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.*;
 
@@ -18,22 +17,23 @@ public class ImagemModel implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID img_id;
+    @Column(name="img_id")
+    private int id;
 
-    @Column(nullable = false, length = 50)
+    @Column(name="img_descricao", nullable = false, length = 50)
     private String  descricao;
 
     @OneToMany
     private List<ProgramaModel> programas;
 
-    public UUID getImg_id() {
-        return img_id;
-    }
-
-    public void setImg_id(UUID img_id) {
-        this.img_id = img_id;
+    public int getId() {
+        return id;
     }
     
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public List<ProgramaModel> getProgramas() {
         return programas;
     }
