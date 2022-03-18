@@ -5,7 +5,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import com.controleestoquensgio.dtos.ProgramaDto;
+import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.models.ProgramaModel;
+import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.services.ProgramaService;
 
 import org.springframework.beans.BeanUtils;
@@ -31,16 +33,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProgramaController {
 
     final ProgramaService programaSvc;
+    final LicencaService licencaSvc;
 
-    public ProgramaController(ProgramaService programaSvc) {
+    public ProgramaController(ProgramaService programaSvc, LicencaService licencaSvc) {
         this.programaSvc = programaSvc;
+        this.licencaSvc = licencaSvc;
     }
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ProgramaDto programaDto){
-        
+        Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(2);
         var programaModel = new ProgramaModel();
         BeanUtils.copyProperties(programaDto, programaModel);
+        programaModel.setLicenca(licencaModelOptional.get());
         return ResponseEntity.status(HttpStatus.CREATED).body(programaSvc.save(programaModel));
     }
 

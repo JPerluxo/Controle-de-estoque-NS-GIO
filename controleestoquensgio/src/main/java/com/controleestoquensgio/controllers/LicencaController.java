@@ -9,26 +9,22 @@ import com.controleestoquensgio.dtos.LicencaDto;
 import com.controleestoquensgio.services.LicencaService;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.web.bind.annotation.*;
-
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/licenca", "/"})
 public class LicencaController {
 
-    final LicencaService licencaSvc;
-
-    public LicencaController(LicencaService licencaSvc) {
-        this.licencaSvc = licencaSvc;
-    }
+    @Autowired
+    LicencaService licencaSvc;
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid LicencaDto licencaDto){

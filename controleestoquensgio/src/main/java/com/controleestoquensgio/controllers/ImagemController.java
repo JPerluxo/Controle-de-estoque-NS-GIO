@@ -1,12 +1,16 @@
 package com.controleestoquensgio.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import com.controleestoquensgio.dtos.ImagemDto;
 import com.controleestoquensgio.models.ImagemModel;
+import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.services.ImagemService;
+import com.controleestoquensgio.services.ProgramaService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -31,16 +35,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImagemController {
 
     final ImagemService imagemSvc;
+    final ProgramaService programaSvc;
 
-    public ImagemController(ImagemService imagemSvc) {
+    public ImagemController(ImagemService imagemSvc, ProgramaService programaSvc) {
         this.imagemSvc = imagemSvc;
+        this.programaSvc = programaSvc;
     }
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ImagemDto imagemDto){
+
+        Optional<ProgramaModel> programaModelOptional = programaSvc.findById(1);
+        Optional<ProgramaModel> programaModelOptional2 = programaSvc.findById(12);
+        Optional<ProgramaModel> programaModelOptional3 = programaSvc.findById(6);
+
+        List<ProgramaModel> programas = new ArrayList<ProgramaModel>();
         
+        programas.add(programaModelOptional.get());
+        programas.add(programaModelOptional2.get());
+        programas.add(programaModelOptional3.get());
+
         var imagemModel = new ImagemModel();
+
         BeanUtils.copyProperties(imagemDto, imagemModel);
+
+        imagemModel.setProgramas(programas);
         return ResponseEntity.status(HttpStatus.CREATED).body(imagemSvc.save(imagemModel));
     }
 
