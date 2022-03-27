@@ -9,7 +9,6 @@ public class EquipamentoDto {
     private String serial;
     private String numPatrimonio;
     private String observacao;
-    private Boolean compartilhado;
     private TipoEquipamentoDto tipoEquipamento; 
     private NotaFiscalDto notaFiscal;
 
@@ -19,12 +18,6 @@ public class EquipamentoDto {
     private ContratoEquipamentoTerceiroDto contratoEquipamentoTerceiro;
     private List <OcorrenciaDto> ocorrencias;
 
-    public Boolean getCompartilhado() {
-        return compartilhado;
-    }
-    public void setCompartilhado(Boolean compartilhado) {
-        this.compartilhado = compartilhado;
-    }
     public String getSerial() {
         return serial;
     }

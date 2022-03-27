@@ -1,5 +1,5 @@
 package com.controleestoquensgio.dtos;
 
-public class PresidenciaDto extends GrupoGerencialDto{
+public class PresidenciaDto extends DepartamentoDto{
      
 }

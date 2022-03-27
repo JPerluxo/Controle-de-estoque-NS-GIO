@@ -2,7 +2,7 @@ package com.controleestoquensgio.dtos;
 
 import javax.validation.constraints.NotBlank;
 
-public abstract class GrupoGerencialDto{
+public abstract class DepartamentoDto{
     
     @NotBlank
     protected String descricao;

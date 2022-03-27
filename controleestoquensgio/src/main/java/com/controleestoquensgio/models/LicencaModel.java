@@ -5,15 +5,12 @@
 
 package com.controleestoquensgio.models;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "LICENCAS")
-public class LicencaModel implements Serializable{
-    private static final long serialVersionUID = 1L;
-
+public class LicencaModel {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="lic_id")
@@ -26,11 +23,9 @@ public class LicencaModel implements Serializable{
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-    
     public void setDescricao (String descricao){
         this.descricao = descricao;
     }

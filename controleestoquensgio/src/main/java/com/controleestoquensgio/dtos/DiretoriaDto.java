@@ -1,4 +1,4 @@
 package com.controleestoquensgio.dtos;
 
-public class DiretoriaDto extends GrupoGerencialDto{
+public class DiretoriaDto extends DepartamentoDto{
 }

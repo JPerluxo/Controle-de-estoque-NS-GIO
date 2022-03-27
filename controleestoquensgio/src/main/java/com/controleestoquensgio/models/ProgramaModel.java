@@ -1,20 +1,10 @@
-
-/**
- *
- * @author Tiago
- */
-
 package com.controleestoquensgio.models;
-
-import java.io.Serializable;
-
 
 import javax.persistence.*;
 
 @Entity
 @Table (name = "PROGRAMAS")
-public class ProgramaModel implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class ProgramaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,12 +22,10 @@ public class ProgramaModel implements Serializable{
 
     public int getId() {
         return id;
-    }
-    
+    }  
     public void setId(int id) {
         this.id = id;
     }
-
     public String getDescricao() {
         return descricao;
     }
