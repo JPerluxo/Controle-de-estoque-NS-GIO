@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table (name = "CONTRATO_COMODATO")
-public class ContratoComodatomModel{
+public class ContratoComodatoModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

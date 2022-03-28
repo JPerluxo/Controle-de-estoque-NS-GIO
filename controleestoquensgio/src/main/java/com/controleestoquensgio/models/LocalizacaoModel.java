@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table (name = "LOCALIZACOES")
-public class LocalizacacaoModel {
+public class LocalizacaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

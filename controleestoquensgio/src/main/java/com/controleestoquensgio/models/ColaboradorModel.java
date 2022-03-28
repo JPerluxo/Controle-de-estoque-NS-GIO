@@ -50,7 +50,7 @@ public class ColaboradorModel {
     private List<EmprestimoModel> equipamentosDisponibilizados;
     
     @ManyToMany
-    private List<ContratoComodatomModel> contratosComodato;
+    private List<ContratoComodatoModel> contratosComodato;
 
     public int getId() {
         return id;
@@ -106,10 +106,10 @@ public class ColaboradorModel {
     public void setEquipamentosDisponibilizados(List<EmprestimoModel> equipamentosDisponibilizados) {
         this.equipamentosDisponibilizados = equipamentosDisponibilizados;
     }
-    public List<ContratoComodatomModel> getContratosComodato() {
+    public List<ContratoComodatoModel> getContratosComodato() {
         return contratosComodato;
     }
-    public void setContratosComodato(List<ContratoComodatomModel> contratosComodato) {
+    public void setContratosComodato(List<ContratoComodatoModel> contratosComodato) {
         this.contratosComodato = contratosComodato;
     }
     public NucleoModel getNucleo() {

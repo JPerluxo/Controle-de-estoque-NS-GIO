@@ -27,7 +27,7 @@ public class EquipamentoModel {
     private NotaFiscalModel notaFiscal;
 
     @ManyToOne
-    private LocalizacacaoModel localizacao;
+    private LocalizacaoModel localizacao;
 
     @ManyToOne
     private ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro;
@@ -71,10 +71,10 @@ public class EquipamentoModel {
     public void setNotaFiscal(NotaFiscalModel notaFiscal) {
         this.notaFiscal = notaFiscal;
     }
-    public LocalizacacaoModel getLocalizacao() {
+    public LocalizacaoModel getLocalizacao() {
         return localizacao;
     }
-    public void setLocalizacao(LocalizacacaoModel localizacao) {
+    public void setLocalizacao(LocalizacaoModel localizacao) {
         this.localizacao = localizacao;
     }
     public ContratoEquipamentoTerceiroModel getContratoEquipamentoTerceiro() {
