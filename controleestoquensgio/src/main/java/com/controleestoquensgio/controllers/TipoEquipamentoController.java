@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/tipoEquipamento", "/"})
+@RequestMapping(value = {"/controle-estoque/tipoEquipamento"})
 public class TipoEquipamentoController {
 
     @Autowired
@@ -28,7 +28,6 @@ public class TipoEquipamentoController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid TipoEquipamentoDto tipoEquipamentoDto){
-        
         var tipoEquipamentoModel = new TipoEquipamentoModel();
         BeanUtils.copyProperties(tipoEquipamentoDto, tipoEquipamentoModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(tipoEquipamentoSvc.save(tipoEquipamentoModel));
@@ -42,20 +41,26 @@ public class TipoEquipamentoController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
+       
         if(!tipoEquipamentoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de equipamento não encontrado");
         }
+
         return ResponseEntity.status(HttpStatus.OK).body(tipoEquipamentoModelOptional.get());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
+       
         Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
+        
         if(!tipoEquipamentoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de equipamento não encontrado");
         }
+
         tipoEquipamentoSvc.delete(tipoEquipamentoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+
+        return ResponseEntity.status(HttpStatus.OK).body("Equipamento deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,10 +68,11 @@ public class TipoEquipamentoController {
                                          @RequestBody @Valid TipoEquipamentoDto tipoEquipamentoDto){
         Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
         if(!tipoEquipamentoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de equipamento não encontrado");
         }
 
         var tipoEquipamentoModel = tipoEquipamentoModelOptional.get();
+        BeanUtils.copyProperties(tipoEquipamentoDto, tipoEquipamentoModel);
 
         return ResponseEntity.status(HttpStatus.OK).body(tipoEquipamentoSvc.save(tipoEquipamentoModel));
     }
