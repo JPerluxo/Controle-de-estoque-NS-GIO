@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/tipoAcesso", "/"})
+@RequestMapping(value = {"/controle-estoque/tipoAcesso"})
 public class TipoAcessoController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class TipoAcessoController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(id);
         if(!tipoAcessoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de acesso não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(tipoAcessoModelOptional.get());
     }
@@ -52,10 +52,10 @@ public class TipoAcessoController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(id);
         if(!tipoAcessoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de acesso não encontrado");
         }
         tipoAcessoSvc.delete(tipoAcessoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Tipo de acesso deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,11 +63,12 @@ public class TipoAcessoController {
                                          @RequestBody @Valid TipoAcessoDto tipoAcessoDto){
         Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(id);
         if(!tipoAcessoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de acesso não encontrado");
         }
 
         var tipoAcessoModel = tipoAcessoModelOptional.get();
-
+        BeanUtils.copyProperties(tipoAcessoDto, tipoAcessoModel);
+        
         return ResponseEntity.status(HttpStatus.OK).body(tipoAcessoSvc.save(tipoAcessoModel));
     }
 }
