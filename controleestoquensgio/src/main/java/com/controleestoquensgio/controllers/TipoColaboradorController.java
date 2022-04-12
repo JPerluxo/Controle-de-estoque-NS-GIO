@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/tipoColaborador", "/"})
+@RequestMapping(value = {"/controle-estoque/tipoColaborador"})
 public class TipoColaboradorController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class TipoColaboradorController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorSvc.findById(id);
         if(!tipoColaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de colaborador não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(tipoColaboradorModelOptional.get());
     }
@@ -52,10 +52,10 @@ public class TipoColaboradorController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorSvc.findById(id);
         if(!tipoColaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de colaborador não encontrado");
         }
         tipoColaboradorSvc.delete(tipoColaboradorModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Tipo de colaborador deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,10 +63,11 @@ public class TipoColaboradorController {
                                          @RequestBody @Valid TipoColaboradorDto tipoColaboradorDto){
         Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorSvc.findById(id);
         if(!tipoColaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de colaborador não encontrado");
         }
 
         var tipoColaboradorModel = tipoColaboradorModelOptional.get();
+        BeanUtils.copyProperties(tipoColaboradorDto, tipoColaboradorModel);
 
         return ResponseEntity.status(HttpStatus.OK).body(tipoColaboradorSvc.save(tipoColaboradorModel));
     }
