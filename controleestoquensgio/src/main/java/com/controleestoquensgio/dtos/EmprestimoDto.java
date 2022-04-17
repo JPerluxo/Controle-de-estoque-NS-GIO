@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 
+import com.controleestoquensgio.models.ColaboradorModel;
+import com.controleestoquensgio.models.EquipamentoModel;
+
 public class EmprestimoDto {
 
     @NotBlank
@@ -11,14 +14,14 @@ public class EmprestimoDto {
     
     @NotBlank
     private Date dataDevolucao;
-    private ColaboradorDto colaborador;
-    private EquipamentoDto equipamento;
+    private ColaboradorModel colaborador;
+    private EquipamentoModel equipamento;
     private boolean isVigente;
     
     @NotBlank
     private String finalidade;
     
-    private ColaboradorDto respEntrega;
+    private ColaboradorModel respEntrega;
 
     public Date getDataDisponibilizacao() {
         return dataDisponibilizacao;
@@ -36,19 +39,19 @@ public class EmprestimoDto {
         this.dataDevolucao = dataDevolucao;
     }
 
-    public ColaboradorDto getColaborador() {
+    public ColaboradorModel getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(ColaboradorDto colaborador) {
+    public void setColaborador(ColaboradorModel colaborador) {
         this.colaborador = colaborador;
     }
 
-    public EquipamentoDto getEquipamento() {
+    public EquipamentoModel getEquipamento() {
         return equipamento;
     }
 
-    public void setEquipamento(EquipamentoDto equipamento) {
+    public void setEquipamento(EquipamentoModel equipamento) {
         this.equipamento = equipamento;
     }
 
@@ -68,11 +71,11 @@ public class EmprestimoDto {
         this.finalidade = finalidade;
     }
 
-    public ColaboradorDto getRespEntrega() {
+    public ColaboradorModel getRespEntrega() {
         return respEntrega;
     }
 
-    public void setRespEntrega(ColaboradorDto respEntrega) {
+    public void setRespEntrega(ColaboradorModel respEntrega) {
         this.respEntrega = respEntrega;
     }
     

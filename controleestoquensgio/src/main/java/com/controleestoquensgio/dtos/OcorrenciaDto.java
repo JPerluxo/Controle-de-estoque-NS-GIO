@@ -2,6 +2,9 @@ package com.controleestoquensgio.dtos;
 
 import javax.validation.constraints.NotBlank;
 
+import com.controleestoquensgio.models.ColaboradorModel;
+import com.controleestoquensgio.models.EquipamentoModel;
+
 public class OcorrenciaDto {
 
     @NotBlank
@@ -10,9 +13,9 @@ public class OcorrenciaDto {
     @NotBlank
     private String descricao;
     
-    private EquipamentoDto equipamento;
+    private EquipamentoModel equipamento;
     
-    private ColaboradorDto colaborador;
+    private ColaboradorModel colaborador;
     
     public String getOs() {
         return os;
@@ -26,16 +29,16 @@ public class OcorrenciaDto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public EquipamentoDto getEquipamento() {
+    public EquipamentoModel getEquipamento() {
         return equipamento;
     }
-    public void setEquipamento(EquipamentoDto equipamento) {
+    public void setEquipamento(EquipamentoModel equipamento) {
         this.equipamento = equipamento;
     }
-    public ColaboradorDto getColaborador() {
+    public ColaboradorModel getColaborador() {
         return colaborador;
     }
-    public void setColaborador(ColaboradorDto colaborador) {
+    public void setColaborador(ColaboradorModel colaborador) {
         this.colaborador = colaborador;
     }
     

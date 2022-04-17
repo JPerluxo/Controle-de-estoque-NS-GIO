@@ -9,17 +9,19 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import com.controleestoquensgio.models.ProgramaModel;
+
 public class ImagemDto {
 
     @NotBlank
     private String  descricao;
     
-    private List<ProgramaDto> programas;
+    private List<ProgramaModel> programas;
 
-    public List<ProgramaDto> getProgramas() {
+    public List<ProgramaModel> getProgramas() {
         return programas;
     }
-    public void setProgramas(List<ProgramaDto> programas) {
+    public void setProgramas(List<ProgramaModel> programas) {
         this.programas = programas;
     }
     public String getDescricao() {

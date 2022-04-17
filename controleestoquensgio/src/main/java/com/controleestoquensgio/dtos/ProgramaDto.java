@@ -8,6 +8,8 @@ package com.controleestoquensgio.dtos;
 
 import javax.validation.constraints.NotBlank;
 
+import com.controleestoquensgio.models.LicencaModel;
+
 public class ProgramaDto {
 
     @NotBlank
@@ -15,7 +17,7 @@ public class ProgramaDto {
 
     private String observacao;
     
-    private LicencaDto licenca;
+    private LicencaModel licenca;
 
     public String getDescricao() {
         return descricao;
@@ -23,10 +25,10 @@ public class ProgramaDto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public LicencaDto getLicenca() {
+    public LicencaModel getLicenca() {
         return licenca;
     }
-    public void setLicenca(LicencaDto licenca) {
+    public void setLicenca(LicencaModel licenca) {
         this.licenca = licenca;
     }
     public String getObservacao() {

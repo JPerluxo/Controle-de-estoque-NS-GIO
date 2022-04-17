@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/regimeTrabalho", "/"})
+@RequestMapping(value = {"/controle-estoque/regimeTrabalho"})
 public class RegimeTrabalhoController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class RegimeTrabalhoController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<RegimeTrabalhoModel> regimeTrabalhoModelOptional = regimeTrabalhoSvc.findById(id);
         if(!regimeTrabalhoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Regime de trabalho não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(regimeTrabalhoModelOptional.get());
     }
@@ -52,10 +52,10 @@ public class RegimeTrabalhoController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<RegimeTrabalhoModel> regimeTrabalhoModelOptional = regimeTrabalhoSvc.findById(id);
         if(!regimeTrabalhoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Regime de trabalho não encontrado");
         }
         regimeTrabalhoSvc.delete(regimeTrabalhoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Regime de trabalho deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,10 +63,11 @@ public class RegimeTrabalhoController {
                                          @RequestBody @Valid RegimeTrabalhoDto regimeTrabalhoDto){
         Optional<RegimeTrabalhoModel> regimeTrabalhoModelOptional = regimeTrabalhoSvc.findById(id);
         if(!regimeTrabalhoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Regime de trabalho não encontrado");
         }
 
         var regimeTrabalhoModel = regimeTrabalhoModelOptional.get();
+        BeanUtils.copyProperties(regimeTrabalhoDto, regimeTrabalhoModel);
 
         return ResponseEntity.status(HttpStatus.OK).body(regimeTrabalhoSvc.save(regimeTrabalhoModel));
     }

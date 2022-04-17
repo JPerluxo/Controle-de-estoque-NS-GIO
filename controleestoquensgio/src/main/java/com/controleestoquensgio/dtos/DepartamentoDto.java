@@ -2,6 +2,8 @@ package com.controleestoquensgio.dtos;
 
 import javax.validation.constraints.NotBlank;
 
+import com.controleestoquensgio.models.ColaboradorModel;
+
 public abstract class DepartamentoDto{
     
     @NotBlank
@@ -11,15 +13,15 @@ public abstract class DepartamentoDto{
     protected String sigla;
     
     @NotBlank
-    protected ColaboradorDto responsavel;
+    protected ColaboradorModel responsavel;
 
     public String getDescricao() {
         return descricao;
     }
-    public ColaboradorDto getResponsavel() {
+    public ColaboradorModel getResponsavel() {
         return responsavel;
     }
-    public void setResponsavel(ColaboradorDto responsavel) {
+    public void setResponsavel(ColaboradorModel responsavel) {
         this.responsavel = responsavel;
     }
     public String getSigla() {

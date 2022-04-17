@@ -4,19 +4,22 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import com.controleestoquensgio.models.*;
+
+
 public class EquipamentoDto {
 
     private String serial;
     private String numPatrimonio;
     private String observacao;
-    private TipoEquipamentoDto tipoEquipamento; 
-    private NotaFiscalDto notaFiscal;
+    private TipoEquipamentoModel tipoEquipamento; 
+    private NotaFiscalModel notaFiscal;
 
     @NotBlank
-    private LocalizacaoDto localizacao;
+    private LocalizacaoModel localizacao;
 
-    private ContratoEquipamentoTerceiroDto contratoEquipamentoTerceiro;
-    private List <OcorrenciaDto> ocorrencias;
+    private ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro;
+    private List <OcorrenciaModel> ocorrencias;
 
     public String getSerial() {
         return serial;
@@ -36,34 +39,34 @@ public class EquipamentoDto {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
-    public TipoEquipamentoDto getTipoEquipamento() {
+    public TipoEquipamentoModel getTipoEquipamento() {
         return tipoEquipamento;
     }
-    public void setTipoEquipamento(TipoEquipamentoDto tipoEquipamento) {
+    public void setTipoEquipamento(TipoEquipamentoModel tipoEquipamento) {
         this.tipoEquipamento = tipoEquipamento;
     }
-    public NotaFiscalDto getNotaFiscal() {
+    public NotaFiscalModel getNotaFiscal() {
         return notaFiscal;
     }
-    public void setNotaFiscal(NotaFiscalDto notaFiscal) {
+    public void setNotaFiscal(NotaFiscalModel notaFiscal) {
         this.notaFiscal = notaFiscal;
     }
-    public LocalizacaoDto getLocalizacao() {
+    public LocalizacaoModel getLocalizacao() {
         return localizacao;
     }
-    public void setLocalizacao(LocalizacaoDto localizacao) {
+    public void setLocalizacao(LocalizacaoModel localizacao) {
         this.localizacao = localizacao;
     }
-    public ContratoEquipamentoTerceiroDto getContratoEquipamentoTerceiro() {
+    public ContratoEquipamentoTerceiroModel getContratoEquipamentoTerceiro() {
         return contratoEquipamentoTerceiro;
     }
-    public void setContratoEquipamentoTerceiro(ContratoEquipamentoTerceiroDto contratoEquipamentoTerceiro) {
+    public void setContratoEquipamentoTerceiro(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro) {
         this.contratoEquipamentoTerceiro = contratoEquipamentoTerceiro;
     }
-    public List<OcorrenciaDto> getOcorrencias() {
+    public List<OcorrenciaModel> getOcorrencias() {
         return ocorrencias;
     }
-    public void setOcorrencias(List<OcorrenciaDto> ocorrencias) {
+    public void setOcorrencias(List<OcorrenciaModel> ocorrencias) {
         this.ocorrencias = ocorrencias;
     }
 

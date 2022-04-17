@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import com.controleestoquensgio.models.*;
+
 public class ColaboradorDto{
 
     @NotBlank
@@ -12,17 +14,17 @@ public class ColaboradorDto{
     @NotBlank
     private String nome;
 
-    private ImagemDto imagem;
-    private List <OcorrenciaDto> ocorrencias;
-    private TipoAcessoDto tipoAcesso;
-    private TipoColaboradorDto tipoColaborador;
-    private RegimeTrabalhoDto regimeTrabalho;
-    private PresidenciaDto presidencia;
-    private DiretoriaDto diretoria;
-    private GerenciaDto gerencia;
-    private NucleoDto nucleo;
-    private List<EmprestimoDto> equipamentosDisponibilizados;
-    private List<ContratoComodatoDto> contratosComodato;
+    private ImagemModel imagem;
+    private List <OcorrenciaModel> ocorrencias;
+    private TipoAcessoModel tipoAcesso;
+    private TipoColaboradorModel tipoColaborador;
+    private RegimeTrabalhoModel regimeTrabalho;
+    private PresidenciaModel presidencia;
+    private DiretoriaModel diretoria;
+    private GerenciaModel gerencia;
+    private NucleoModel nucleo;
+    private List<EmprestimoModel> equipamentosDisponibilizados;
+    private List<ContratoComodatoModel> contratosComodato;
 
 
     public String getRf() {
@@ -41,90 +43,90 @@ public class ColaboradorDto{
         this.nome = nome;
     }
 
-    public ImagemDto getImagem() {
+    public ImagemModel getImagem() {
         return imagem;
     }
 
-    public void setImagem(ImagemDto imagem) {
+    public void setImagem(ImagemModel imagem) {
         this.imagem = imagem;
     }
 
-    public List<OcorrenciaDto> getOcorrencias() {
+    public List<OcorrenciaModel> getOcorrencias() {
         return ocorrencias;
     }
 
-    public void setOcorrencias(List<OcorrenciaDto> ocorrencias) {
+    public void setOcorrencias(List<OcorrenciaModel> ocorrencias) {
         this.ocorrencias = ocorrencias;
     }
 
-    public TipoAcessoDto getTipoAcesso() {
+    public TipoAcessoModel getTipoAcesso() {
         return tipoAcesso;
     }
 
-    public void setTipoAcesso(TipoAcessoDto tipoAcesso) {
+    public void setTipoAcesso(TipoAcessoModel tipoAcesso) {
         this.tipoAcesso = tipoAcesso;
     }
 
-    public TipoColaboradorDto getTipoColaborador() {
+    public TipoColaboradorModel getTipoColaborador() {
         return tipoColaborador;
     }
 
-    public void setTipoColaborador(TipoColaboradorDto tipoColaborador) {
+    public void setTipoColaborador(TipoColaboradorModel tipoColaborador) {
         this.tipoColaborador = tipoColaborador;
     }
 
-    public RegimeTrabalhoDto getRegimeTrabalho() {
+    public RegimeTrabalhoModel getRegimeTrabalho() {
         return regimeTrabalho;
     }
 
-    public void setRegimeTrabalho(RegimeTrabalhoDto regimeTrabalho) {
+    public void setRegimeTrabalho(RegimeTrabalhoModel regimeTrabalho) {
         this.regimeTrabalho = regimeTrabalho;
     }
 
-    public List<EmprestimoDto> getEquipamentosDisponibilizados() {
+    public List<EmprestimoModel> getEquipamentosDisponibilizados() {
         return equipamentosDisponibilizados;
     }
 
-    public void setEquipamentosDisponibilizados(List<EmprestimoDto> equipamentosDisponibilizados) {
+    public void setEquipamentosDisponibilizados(List<EmprestimoModel> equipamentosDisponibilizados) {
         this.equipamentosDisponibilizados = equipamentosDisponibilizados;
     }
 
-    public List<ContratoComodatoDto> getContratosComodato() {
+    public List<ContratoComodatoModel> getContratosComodato() {
         return contratosComodato;
     }
 
-    public void setContratosComodato(List<ContratoComodatoDto> contratosComodato) {
+    public void setContratosComodato(List<ContratoComodatoModel> contratosComodato) {
         this.contratosComodato = contratosComodato;
     }
-    public NucleoDto getNucleo() {
+    public NucleoModel getNucleo() {
         return nucleo;
     }
 
-    public void setNucleo(NucleoDto nucleo) {
+    public void setNucleo(NucleoModel nucleo) {
         this.nucleo = nucleo;
     }
 
-    public GerenciaDto getGerencia() {
+    public GerenciaModel getGerencia() {
         return gerencia;
     }
 
-    public void setGerencia(GerenciaDto gerencia) {
+    public void setGerencia(GerenciaModel gerencia) {
         this.gerencia = gerencia;
     }
 
-    public DiretoriaDto getDiretoria() {
+    public DiretoriaModel getDiretoria() {
         return diretoria;
     }
 
-    public void setDiretoria(DiretoriaDto diretoria) {
+    public void setDiretoria(DiretoriaModel diretoria) {
         this.diretoria = diretoria;
     }
 
-    public PresidenciaDto getPresidencia() {
+    public PresidenciaModel getPresidencia() {
         return presidencia;
     }
 
-    public void setPresidencia(PresidenciaDto presidencia) {
+    public void setPresidencia(PresidenciaModel presidencia) {
         this.presidencia = presidencia;
     }
 }
