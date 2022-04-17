@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/contratoComodato", "/"})
+@RequestMapping(value = {"/controle-estoque/contratoComodato"})
 public class ContratoComodatoController {
 
     @Autowired
@@ -28,7 +28,6 @@ public class ContratoComodatoController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ContratoComodatoDto contratoComodatoDto){
-        
         var contratoComodatoModel = new ContratoComodatoModel();
         BeanUtils.copyProperties(contratoComodatoDto, contratoComodatoModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(contratoComodatoSvc.save(contratoComodatoModel));
@@ -43,7 +42,7 @@ public class ContratoComodatoController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<ContratoComodatoModel> contratoComodatoModelOptional = contratoComodatoSvc.findById(id);
         if(!contratoComodatoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato de comodato não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(contratoComodatoModelOptional.get());
     }
@@ -52,10 +51,10 @@ public class ContratoComodatoController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<ContratoComodatoModel> contratoComodatoModelOptional = contratoComodatoSvc.findById(id);
         if(!contratoComodatoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato de comodato não encontrado");
         }
         contratoComodatoSvc.delete(contratoComodatoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Contrato de comodato deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,11 +62,11 @@ public class ContratoComodatoController {
                                          @RequestBody @Valid ContratoComodatoDto contratoComodatoDto){
         Optional<ContratoComodatoModel> contratoComodatoModelOptional = contratoComodatoSvc.findById(id);
         if(!contratoComodatoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato de comodato não encontrado");
         }
 
         var contratoComodatoModel = contratoComodatoModelOptional.get();
-
+        BeanUtils.copyProperties(contratoComodatoDto, contratoComodatoModel);
         return ResponseEntity.status(HttpStatus.OK).body(contratoComodatoSvc.save(contratoComodatoModel));
     }
 }

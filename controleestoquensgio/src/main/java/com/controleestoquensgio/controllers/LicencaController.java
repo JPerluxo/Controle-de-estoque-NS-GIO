@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/licenca", "/"})
+@RequestMapping(value = {"/controle-estoque/licenca"})
 public class LicencaController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class LicencaController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(id);
         if(!licencaModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Licença não encontrada");
         }
         return ResponseEntity.status(HttpStatus.OK).body(licencaModelOptional.get());
     }
@@ -52,10 +52,10 @@ public class LicencaController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(id);
         if(!licencaModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Licença não encontrada");
         }
         licencaSvc.delete(licencaModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Licença deletada com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,12 +63,11 @@ public class LicencaController {
                                          @RequestBody @Valid LicencaDto licencaDto){
         Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(id);
         if(!licencaModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Licença não encontrada");
         }
 
         var licencaModel = licencaModelOptional.get();
-        licencaModel.setDescricao(licencaDto.getDescricao());
-
+        BeanUtils.copyProperties(licencaDto, licencaModel);
         return ResponseEntity.status(HttpStatus.OK).body(licencaSvc.save(licencaModel));
     }
 }

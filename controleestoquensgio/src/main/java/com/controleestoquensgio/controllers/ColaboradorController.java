@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/colaborador", "/"})
+@RequestMapping(value = {"/controle-estoque/colaborador"})
 public class ColaboradorController {
 
     @Autowired
@@ -28,7 +28,6 @@ public class ColaboradorController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ColaboradorDto colaboradorDto){
-        
         var colaboradorModel = new ColaboradorModel();
         BeanUtils.copyProperties(colaboradorDto, colaboradorModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(colaboradorSvc.save(colaboradorModel));
@@ -43,7 +42,7 @@ public class ColaboradorController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(id);
         if(!colaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Colaborador não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(colaboradorModelOptional.get());
     }
@@ -52,10 +51,10 @@ public class ColaboradorController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(id);
         if(!colaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Colaborador não encontrado");
         }
         colaboradorSvc.delete(colaboradorModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Colaborador deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,10 +62,11 @@ public class ColaboradorController {
                                          @RequestBody @Valid ColaboradorDto colaboradorDto){
         Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(id);
         if(!colaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Colaborador não encontrado");
         }
 
         var colaboradorModel = colaboradorModelOptional.get();
+        BeanUtils.copyProperties(colaboradorDto, colaboradorModel);
         return ResponseEntity.status(HttpStatus.OK).body(colaboradorSvc.save(colaboradorModel));
     }
 }

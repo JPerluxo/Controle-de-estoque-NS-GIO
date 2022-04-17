@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/ocorrencia", "/"})
+@RequestMapping(value = {"/controle-estoque/ocorrencia"})
 public class OcorrenciaController {
 
     @Autowired
@@ -28,7 +28,6 @@ public class OcorrenciaController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid OcorrenciaDto ocorrenciaDto){
-        
         var ocorrenciaModel = new OcorrenciaModel();
         BeanUtils.copyProperties(ocorrenciaDto, ocorrenciaModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(ocorrenciaSvc.save(ocorrenciaModel));
@@ -43,7 +42,7 @@ public class OcorrenciaController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<OcorrenciaModel> ocorrenciaModelOptional = ocorrenciaSvc.findById(id);
         if(!ocorrenciaModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ocorrência não encontrada");
         }
         return ResponseEntity.status(HttpStatus.OK).body(ocorrenciaModelOptional.get());
     }
@@ -52,10 +51,10 @@ public class OcorrenciaController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<OcorrenciaModel> ocorrenciaModelOptional = ocorrenciaSvc.findById(id);
         if(!ocorrenciaModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ocorrência não encontrada");
         }
         ocorrenciaSvc.delete(ocorrenciaModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Ocorrência deletada com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,7 +62,7 @@ public class OcorrenciaController {
                                          @RequestBody @Valid OcorrenciaDto ocorrenciaDto){
         Optional<OcorrenciaModel> ocorrenciaModelOptional = ocorrenciaSvc.findById(id);
         if(!ocorrenciaModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ocorrência não encontrada");
         }
 
         var ocorrenciaModel = ocorrenciaModelOptional.get();

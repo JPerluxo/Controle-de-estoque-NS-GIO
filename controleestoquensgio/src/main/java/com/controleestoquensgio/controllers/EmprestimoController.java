@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/emprestimo", "/"})
+@RequestMapping(value = {"/controle-estoque/emprestimo"})
 public class EmprestimoController {
 
     @Autowired
@@ -28,7 +28,6 @@ public class EmprestimoController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid EmprestimoDto emprestimoDto){
-        
         var emprestimoModel = new EmprestimoModel();
         BeanUtils.copyProperties(emprestimoDto, emprestimoModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoSvc.save(emprestimoModel));
@@ -43,7 +42,7 @@ public class EmprestimoController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<EmprestimoModel> emprestimoModelOptional = emprestimoSvc.findById(id);
         if(!emprestimoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Emprestimo não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(emprestimoModelOptional.get());
     }
@@ -52,10 +51,10 @@ public class EmprestimoController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<EmprestimoModel> emprestimoModelOptional = emprestimoSvc.findById(id);
         if(!emprestimoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Emprestimo não encontrado");
         }
         emprestimoSvc.delete(emprestimoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Emprestimo deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,11 +62,11 @@ public class EmprestimoController {
                                          @RequestBody @Valid EmprestimoDto emprestimoDto){
         Optional<EmprestimoModel> emprestimoModelOptional = emprestimoSvc.findById(id);
         if(!emprestimoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Emprestimo não encontrado");
         }
 
         var emprestimoModel = emprestimoModelOptional.get();
-
+        BeanUtils.copyProperties(emprestimoDto, emprestimoModel);
         return ResponseEntity.status(HttpStatus.OK).body(emprestimoSvc.save(emprestimoModel));
     }
 }

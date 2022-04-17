@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/contratoEquipamentoTerceiro", "/"})
+@RequestMapping(value = {"/controle-estoque/contratoEquipamentoTerceiro"})
 public class ContratoEquipamentoTerceiroController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class ContratoEquipamentoTerceiroController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(id);
         if(!contratoEquipamentoTerceiroModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(contratoEquipamentoTerceiroModelOptional.get());
     }
@@ -52,10 +52,10 @@ public class ContratoEquipamentoTerceiroController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(id);
         if(!contratoEquipamentoTerceiroModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato não encontrado");
         }
         contratoEquipamentoTerceiroSvc.delete(contratoEquipamentoTerceiroModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Contrato deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,11 +63,11 @@ public class ContratoEquipamentoTerceiroController {
                                          @RequestBody @Valid ContratoEquipamentoTerceiroDto contratoEquipamentoTerceiroDto){
         Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(id);
         if(!contratoEquipamentoTerceiroModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato não encontrado");
         }
 
         var contratoEquipamentoTerceiroModel = contratoEquipamentoTerceiroModelOptional.get();
-
+        BeanUtils.copyProperties(contratoEquipamentoTerceiroDto, contratoEquipamentoTerceiroModel);
         return ResponseEntity.status(HttpStatus.OK).body(contratoEquipamentoTerceiroSvc.save(contratoEquipamentoTerceiroModel));
     }
 }

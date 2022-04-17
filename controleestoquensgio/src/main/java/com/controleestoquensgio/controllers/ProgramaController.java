@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import com.controleestoquensgio.dtos.ProgramaDto;
-//import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.services.ProgramaService;
@@ -42,10 +41,8 @@ public class ProgramaController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ProgramaDto programaDto){
-        //Optional<LicencaModel> licencaModelOptional = licencaSvc.findById(2);
         var programaModel = new ProgramaModel();
         BeanUtils.copyProperties(programaDto, programaModel);
-        //programaModel.setLicenca(licencaModelOptional.get());
         return ResponseEntity.status(HttpStatus.CREATED).body(programaSvc.save(programaModel));
     }
 
@@ -82,8 +79,7 @@ public class ProgramaController {
         }
 
         var programaModel = programaModelOptional.get();
-        programaModel.setDescricao(programaDto.getDescricao());
-        programaModel.setObservacao(programaDto.getObservacao());
+        BeanUtils.copyProperties(programaDto, programaModel);
 
         return ResponseEntity.status(HttpStatus.OK).body(programaSvc.save(programaModel));
     }

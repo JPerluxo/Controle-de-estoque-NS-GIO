@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/equipamento", "/"})
+@RequestMapping(value = {"/controle-estoque/equipamento"})
 public class EquipamentoController {
 
     @Autowired
@@ -28,7 +28,6 @@ public class EquipamentoController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid EquipamentoDto equipamentoDto){
-        
         var equipamentoModel = new EquipamentoModel();
         BeanUtils.copyProperties(equipamentoDto, equipamentoModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(equipamentoSvc.save(equipamentoModel));
@@ -43,7 +42,7 @@ public class EquipamentoController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<EquipamentoModel> equipamentoModelOptional = equipamentoSvc.findById(id);
         if(!equipamentoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipamento não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(equipamentoModelOptional.get());
     }
@@ -52,10 +51,10 @@ public class EquipamentoController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<EquipamentoModel> equipamentoModelOptional = equipamentoSvc.findById(id);
         if(!equipamentoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipamento não encontrado");
         }
         equipamentoSvc.delete(equipamentoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Equipamento deletado com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,11 +62,11 @@ public class EquipamentoController {
                                          @RequestBody @Valid EquipamentoDto equipamentoDto){
         Optional<EquipamentoModel> equipamentoModelOptional = equipamentoSvc.findById(id);
         if(!equipamentoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipamento não encontrado");
         }
 
         var equipamentoModel = equipamentoModelOptional.get();
-
+        BeanUtils.copyProperties(equipamentoDto, equipamentoModel);
         return ResponseEntity.status(HttpStatus.OK).body(equipamentoSvc.save(equipamentoModel));
     }
 }

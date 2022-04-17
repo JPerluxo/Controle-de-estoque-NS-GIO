@@ -20,7 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/localizacao", "/"})
+@RequestMapping(value = {"/controle-estoque/localizacao"})
 public class LocalizacaoController {
 
     @Autowired
@@ -28,7 +28,6 @@ public class LocalizacaoController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid LocalizacaoDto localizacaoDto){
-        
         var localizacaoModel = new LocalizacaoModel();
         BeanUtils.copyProperties(localizacaoDto, localizacaoModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(localizacaoSvc.save(localizacaoModel));
@@ -43,7 +42,7 @@ public class LocalizacaoController {
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
         Optional<LocalizacaoModel> localizacaoModelOptional = localizacaoSvc.findById(id);
         if(!localizacaoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Localização não encontrada");
         }
         return ResponseEntity.status(HttpStatus.OK).body(localizacaoModelOptional.get());
     }
@@ -52,10 +51,10 @@ public class LocalizacaoController {
     public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<LocalizacaoModel> localizacaoModelOptional = localizacaoSvc.findById(id);
         if(!localizacaoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Localização não encontrada");
         }
         localizacaoSvc.delete(localizacaoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("License deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Localização deletada com sucesso");
     }
 
     @PutMapping("/{id}")
@@ -63,11 +62,11 @@ public class LocalizacaoController {
                                          @RequestBody @Valid LocalizacaoDto localizacaoDto){
         Optional<LocalizacaoModel> localizacaoModelOptional = localizacaoSvc.findById(id);
         if(!localizacaoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Localização não encontrada");
         }
 
         var localizacaoModel = localizacaoModelOptional.get();
-
+        BeanUtils.copyProperties(localizacaoDto, localizacaoModel);
         return ResponseEntity.status(HttpStatus.OK).body(localizacaoSvc.save(localizacaoModel));
     }
 }
