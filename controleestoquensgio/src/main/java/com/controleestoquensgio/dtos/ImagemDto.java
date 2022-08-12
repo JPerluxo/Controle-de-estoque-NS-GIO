@@ -13,9 +13,10 @@ import com.controleestoquensgio.models.ProgramaModel;
 
 public class ImagemDto {
 
-    @NotBlank
+    @NotBlank(message = "Insira um prédio!")
     private String  descricao;
     
+    @NotBlank(message = "Insira ao menos um programa!")
     private List<ProgramaModel> programas;
 
     public List<ProgramaModel> getProgramas() {

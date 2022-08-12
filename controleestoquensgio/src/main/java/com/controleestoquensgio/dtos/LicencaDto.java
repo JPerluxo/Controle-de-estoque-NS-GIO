@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 public class LicencaDto {
 
-    @NotBlank
+    @NotBlank(message = "Insira uma descrição!")
     private String descricao;
 
     public void setDescricao (String descricao){

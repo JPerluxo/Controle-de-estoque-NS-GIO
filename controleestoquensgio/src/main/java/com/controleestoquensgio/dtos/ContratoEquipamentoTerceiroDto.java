@@ -1,33 +1,36 @@
 package com.controleestoquensgio.dtos;
 
-import java.util.Date;
+
+
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ContratoEquipamentoTerceiroDto {
     
     @NotBlank
     private String fornecedor;
 
-    @NotBlank
-    private Date dataInicio;
+    @NotNull
+    private LocalDate dataInicio;
     
-    @NotBlank
-    private Date dataFinal;
+    @NotNull
+    private LocalDate dataFinal;
 
     public String getFornecedor() {
         return fornecedor;
     }
-    public Date getDataFinal() {
+    public LocalDate getDataFinal() {
         return dataFinal;
     }
-    public void setDataFinal(Date dataFinal) {
+    public void setDataFinal(LocalDate dataFinal) {
         this.dataFinal = dataFinal;
     }
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
     public void setFornecedor(String fornecedor) {

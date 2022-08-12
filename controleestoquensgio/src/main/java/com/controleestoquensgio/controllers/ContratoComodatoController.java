@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/contratoComodato"})
-public class ContratoComodatoController {
+public class ContratoComodatoController extends ControllerFather{
 
     @Autowired
     ContratoComodatoService contratoComodatoSvc;

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/tipoAcesso"})
-public class TipoAcessoController {
+public class TipoAcessoController extends ControllerFather{
 
     @Autowired
     TipoAcessoService tipoAcessoSvc;

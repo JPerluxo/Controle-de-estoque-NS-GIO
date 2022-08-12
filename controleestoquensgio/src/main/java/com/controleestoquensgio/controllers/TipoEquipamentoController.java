@@ -1,5 +1,6 @@
 package com.controleestoquensgio.controllers;
 
+
 import java.util.Optional;
 
 
@@ -7,7 +8,6 @@ import javax.validation.Valid;
 import com.controleestoquensgio.models.TipoEquipamentoModel;
 import com.controleestoquensgio.dtos.TipoEquipamentoDto;
 import com.controleestoquensgio.services.TipoEquipamentoService;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +16,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-
 import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/tipoEquipamento"})
-public class TipoEquipamentoController {
+public class TipoEquipamentoController extends ControllerFather{
 
     @Autowired
     TipoEquipamentoService tipoEquipamentoSvc;

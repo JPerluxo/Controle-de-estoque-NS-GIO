@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 public class TipoDto {
 
-    @NotBlank
+    @NotBlank(message = "Insira a descrição!")
     private String descricao;
 
     public String getDescricao() {

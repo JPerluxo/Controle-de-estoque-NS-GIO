@@ -4,13 +4,13 @@ import javax.validation.constraints.NotBlank;
 
 public class TipoEquipamentoDto {
     
-    @NotBlank
+    @NotBlank(message = "Insira uma descrição!")
     private String descricao;
     
-    @NotBlank
+    @NotBlank(message = "Insira uma marca!")
     private String marca;
 
-    @NotBlank
+    @NotBlank(message = "Insira uma modelo!")
     private String modelo;
     
     @NotBlank

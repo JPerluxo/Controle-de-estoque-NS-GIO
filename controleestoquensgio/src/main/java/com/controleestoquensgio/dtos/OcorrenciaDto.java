@@ -7,14 +7,16 @@ import com.controleestoquensgio.models.EquipamentoModel;
 
 public class OcorrenciaDto {
 
-    @NotBlank
+    @NotBlank(message = "Insira uma OS!")
     private String os;
     
-    @NotBlank
+    @NotBlank(message = "Insira uma descrição!")
     private String descricao;
     
+    @NotBlank(message = "Insira um equipamento!")
     private EquipamentoModel equipamento;
     
+    @NotBlank(message = "Insira um colaborador!")
     private ColaboradorModel colaborador;
     
     public String getOs() {

@@ -1,12 +1,13 @@
 package com.controleestoquensgio.dtos;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ContratoComodatoDto{
-    @NotBlank
-    private Date date; 
+    @NotNull
+    private LocalDate date; 
     
     @NotBlank
     private String caminhoArquivo;
@@ -14,8 +15,11 @@ public class ContratoComodatoDto{
     @NotBlank
     private String status;
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
+    }
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
     public String getStatus() {
         return status;
@@ -28,10 +32,5 @@ public class ContratoComodatoDto{
     }
     public void setCaminhoArquivo(String caminhoArquivo) {
         this.caminhoArquivo = caminhoArquivo;
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    } 
-
-    
+    }    
 }

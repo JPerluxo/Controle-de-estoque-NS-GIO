@@ -6,10 +6,10 @@ import com.controleestoquensgio.models.ColaboradorModel;
 
 public abstract class DepartamentoDto{
     
-    @NotBlank
+    @NotBlank(message = "Informe uma descrição!")
     protected String descricao;
     
-    @NotBlank
+    @NotBlank(message = "Informe a ")
     protected String sigla;
     
     @NotBlank

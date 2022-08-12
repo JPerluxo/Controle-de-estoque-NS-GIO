@@ -8,17 +8,26 @@ import com.controleestoquensgio.models.*;
 
 public class ColaboradorDto{
 
-    @NotBlank
+    @NotBlank(message = "Insira o RF!")
     private String rf;
     
-    @NotBlank
+    @NotBlank(message = "Insira um nome!")
     private String nome;
 
+    @NotBlank(message = "Insira uma imagem!")
     private ImagemModel imagem;
+
     private List <OcorrenciaModel> ocorrencias;
+    
+    @NotBlank(message = "Insira uma imagem!")
     private TipoAcessoModel tipoAcesso;
+
+    @NotBlank(message = "Insira um tipo de colaborador!")
     private TipoColaboradorModel tipoColaborador;
+
+    @NotBlank(message = "Insira um regime de trabalho!")
     private RegimeTrabalhoModel regimeTrabalho;
+
     private PresidenciaModel presidencia;
     private DiretoriaModel diretoria;
     private GerenciaModel gerencia;

@@ -16,7 +16,7 @@ public class NotaFiscalModel {
     @Column(name="nof_numero", nullable = false, length = 20)
     private String numero;
     
-    @Column(name="nof_dt", nullable = false)
+    @Column(name="nof_dt", nullable = true)
     private Date date;
 
     public int getId() {

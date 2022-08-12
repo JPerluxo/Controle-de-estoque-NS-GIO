@@ -12,10 +12,13 @@ public class EquipamentoDto {
     private String serial;
     private String numPatrimonio;
     private String observacao;
+
+    @NotBlank(message = "Insira um tipo de equipamento!")
     private TipoEquipamentoModel tipoEquipamento; 
+
     private NotaFiscalModel notaFiscal;
 
-    @NotBlank
+    @NotBlank(message = "Insira uma localização!")
     private LocalizacaoModel localizacao;
 
     private ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro;

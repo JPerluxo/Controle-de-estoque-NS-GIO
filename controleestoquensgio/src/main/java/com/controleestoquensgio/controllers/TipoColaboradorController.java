@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/tipoColaborador"})
-public class TipoColaboradorController {
+public class TipoColaboradorController extends ControllerFather{
 
     @Autowired
     TipoColaboradorService tipoColaboradorSvc;

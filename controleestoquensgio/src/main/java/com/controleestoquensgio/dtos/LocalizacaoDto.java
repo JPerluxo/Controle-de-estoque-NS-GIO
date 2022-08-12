@@ -4,13 +4,13 @@ import javax.validation.constraints.NotBlank;
 
 public class LocalizacaoDto{
 
-    @NotBlank
+    @NotBlank(message = "Insira um prédio!")
     private String predio;
     
-    @NotBlank
+    @NotBlank(message = "Insira um andar!")
     private String andar;
     
-    @NotBlank
+    @NotBlank(message = "Insira um lado!")
     private String lado;
     
     private String referencia;

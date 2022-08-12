@@ -1,29 +1,23 @@
 package com.controleestoquensgio.dtos;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.NotNull;
 
 public class NotaFiscalDto {
 
-    @NotBlank
+    @NotBlank(message = "Insira um número!")
     private String numero;
     
-    @NotBlank
-    private Date date;
+    @NotBlank(message = "Insira uma data!")
+    private LocalDate data;
 
-    public NotaFiscalDto(){
-        this.numero = " "; 
+    public void setLocalDate(LocalDate data) {
+        this.data = data;
     }
-    public NotaFiscalDto(String numero, Date date){
-        this.numero = numero;
-        this.date = date; 
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    public Date getDate() {
-        return date;
+    public LocalDate getLocalDate() {
+        return data;
     }
     public String getNumero() {
         return numero;

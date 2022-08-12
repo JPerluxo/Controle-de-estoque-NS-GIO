@@ -12,7 +12,7 @@ import com.controleestoquensgio.models.LicencaModel;
 
 public class ProgramaDto {
 
-    @NotBlank
+    @NotBlank(message = "Insira uma descrição!")
     private String descricao;
 
     private String observacao;

@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/imagem"})
-public class ImagemController {
+public class ImagemController extends ControllerFather{
 
     final ImagemService imagemSvc;
     final ProgramaService programaSvc;

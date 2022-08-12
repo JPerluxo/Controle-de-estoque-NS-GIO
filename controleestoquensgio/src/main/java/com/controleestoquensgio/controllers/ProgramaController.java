@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/programa"})
-public class ProgramaController {
+public class ProgramaController extends ControllerFather{
 
     final ProgramaService programaSvc;
     final LicencaService licencaSvc;

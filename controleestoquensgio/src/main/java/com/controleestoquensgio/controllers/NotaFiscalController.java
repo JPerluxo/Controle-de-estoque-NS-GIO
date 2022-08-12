@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/notaFiscal"})
-public class NotaFiscalController {
+public class NotaFiscalController extends ControllerFather{
 
     @Autowired
     NotaFiscalService notaFiscalSvc;
