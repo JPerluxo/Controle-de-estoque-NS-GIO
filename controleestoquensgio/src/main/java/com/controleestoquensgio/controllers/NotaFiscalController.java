@@ -3,7 +3,7 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import com.controleestoquensgio.models.NotaFiscalModel;
 import com.controleestoquensgio.dtos.NotaFiscalDto;
 import com.controleestoquensgio.services.NotaFiscalService;

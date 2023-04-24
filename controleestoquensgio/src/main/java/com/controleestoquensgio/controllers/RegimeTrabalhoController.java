@@ -3,7 +3,7 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
 import com.controleestoquensgio.dtos.RegimeTrabalhoDto;
 import com.controleestoquensgio.services.RegimeTrabalhoService;

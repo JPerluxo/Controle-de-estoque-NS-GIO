@@ -3,7 +3,7 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.dtos.TipoAcessoDto;
 import com.controleestoquensgio.services.TipoAcessoService;

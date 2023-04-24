@@ -3,7 +3,7 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import com.controleestoquensgio.models.ColaboradorModel;
 import com.controleestoquensgio.dtos.ColaboradorDto;
 import com.controleestoquensgio.services.ColaboradorService;
@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.web.bind.annotation.*;
+
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/colaborador"})

@@ -2,7 +2,7 @@ package com.controleestoquensgio.models;
 
 import java.util.Date;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table (name = "NOTAS_FISCAIS")

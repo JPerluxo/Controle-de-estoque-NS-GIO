@@ -3,7 +3,7 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import com.controleestoquensgio.models.LocalizacaoModel;
 import com.controleestoquensgio.dtos.LocalizacaoDto;
 import com.controleestoquensgio.services.LocalizacaoService;

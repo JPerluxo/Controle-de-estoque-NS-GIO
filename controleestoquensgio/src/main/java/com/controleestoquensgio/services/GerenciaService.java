@@ -2,7 +2,7 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.models.GerenciaModel;
 import com.controleestoquensgio.repositories.GerenciaRepository;

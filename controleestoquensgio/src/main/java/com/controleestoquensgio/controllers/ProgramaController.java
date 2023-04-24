@@ -2,7 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.ProgramaDto;
 import com.controleestoquensgio.models.ProgramaModel;

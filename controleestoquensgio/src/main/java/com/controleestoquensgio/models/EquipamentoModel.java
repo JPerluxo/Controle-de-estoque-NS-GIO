@@ -2,7 +2,7 @@ package com.controleestoquensgio.models;
 
 import java.util.List;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table (name = "EQUIPAMENTOS")

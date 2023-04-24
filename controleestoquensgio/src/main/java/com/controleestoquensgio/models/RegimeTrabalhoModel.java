@@ -1,6 +1,6 @@
 package com.controleestoquensgio.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table (name = "REGIMES_TRABALHO")

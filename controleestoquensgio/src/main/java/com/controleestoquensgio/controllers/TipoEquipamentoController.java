@@ -4,7 +4,7 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import com.controleestoquensgio.models.TipoEquipamentoModel;
 import com.controleestoquensgio.dtos.TipoEquipamentoDto;
 import com.controleestoquensgio.services.TipoEquipamentoService;
