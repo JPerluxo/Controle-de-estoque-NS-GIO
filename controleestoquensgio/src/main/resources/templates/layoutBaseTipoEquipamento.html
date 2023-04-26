@@ -1,0 +1,13 @@
+<!--suppress ALL -->
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<div th:fragment="form">
+    Descricao:  <input th:field="*{descricao}"  type="text" value="" id="descricao">
+    Marca:      <input th:field="*{marca}"      type="text" value="" id="marca">
+    Modelo:     <input th:field="*{modelo}"     type="text" value="" id="modelo">
+    Fornecedor: <input th:field="*{fornecedor}" type="text" value="" id="fornecedor">
+    Polegadas:  <input th:field="*{polegadas}"  type="text" value="" id="polegadas">
+</div>

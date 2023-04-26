@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tipo de equipamento</title>
+</head>
+<body>
+
+  Formulário
+
+  <form th:action="@{tiposDeEquipamento/update/{id}(id=${tipoEquipamento.id})}" method="post">
+    <div th:replace="~{layoutBaseTipoEquipamento :: form}"></div>
+    <button type="submit"> Atualizar </button>
+  </form>
+
+</body>
+</html>
