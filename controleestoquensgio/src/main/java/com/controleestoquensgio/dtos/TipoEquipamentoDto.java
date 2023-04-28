@@ -10,10 +10,10 @@ public class TipoEquipamentoDto {
     @NotBlank(message = "Insira uma marca!")
     private String marca;
 
-    @NotBlank(message = "Insira uma modelo!")
+    @NotBlank(message = "Insira um modelo!")
     private String modelo;
     
-    @NotBlank
+    @NotBlank(message = "Insira um modelo!")
     private String fornecedor;
     
     private String polegadas;

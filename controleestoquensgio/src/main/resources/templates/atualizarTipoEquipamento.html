@@ -10,7 +10,7 @@
 
   Formulário
 
-  <form th:action="@{tiposDeEquipamento/update/{id}(id=${tipoEquipamento.id})}" method="post">
+  <form th:object="${tipoDeEquipamento}" method="post">
     <div th:replace="~{layoutBaseTipoEquipamento :: form}"></div>
     <button type="submit"> Atualizar </button>
   </form>
