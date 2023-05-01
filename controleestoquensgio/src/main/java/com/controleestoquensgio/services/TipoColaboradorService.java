@@ -2,14 +2,16 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import jakarta.transaction.Transactional;
-
 import com.controleestoquensgio.models.TipoColaboradorModel;
+import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.Resultado;
 import com.controleestoquensgio.repositories.TipoColaboradorRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class TipoColaboradorService {
@@ -20,10 +22,16 @@ public class TipoColaboradorService {
     }
 
     @Transactional
-    public TipoColaboradorModel save(TipoColaboradorModel tipoColaboradorMdl){
-        return tipoColaboradorRpt.save(tipoColaboradorMdl);
-    } 
+    public Resultado save(TipoColaboradorModel tipoColaboradorMdl) {
 
+        tipoColaboradorRpt.save(tipoColaboradorMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
+    }
+    
     public Page<TipoColaboradorModel> findAll(Pageable pageable) {
         return tipoColaboradorRpt.findAll(pageable);
     }
@@ -33,7 +41,33 @@ public class TipoColaboradorService {
     }
 
     @Transactional
-    public void delete(TipoColaboradorModel tipoColaboradorMdl) {
-        tipoColaboradorRpt.delete(tipoColaboradorMdl);
+    public Resultado deleteById(int id) {
+
+        Optional<TipoColaboradorModel> tipoColaboradorModelOptional = findById(id);
+
+        if (tipoColaboradorModelOptional.isEmpty()) {
+            return new Resultado(
+                    Mensagens.tipoDeColaboradorNaoEncontrado(),
+                    Mensagens.tipoDeColaboradorNaoEncontradoTipoDeMensagem()
+            );
+        }
+
+        tipoColaboradorRpt.delete(tipoColaboradorModelOptional.get());
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
+    }
+
+    @Transactional
+    public Resultado update(TipoColaboradorModel tipoColaboradorMdl){
+
+        tipoColaboradorRpt.save(tipoColaboradorMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
     }
 }

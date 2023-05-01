@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    Formulário
+    <form th:object="${tipoColaboradorDto}" method="post">
+      <div th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: form}"></div>
+      <button type="submit"> Salvar </button>
+    </form>
+
+    <div th:each="tipoColaborador : ${listaDeTiposDeColaborador}">
+      <p>
+      <div>
+
+        Descricao:  <span th:text="${tipoColaborador.descricao}"></span>
+
+        <form action="#" th:action="@{tiposDeColaborador/delete/{id}(id=${tipoColaborador.id})}" method="post">
+          <button type="submit"> Deletar </button>
+        </form>
+
+        <form th:action="@{tiposDeColaborador/update/{id}(id=${tipoColaborador.id})}" method="get">
+          <button type="submit"> Editar </button>
+        </form>
+      </div>
+      </p>
+    </div>
+  </body>
+</html>
