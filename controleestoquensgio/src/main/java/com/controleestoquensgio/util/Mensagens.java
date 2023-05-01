@@ -11,4 +11,6 @@ public class Mensagens {
     public static String tipoDeColaboradorNaoEncontradoTipoDeMensagem() { return ErroOuSucesso.ERRO.name(); }
     public static String regimeDeTrabalhoNaoEncontrado() { return "Tipo de colaborador não encontrado!"; }
     public static String regimeDeTrabalhoNaoEncontradoTipoDeMensagem() { return ErroOuSucesso.ERRO.name(); }
+    public static String localizacaoNaoEncontrada() { return "Tipo de colaborador não encontrado!"; }
+    public static String localizacaoNaoEncontradaTipoDeMensagem() { return ErroOuSucesso.ERRO.name(); }
 }
