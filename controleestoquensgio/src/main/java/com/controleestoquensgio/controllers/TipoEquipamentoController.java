@@ -54,7 +54,13 @@ public class TipoEquipamentoController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable(value = "id") int id, @Valid TipoEquipamentoDto tipoEquipamentoDto, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable(value = "id") int id, @Valid TipoEquipamentoDto tipoEquipamentoDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("tipoEquipamentoDto", tipoEquipamentoDto);
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable));
+            return "tipoEquipamento/atualizarTipoEquipamento";
+        }
 
         Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoService.findById(id);
 

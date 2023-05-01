@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{tipoAcesso/layoutBaseTipoAcesso :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    Formulário
+    <form th:object="${tipoAcessoDto}" method="post">
+      <div th:replace="~{tipoAcesso/layoutBaseTipoAcesso :: form}"></div>
+      <button type="submit"> Salvar </button>
+    </form>
+
+    <div th:each="tipoAcesso : ${listaDeTiposDeAcesso}">
+      <p>
+      <div>
+
+        Descricao:  <span th:text="${tipoAcesso.descricao}"></span>
+
+        <form action="#" th:action="@{tiposDeAcesso/delete/{id}(id=${tipoAcesso.id})}" method="post">
+          <button type="submit"> Deletar </button>
+        </form>
+
+        <form th:action="@{tiposDeAcesso/update/{id}(id=${tipoAcesso.id})}" method="get">
+          <button type="submit"> Editar </button>
+        </form>
+      </div>
+      </p>
+    </div>
+  </body>
+</html>

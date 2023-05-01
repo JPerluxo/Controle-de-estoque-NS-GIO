@@ -2,73 +2,118 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-
 import jakarta.validation.Valid;
-import com.controleestoquensgio.models.TipoAcessoModel;
+
 import com.controleestoquensgio.dtos.TipoAcessoDto;
+import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.services.TipoAcessoService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-@RestController
-@CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/tipoAcesso"})
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+@RequestMapping(value = {"/tiposDeAcesso"})
 public class TipoAcessoController extends ControllerFather{
 
     @Autowired
     TipoAcessoService tipoAcessoSvc;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid TipoAcessoDto tipoAcessoDto){
+    public String save(@Valid TipoAcessoDto tipoAcessoDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes){
+        
+        if (result.hasErrors()) {
+            model.addAttribute("tipoAcessoDto", tipoAcessoDto);
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+            return "tipoAcesso/cadastrarTipoAcesso";
+        }
         
         var tipoAcessoModel = new TipoAcessoModel();
+        
         BeanUtils.copyProperties(tipoAcessoDto, tipoAcessoModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(tipoAcessoSvc.save(tipoAcessoModel));
+
+        var resultado = tipoAcessoSvc.save(tipoAcessoModel);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+        
+        return "redirect:/tiposDeAcesso";
     }
 
-    @GetMapping
-    public ResponseEntity<Page<TipoAcessoModel>> getAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(tipoAcessoSvc.findAll(pageable));
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable(value = "id") int id, RedirectAttributes redirectAttributes) {
+
+        var resultado = tipoAcessoSvc.deleteById(id);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/tiposDeAcesso";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
-        Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(id);
-        if(!tipoAcessoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de acesso não encontrado");
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable(value = "id") int id, @Valid TipoAcessoDto tipoAcessoDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("tipoAcessoDto", tipoAcessoDto);
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+            return "tipoAcesso/atualizarTipoAcesso";
         }
-        return ResponseEntity.status(HttpStatus.OK).body(tipoAcessoModelOptional.get());
-    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(id);
-        if(!tipoAcessoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de acesso não encontrado");
-        }
-        tipoAcessoSvc.delete(tipoAcessoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Tipo de acesso deletado com sucesso");
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable(value = "id") int id,
-                                         @RequestBody @Valid TipoAcessoDto tipoAcessoDto){
-        Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(id);
-        if(!tipoAcessoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de acesso não encontrado");
+        if (tipoAcessoModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    Mensagens.tipoDeAcessoNaoEncontrado(),
+                    Mensagens.tipoDeAcessoNaoEncontradoTipoDeMensagem()
+            );
+
+            return "redirect:/tiposDeAcesso";
         }
 
         var tipoAcessoModel = tipoAcessoModelOptional.get();
+
         BeanUtils.copyProperties(tipoAcessoDto, tipoAcessoModel);
-        
-        return ResponseEntity.status(HttpStatus.OK).body(tipoAcessoSvc.save(tipoAcessoModel));
+
+        var resultado = tipoAcessoSvc.update(tipoAcessoModel);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/tiposDeAcesso";
+    }
+
+    @GetMapping
+    public String getAll(Pageable pageable, Model model) {
+
+        Iterable<TipoAcessoModel> listaDeTiposDeAcesso = tipoAcessoSvc.findAll(pageable);
+        TipoAcessoDto tipoAcessoDto = new TipoAcessoDto();
+
+        model.addAttribute("listaDeTiposDeAcesso", listaDeTiposDeAcesso);
+        model.addAttribute("tipoAcessoDto", tipoAcessoDto);
+
+        return "tipoAcesso/cadastrarTipoAcesso";
+    }
+
+    @GetMapping("/update/{id}")
+    public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes) {
+
+        Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(id);
+
+        if (tipoAcessoModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem(),
+                    Mensagens.tipoDeEquipamentoNaoEncontrado()
+            );
+
+            return "redirect:/tiposDeAcesso";
+        }
+
+        model.addAttribute("tipoAcessoDto", tipoAcessoModelOptional.get());
+
+        return "tipoAcesso/atualizarTipoAcesso";
     }
 }

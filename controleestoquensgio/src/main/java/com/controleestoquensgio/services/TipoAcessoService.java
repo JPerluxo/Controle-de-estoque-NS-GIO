@@ -2,9 +2,11 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 
-import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.repositories.TipoAcessoRepository;
 
 import org.springframework.data.domain.Page;
@@ -20,8 +22,14 @@ public class TipoAcessoService {
     }
 
     @Transactional
-    public TipoAcessoModel save(TipoAcessoModel tipoAcessoMdl){
-        return tipoAcessoRpt.save(tipoAcessoMdl);
+    public Resultado save(TipoAcessoModel tipoAcessoMdl){
+        
+        tipoAcessoRpt.save(tipoAcessoMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
     } 
 
     public Page<TipoAcessoModel> findAll(Pageable pageable) {
@@ -33,7 +41,33 @@ public class TipoAcessoService {
     }
 
     @Transactional
-    public void delete(TipoAcessoModel tipoAcessoMdl) {
-        tipoAcessoRpt.delete(tipoAcessoMdl);
+    public Resultado deleteById(int id) {
+
+        Optional<TipoAcessoModel> tipoAcessoModelOptional = findById(id);
+
+        if (tipoAcessoModelOptional.isEmpty()) {
+            return new Resultado(
+                    Mensagens.tipoDeAcessoNaoEncontrado(),
+                    Mensagens.tipoDeAcessoNaoEncontradoTipoDeMensagem()
+            );
+        }
+
+        tipoAcessoRpt.delete(tipoAcessoModelOptional.get());
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
+    }
+
+    @Transactional
+    public Resultado update(TipoAcessoModel tipoAcessoMdl){
+
+        tipoAcessoRpt.save(tipoAcessoMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
     }
 }
