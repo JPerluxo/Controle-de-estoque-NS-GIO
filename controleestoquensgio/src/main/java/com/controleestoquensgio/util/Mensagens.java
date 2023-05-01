@@ -9,4 +9,6 @@ public class Mensagens {
     public static String tipoDeAcessoNaoEncontradoTipoDeMensagem() { return ErroOuSucesso.ERRO.name(); }
     public static String tipoDeColaboradorNaoEncontrado() { return "Tipo de colaborador não encontrado!"; }
     public static String tipoDeColaboradorNaoEncontradoTipoDeMensagem() { return ErroOuSucesso.ERRO.name(); }
+    public static String regimeDeTrabalhoNaoEncontrado() { return "Tipo de colaborador não encontrado!"; }
+    public static String regimeDeTrabalhoNaoEncontradoTipoDeMensagem() { return ErroOuSucesso.ERRO.name(); }
 }

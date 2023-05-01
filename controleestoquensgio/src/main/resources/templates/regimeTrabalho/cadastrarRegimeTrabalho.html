@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{regimeTrabalho/layoutBaseRegimeTrabalho :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    Formulário
+    <form th:object="${regimeTrabalhoDto}" method="post">
+      <div th:replace="~{regimeTrabalho/layoutBaseRegimeTrabalho :: form}"></div>
+      <button type="submit"> Salvar </button>
+    </form>
+
+    <div th:each="regimeTrabalho : ${listaDeRegimesDeTrabalho}">
+      <p>
+      <div>
+
+        Descricao:  <span th:text="${regimeTrabalho.descricao}"></span>
+
+        <form action="#" th:action="@{regimesDeTrabalho/delete/{id}(id=${regimeTrabalho.id})}" method="post">
+          <button type="submit"> Deletar </button>
+        </form>
+
+        <form th:action="@{regimesDeTrabalho/update/{id}(id=${regimeTrabalho.id})}" method="get">
+          <button type="submit"> Editar </button>
+        </form>
+      </div>
+      </p>
+    </div>
+  </body>
+</html>

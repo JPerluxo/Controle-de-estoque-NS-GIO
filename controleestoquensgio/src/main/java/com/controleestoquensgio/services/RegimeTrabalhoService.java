@@ -2,6 +2,9 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.models.RegimeTrabalhoModel;
+import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
@@ -20,9 +23,15 @@ public class RegimeTrabalhoService {
     }
 
     @Transactional
-    public RegimeTrabalhoModel save(RegimeTrabalhoModel regimeTrabalhoMdl){
-        return regimeTrabalhoRpt.save(regimeTrabalhoMdl);
-    } 
+    public Resultado save(RegimeTrabalhoModel regimeTrabalhoMdl){
+
+        regimeTrabalhoRpt.save(regimeTrabalhoMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
+    }
 
     public Page<RegimeTrabalhoModel> findAll(Pageable pageable) {
         return regimeTrabalhoRpt.findAll(pageable);
@@ -33,7 +42,34 @@ public class RegimeTrabalhoService {
     }
 
     @Transactional
-    public void delete(RegimeTrabalhoModel regimeTrabalhoMdl) {
-        regimeTrabalhoRpt.delete(regimeTrabalhoMdl);
+    public Resultado deleteById(int id) {
+
+        Optional<RegimeTrabalhoModel> regimeTrabalhoModelOptional = findById(id);
+
+        if (regimeTrabalhoModelOptional.isEmpty()) {
+            return new Resultado(
+                    Mensagens.regimeDeTrabalhoNaoEncontrado(),
+                    Mensagens.regimeDeTrabalhoNaoEncontradoTipoDeMensagem()
+            );
+        }
+
+        regimeTrabalhoRpt.delete(regimeTrabalhoModelOptional.get());
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
     }
+
+    @Transactional
+    public Resultado update(RegimeTrabalhoModel regimeTrabalhoMdl){
+
+        regimeTrabalhoRpt.save(regimeTrabalhoMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
+    }
+
 }
