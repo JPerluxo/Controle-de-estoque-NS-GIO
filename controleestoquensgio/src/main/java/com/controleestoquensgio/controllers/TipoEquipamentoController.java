@@ -2,6 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.util.Mensagens;
 import jakarta.validation.Valid;
 import com.controleestoquensgio.models.TipoEquipamentoModel;
 import com.controleestoquensgio.dtos.TipoEquipamentoDto;
@@ -13,56 +14,66 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/tiposDeEquipamento"})
-public class TipoEquipamentoController extends ControllerFather {
+public class TipoEquipamentoController {
 
     @Autowired
-    TipoEquipamentoService tipoEquipamentoSvc;
+    TipoEquipamentoService tipoEquipamentoService;
 
     @PostMapping
-    public String save(@Valid TipoEquipamentoDto tipoEquipamentoDto, BindingResult result, Model model, Pageable pageable) {
+    public String save(@Valid TipoEquipamentoDto tipoEquipamentoDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            model.addAttribute("tipoDeEquipamento", tipoEquipamentoDto);
-            model.addAttribute("tiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable));
-            return "cadastrarTipoEquipamento";
+            model.addAttribute("tipoEquipamentoDto", tipoEquipamentoDto);
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable));
+            return "tipoEquipamento/cadastrarTipoEquipamento";
         }
 
         var tipoEquipamentoModel = new TipoEquipamentoModel();
 
         BeanUtils.copyProperties(tipoEquipamentoDto, tipoEquipamentoModel);
 
-        tipoEquipamentoSvc.save(tipoEquipamentoModel);
+        var resultado = tipoEquipamentoService.save(tipoEquipamentoModel);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
         return "redirect:/tiposDeEquipamento";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable(value = "id") int id) {
+    public String delete(@PathVariable(value = "id") int id, RedirectAttributes redirectAttributes) {
 
-        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
+        var resultado = tipoEquipamentoService.deleteById(id);
 
-        if (tipoEquipamentoModelOptional.isEmpty()) return "redirect:/tiposDeEquipamento";
-
-        tipoEquipamentoSvc.delete(tipoEquipamentoModelOptional.get());
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
         return "redirect:/tiposDeEquipamento";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable(value = "id") int id, @Valid TipoEquipamentoDto tipoEquipamentoDto) {
+    public String update(@PathVariable(value = "id") int id, @Valid TipoEquipamentoDto tipoEquipamentoDto, RedirectAttributes redirectAttributes) {
 
-        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
+        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoService.findById(id);
 
-        if (tipoEquipamentoModelOptional.isEmpty()) return "redirect:/tiposDeEquipamento";
+        if (tipoEquipamentoModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem(),
+                    Mensagens.tipoDeEquipamentoNaoEncontrado()
+            );
+
+            return "redirect:/tiposDeEquipamento";
+        }
 
         var tipoEquipamentoModel = tipoEquipamentoModelOptional.get();
 
         BeanUtils.copyProperties(tipoEquipamentoDto, tipoEquipamentoModel);
 
-        tipoEquipamentoSvc.save(tipoEquipamentoModel);
+        var resultado = tipoEquipamentoService.update(tipoEquipamentoModel);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
         return "redirect:/tiposDeEquipamento";
     }
@@ -70,24 +81,31 @@ public class TipoEquipamentoController extends ControllerFather {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<TipoEquipamentoModel> tiposDeEquipamento = tipoEquipamentoSvc.findAll(pageable);
+        Iterable<TipoEquipamentoModel> listaDeTiposDeEquipamento = tipoEquipamentoService.findAll(pageable);
         TipoEquipamentoDto tipoDeEquipamento = new TipoEquipamentoDto();
 
-        model.addAttribute("tiposDeEquipamento", tiposDeEquipamento);
-        model.addAttribute("tipoDeEquipamento", tipoDeEquipamento);
+        model.addAttribute("listaDeTiposDeEquipamento", listaDeTiposDeEquipamento);
+        model.addAttribute("tipoEquipamentoDto", tipoDeEquipamento);
 
-        return "cadastrarTipoEquipamento";
+        return "tipoEquipamento/cadastrarTipoEquipamento";
     }
 
     @GetMapping("/update/{id}")
-    public String showFormUpdate(@PathVariable(value = "id") int id, Model model) {
+    public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes) {
 
-        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
+        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoService.findById(id);
 
-        if (tipoEquipamentoModelOptional.isEmpty()) return "redirect:/tiposDeEquipamento";
+        if (tipoEquipamentoModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem(),
+                    Mensagens.tipoDeEquipamentoNaoEncontrado()
+            );
 
-        model.addAttribute("tipoDeEquipamento", tipoEquipamentoModelOptional.get());
+            return "redirect:/tiposDeEquipamento";
+        }
 
-        return "atualizarTipoEquipamento";
+        model.addAttribute("tipoEquipamentoDto", tipoEquipamentoModelOptional.get());
+
+        return "tipoEquipamento/atualizarTipoEquipamento";
     }
 }

@@ -2,6 +2,9 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.TipoEquipamentoDto;
+import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.models.TipoEquipamentoModel;
@@ -20,8 +23,14 @@ public class TipoEquipamentoService {
     }
 
     @Transactional
-    public TipoEquipamentoModel save(TipoEquipamentoModel tipoEquipamentoMdl){
-        return tipoEquipamentoRpt.save(tipoEquipamentoMdl);
+    public Resultado save(TipoEquipamentoModel tipoEquipamentoMdl){
+
+        tipoEquipamentoRpt.save(tipoEquipamentoMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
     } 
 
     public Page<TipoEquipamentoModel> findAll(Pageable pageable) {
@@ -33,7 +42,34 @@ public class TipoEquipamentoService {
     }
 
     @Transactional
-    public void delete(TipoEquipamentoModel tipoEquipamentoMdl) {
-        tipoEquipamentoRpt.delete(tipoEquipamentoMdl);
+    public Resultado deleteById(int id) {
+
+        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = findById(id);
+
+        if (tipoEquipamentoModelOptional.isEmpty()) {
+            return new Resultado(
+                    Mensagens.tipoDeEquipamentoNaoEncontrado(),
+                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem()
+            );
+        }
+
+        tipoEquipamentoRpt.delete(tipoEquipamentoModelOptional.get());
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
     }
+
+    @Transactional
+    public Resultado update(TipoEquipamentoModel tipoEquipamentoMdl){
+
+        tipoEquipamentoRpt.save(tipoEquipamentoMdl);
+
+        return new Resultado(
+                Mensagens.operacaoBemSucedida(),
+                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+        );
+    }
+
 }

@@ -54,6 +54,7 @@ public class TipoColaboradorController extends ControllerFather{
         if(!tipoColaboradorModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo de colaborador não encontrado");
         }
+
         tipoColaboradorSvc.delete(tipoColaboradorModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Tipo de colaborador deletado com sucesso");
     }

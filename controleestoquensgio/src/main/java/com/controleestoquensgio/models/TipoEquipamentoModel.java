@@ -23,7 +23,7 @@ public class TipoEquipamentoModel {
     @Column(name="teq_fornecedor", nullable = false, length = 200)
     private String fornecedor;
     
-    @Column(name="teq_polegadas", nullable = false, length = 3)
+    @Column(name="teq_polegadas", nullable = false, length = 4)
     private String polegadas;
 
     public int getId() {
