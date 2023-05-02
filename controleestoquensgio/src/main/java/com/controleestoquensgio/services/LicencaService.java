@@ -2,9 +2,12 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.models.LicencaModel;
+import com.controleestoquensgio.util.ErroOuSucesso;
+import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 
-import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.repositories.LicencaRepository;
 
 import org.springframework.data.domain.Page;
@@ -20,9 +23,15 @@ public class LicencaService {
     }
 
     @Transactional
-    public LicencaModel save(LicencaModel licencaMdl){
-        return licencaRpt.save(licencaMdl);
-    } 
+    public Resultado save(LicencaModel licencaMdl){
+
+        licencaRpt.save(licencaMdl);
+
+        return new Resultado(
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
+        );
+    }
 
     public Page<LicencaModel> findAll(Pageable pageable) {
         return licencaRpt.findAll(pageable);
@@ -33,7 +42,33 @@ public class LicencaService {
     }
 
     @Transactional
-    public void delete(LicencaModel licencaMdl) {
-        licencaRpt.delete(licencaMdl);
+    public Resultado deleteById(int id) {
+
+        Optional<LicencaModel> licencaModelOptional = findById(id);
+
+        if (licencaModelOptional.isEmpty()) {
+            return new Resultado(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.licencaNaoEncontrada()
+            );
+        }
+
+        licencaRpt.delete(licencaModelOptional.get());
+
+        return new Resultado(
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
+        );
+    }
+
+    @Transactional
+    public Resultado update(LicencaModel licencaMdl){
+
+        licencaRpt.save(licencaMdl);
+
+        return new Resultado(
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
+        );
     }
 }

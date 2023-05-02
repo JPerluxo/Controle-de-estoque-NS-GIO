@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{licenca/layoutBaseLicenca :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    Formulário
+    <form th:object="${licencaDto}" method="post">
+      <div th:replace="~{licenca/layoutBaseLicenca :: form}"></div>
+      <button type="submit"> Salvar </button>
+    </form>
+
+    <div th:each="licenca : ${listaDeLicencas}">
+      <p>
+      <div>
+
+        Descricao:  <span th:text="${licenca.descricao}"></span>
+
+        <form action="#" th:action="@{licencas/delete/{id}(id=${licenca.id})}" method="post">
+          <button type="submit"> Deletar </button>
+        </form>
+
+        <form th:action="@{licencas/update/{id}(id=${licenca.id})}" method="get">
+          <button type="submit"> Editar </button>
+        </form>
+      </div>
+      </p>
+    </div>
+  </body>
+</html>

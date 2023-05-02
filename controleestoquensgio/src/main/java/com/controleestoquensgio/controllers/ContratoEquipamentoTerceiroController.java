@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.controleestoquensgio.dtos.ContratoEquipamentoTerceiroDto;
 import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
 import com.controleestoquensgio.services.ContratoEquipamentoTerceiroService;
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 
 import jakarta.validation.Valid;
@@ -71,7 +72,7 @@ public class ContratoEquipamentoTerceiroController extends ControllerFather {
 
         if (contratoEquipamentoTerceiroModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.contratoDeEquipamentoDeTerceiroNaoEncontradoTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.contratoDeEquipamentoDeTerceiroNaoEncontrado()
             );
 
@@ -111,7 +112,7 @@ public class ContratoEquipamentoTerceiroController extends ControllerFather {
 
         if (contratoEquipamentoTerceiroModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.contratoDeEquipamentoDeTerceiroNaoEncontradoTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.contratoDeEquipamentoDeTerceiroNaoEncontrado()
             );
 
