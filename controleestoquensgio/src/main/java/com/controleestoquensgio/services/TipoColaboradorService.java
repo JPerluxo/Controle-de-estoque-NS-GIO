@@ -3,6 +3,7 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.TipoColaboradorModel;
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import com.controleestoquensgio.repositories.TipoColaboradorRepository;
@@ -27,8 +28,7 @@ public class TipoColaboradorService {
         tipoColaboradorRpt.save(tipoColaboradorMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(), Mensagens.operacaoBemSucedida()
         );
     }
     
@@ -47,16 +47,16 @@ public class TipoColaboradorService {
 
         if (tipoColaboradorModelOptional.isEmpty()) {
             return new Resultado(
-                    Mensagens.tipoDeColaboradorNaoEncontrado(),
-                    Mensagens.tipoDeColaboradorNaoEncontradoTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.tipoDeColaboradorNaoEncontrado()
             );
         }
 
         tipoColaboradorRpt.delete(tipoColaboradorModelOptional.get());
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 
@@ -66,8 +66,8 @@ public class TipoColaboradorService {
         tipoColaboradorRpt.save(tipoColaboradorMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 }

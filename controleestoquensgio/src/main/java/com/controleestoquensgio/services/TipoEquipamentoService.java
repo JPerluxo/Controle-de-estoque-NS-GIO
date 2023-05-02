@@ -2,7 +2,7 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.TipoEquipamentoDto;
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
@@ -28,8 +28,8 @@ public class TipoEquipamentoService {
         tipoEquipamentoRpt.save(tipoEquipamentoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     } 
 
@@ -48,16 +48,16 @@ public class TipoEquipamentoService {
 
         if (tipoEquipamentoModelOptional.isEmpty()) {
             return new Resultado(
-                    Mensagens.tipoDeEquipamentoNaoEncontrado(),
-                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.tipoDeEquipamentoNaoEncontrado()
             );
         }
 
         tipoEquipamentoRpt.delete(tipoEquipamentoModelOptional.get());
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 
@@ -67,8 +67,8 @@ public class TipoEquipamentoService {
         tipoEquipamentoRpt.save(tipoEquipamentoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 

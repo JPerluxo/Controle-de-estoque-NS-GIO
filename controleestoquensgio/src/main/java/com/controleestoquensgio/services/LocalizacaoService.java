@@ -3,6 +3,7 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.LocalizacaoModel;
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
@@ -27,8 +28,8 @@ public class LocalizacaoService {
         localizacaoRpt.save(localizacaoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 
@@ -47,16 +48,16 @@ public class LocalizacaoService {
 
         if (localizacaoModelOptional.isEmpty()) {
             return new Resultado(
-                    Mensagens.localizacaoNaoEncontrada(),
-                    Mensagens.localizacaoNaoEncontradaTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.localizacaoNaoEncontrada()
             );
         }
 
         localizacaoRpt.delete(localizacaoModelOptional.get());
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 
@@ -66,8 +67,8 @@ public class LocalizacaoService {
         localizacaoRpt.save(localizacaoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 }

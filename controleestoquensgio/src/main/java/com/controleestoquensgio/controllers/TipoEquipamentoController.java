@@ -2,6 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import jakarta.validation.Valid;
 import com.controleestoquensgio.models.TipoEquipamentoModel;
@@ -66,7 +67,7 @@ public class TipoEquipamentoController {
 
         if (tipoEquipamentoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.tipoDeEquipamentoNaoEncontrado()
             );
 
@@ -103,7 +104,7 @@ public class TipoEquipamentoController {
 
         if (tipoEquipamentoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.tipoDeEquipamentoNaoEncontrado()
             );
 

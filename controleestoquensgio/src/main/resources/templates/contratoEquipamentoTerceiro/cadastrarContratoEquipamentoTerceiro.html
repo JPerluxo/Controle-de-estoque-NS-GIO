@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{contratoEquipamentoTerceiro/layoutBaseContratoEquipamentoTerceiro :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    Formulário
+    <form th:object="${contratoEquipamentoTerceiroDto}" method="post">
+      <div th:replace="~{contratoEquipamentoTerceiro/layoutBaseContratoEquipamentoTerceiro :: form}"></div>
+      <button type="submit"> Salvar </button>
+    </form>
+
+    <div th:each="contratoEquipamentoTerceiro : ${listaDeContratosDeEquipamentoDeTerceiro}">
+      <p>
+      <div>
+
+        Data final:  <span th:text="${contratoEquipamentoTerceiro.dataFinal}"></span>
+        Data Inicio: <span th:text="${contratoEquipamentoTerceiro.dataInicio}"></span>
+        Fornecedor:  <span th:text="${contratoEquipamentoTerceiro.fornecedor}"></span>
+
+        <form action="#" th:action="@{contratosDeEquipamentoDeTerceiro/delete/{id}(id=${contratoEquipamentoTerceiro.id})}" method="post">
+          <button type="submit"> Deletar </button>
+        </form>
+
+        <form th:action="@{contratosDeEquipamentoDeTerceiro/update/{id}(id=${contratoEquipamentoTerceiro.id})}" method="get">
+          <button type="submit"> Editar </button>
+        </form>
+      </div>
+      </p>
+    </div>
+  </body>
+</html>

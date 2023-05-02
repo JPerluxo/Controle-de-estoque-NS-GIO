@@ -2,6 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.util.ErroOuSucesso;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.LocalizacaoDto;
@@ -68,7 +69,7 @@ public class LocalizacaoController extends ControllerFather{
 
         if (localizacaoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.localizacaoNaoEncontradaTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.localizacaoNaoEncontrada()
             );
 
@@ -105,7 +106,7 @@ public class LocalizacaoController extends ControllerFather{
 
         if (localizacaoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.localizacaoNaoEncontradaTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.localizacaoNaoEncontrada()
             );
 

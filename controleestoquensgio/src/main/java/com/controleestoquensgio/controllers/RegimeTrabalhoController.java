@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.controleestoquensgio.dtos.RegimeTrabalhoDto;
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
 import com.controleestoquensgio.services.RegimeTrabalhoService;
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 
 import org.springframework.beans.BeanUtils;
@@ -68,8 +69,8 @@ public class RegimeTrabalhoController extends ControllerFather{
 
         if (regimeTrabalhoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.regimeDeTrabalhoNaoEncontrado(),
-                    Mensagens.regimeDeTrabalhoNaoEncontradoTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.regimeDeTrabalhoNaoEncontrado()
             );
 
             return "redirect:/regimesDeTrabalho";
@@ -105,8 +106,8 @@ public class RegimeTrabalhoController extends ControllerFather{
 
         if (regimeTrabalhoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.regimeDeTrabalhoNaoEncontrado(),
-                    Mensagens.regimeDeTrabalhoNaoEncontradoTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.regimeDeTrabalhoNaoEncontrado()
             );
 
             return "redirect:/regimesDeTrabalho";

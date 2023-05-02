@@ -5,7 +5,7 @@ public class Resultado {
     private String mensagem;
     private String erroOuSucesso;
 
-    public Resultado (String mensagem, String erroOuSucesso) {
+    public Resultado (String erroOuSucesso, String mensagem) {
         this.mensagem = mensagem;
         this.erroOuSucesso = erroOuSucesso;
     }

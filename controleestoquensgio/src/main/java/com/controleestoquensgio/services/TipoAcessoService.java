@@ -3,6 +3,7 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
@@ -27,8 +28,8 @@ public class TipoAcessoService {
         tipoAcessoRpt.save(tipoAcessoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     } 
 
@@ -47,16 +48,16 @@ public class TipoAcessoService {
 
         if (tipoAcessoModelOptional.isEmpty()) {
             return new Resultado(
-                    Mensagens.tipoDeAcessoNaoEncontrado(),
-                    Mensagens.tipoDeAcessoNaoEncontradoTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.tipoDeAcessoNaoEncontrado()
             );
         }
 
         tipoAcessoRpt.delete(tipoAcessoModelOptional.get());
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 
@@ -66,8 +67,8 @@ public class TipoAcessoService {
         tipoAcessoRpt.save(tipoAcessoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 }

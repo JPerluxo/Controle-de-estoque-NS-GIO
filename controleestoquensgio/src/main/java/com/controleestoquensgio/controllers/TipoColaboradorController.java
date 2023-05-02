@@ -2,6 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.util.ErroOuSucesso;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.TipoColaboradorDto;
@@ -68,7 +69,7 @@ public class TipoColaboradorController extends ControllerFather{
 
         if (tipoColaboradorModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.tipoDeColaboradorNaoEncontrado(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.tipoDeColaboradorNaoEncontrado()
             );
 
@@ -105,7 +106,7 @@ public class TipoColaboradorController extends ControllerFather{
 
         if (tipoColaboradorModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.tipoDeColaboradorNaoEncontradoTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.tipoDeColaboradorNaoEncontrado()
             );
 

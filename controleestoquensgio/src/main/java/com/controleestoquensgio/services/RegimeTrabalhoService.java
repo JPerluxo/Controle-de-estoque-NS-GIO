@@ -3,11 +3,11 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
+import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 
-import com.controleestoquensgio.models.RegimeTrabalhoModel;
 import com.controleestoquensgio.repositories.RegimeTrabalhoRepository;
 
 import org.springframework.data.domain.Page;
@@ -28,8 +28,8 @@ public class RegimeTrabalhoService {
         regimeTrabalhoRpt.save(regimeTrabalhoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 
@@ -48,16 +48,16 @@ public class RegimeTrabalhoService {
 
         if (regimeTrabalhoModelOptional.isEmpty()) {
             return new Resultado(
-                    Mensagens.regimeDeTrabalhoNaoEncontrado(),
-                    Mensagens.regimeDeTrabalhoNaoEncontradoTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.regimeDeTrabalhoNaoEncontrado()
             );
         }
 
         regimeTrabalhoRpt.delete(regimeTrabalhoModelOptional.get());
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 
@@ -67,8 +67,8 @@ public class RegimeTrabalhoService {
         regimeTrabalhoRpt.save(regimeTrabalhoMdl);
 
         return new Resultado(
-                Mensagens.operacaoBemSucedida(),
-                Mensagens.operacaoBemSucedidaTipoDeMensagem()
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
         );
     }
 

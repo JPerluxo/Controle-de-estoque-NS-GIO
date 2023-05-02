@@ -2,9 +2,12 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
+import com.controleestoquensgio.util.ErroOuSucesso;
+import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 
-import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
 import com.controleestoquensgio.repositories.ContratoEquipamentoTerceiroRepository;
 
 import org.springframework.data.domain.Page;
@@ -20,8 +23,13 @@ public class ContratoEquipamentoTerceiroService {
     }
 
     @Transactional
-    public ContratoEquipamentoTerceiroModel save(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiroMdl){
-        return contratoEquipamentoTerceiroRpt.save(contratoEquipamentoTerceiroMdl);
+    public Resultado save(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiroMdl){
+
+        contratoEquipamentoTerceiroRpt.save(contratoEquipamentoTerceiroMdl);
+
+        return new Resultado(
+                ErroOuSucesso.SUCESSO.name(), Mensagens.operacaoBemSucedida()
+        );
     } 
 
     public Page<ContratoEquipamentoTerceiroModel> findAll(Pageable pageable) {
@@ -33,7 +41,30 @@ public class ContratoEquipamentoTerceiroService {
     }
 
     @Transactional
-    public void delete(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiroMdl) {
-        contratoEquipamentoTerceiroRpt.delete(contratoEquipamentoTerceiroMdl);
+    public Resultado deleteById(int id) {
+
+        Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = findById(id);
+
+        if (contratoEquipamentoTerceiroModelOptional.isEmpty()) {
+            return new Resultado(
+                    ErroOuSucesso.ERRO.name(), Mensagens.contratoDeEquipamentoDeTerceiroNaoEncontrado()
+            );
+        }
+
+        contratoEquipamentoTerceiroRpt.delete(contratoEquipamentoTerceiroModelOptional.get());
+
+        return new Resultado(
+                ErroOuSucesso.SUCESSO.name(), Mensagens.operacaoBemSucedida()
+        );
+    }
+
+    @Transactional
+    public Resultado update(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiroMdl){
+
+        contratoEquipamentoTerceiroRpt.save(contratoEquipamentoTerceiroMdl);
+
+        return new Resultado(
+                ErroOuSucesso.SUCESSO.name(), Mensagens.operacaoBemSucedida()
+        );
     }
 }

@@ -1,40 +1,44 @@
 package com.controleestoquensgio.dtos;
 
-
-
-import java.time.LocalDate;
+import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ContratoEquipamentoTerceiroDto {
     
-    @NotBlank
+    @NotBlank(message = "Insira um fornecedor!")
     private String fornecedor;
 
-    @NotNull
-    private LocalDate dataInicio;
-    
-    @NotNull
-    private LocalDate dataFinal;
+    @NotNull(message = "Insira uma data de início!")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dataInicio;
+    @NotNull(message = "Insira uma data final!")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dataFinal;
 
     public String getFornecedor() {
         return fornecedor;
     }
-    public LocalDate getDataFinal() {
-        return dataFinal;
-    }
-    public void setDataFinal(LocalDate dataFinal) {
-        this.dataFinal = dataFinal;
-    }
-    public LocalDate getDataInicio() {
-        return dataInicio;
-    }
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
-    }
+
     public void setFornecedor(String fornecedor) {
         this.fornecedor = fornecedor;
     }
 
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
+    }
 }

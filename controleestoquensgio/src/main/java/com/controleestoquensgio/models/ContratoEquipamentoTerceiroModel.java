@@ -16,11 +16,11 @@ public class ContratoEquipamentoTerceiroModel {
     @Column(name="cet_fornecedor", nullable = false, length = 50)
     private String fornecedor;
 
-    @Column(name="cet_dtInicio", nullable = false)
+    @Column(name="cet_dt_inicio", nullable = false)
     private Date dataInicio;
     
-    @Column(name="cet_dtTermino", nullable = false)
-    private Date dataTermino;
+    @Column(name="cet_dt_termino", nullable = false)
+    private Date dataFinal;
 
     public int getId() {
         return id;
@@ -31,11 +31,11 @@ public class ContratoEquipamentoTerceiroModel {
     public String getFornecedor() {
         return fornecedor;
     }
-    public Date getDataTermino() {
-        return dataTermino;
+    public Date getDataFinal() {
+        return dataFinal;
     }
-    public void setDataTermino(Date dataTermino) {
-        this.dataTermino = dataTermino;
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
     }
     public Date getDataInicio() {
         return dataInicio;

@@ -2,6 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.util.ErroOuSucesso;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.TipoAcessoDto;
@@ -68,8 +69,8 @@ public class TipoAcessoController extends ControllerFather{
 
         if (tipoAcessoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.tipoDeAcessoNaoEncontrado(),
-                    Mensagens.tipoDeAcessoNaoEncontradoTipoDeMensagem()
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.tipoDeAcessoNaoEncontrado()
             );
 
             return "redirect:/tiposDeAcesso";
@@ -105,7 +106,7 @@ public class TipoAcessoController extends ControllerFather{
 
         if (tipoAcessoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
-                    Mensagens.tipoDeEquipamentoNaoEncontradoTipoDeMensagem(),
+                    ErroOuSucesso.ERRO.name(),
                     Mensagens.tipoDeEquipamentoNaoEncontrado()
             );
 
