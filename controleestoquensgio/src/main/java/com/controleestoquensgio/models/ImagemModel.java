@@ -37,5 +37,8 @@ public class ImagemModel {
     }
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    } 
+    }
+    public void addPrograma (ProgramaModel programa) {
+        this.programas.add(programa);
+    }
 }
