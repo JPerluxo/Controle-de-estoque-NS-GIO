@@ -9,4 +9,6 @@ public class Mensagens {
     public static String localizacaoNaoEncontrada() { return "Localizacao não encontrada!"; }
     public static String contratoDeEquipamentoDeTerceiroNaoEncontrado() { return "Contrato de equipamento de terceiro não encontrado!"; }
     public static String licencaNaoEncontrada() { return "Licença não encontrada!"; }
+    public static String programaNaoEncontrado() { return "Programa não encontrado!"; }
+    public static String imagemNaoEncontrada() { return "Imagem não encontrada!"; }
 }

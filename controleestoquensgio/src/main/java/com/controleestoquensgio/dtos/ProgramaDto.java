@@ -1,14 +1,7 @@
-
-/**
- *
- * @author Tiago
- */
-
 package com.controleestoquensgio.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-
-import com.controleestoquensgio.models.LicencaModel;
+import jakarta.validation.constraints.Positive;
 
 public class ProgramaDto {
 
@@ -16,8 +9,8 @@ public class ProgramaDto {
     private String descricao;
 
     private String observacao;
-    
-    private LicencaModel licenca;
+    @Positive(message = "Insira uma licença!")
+    private int licencaId;
 
     public String getDescricao() {
         return descricao;
@@ -25,16 +18,12 @@ public class ProgramaDto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public LicencaModel getLicenca() {
-        return licenca;
-    }
-    public void setLicenca(LicencaModel licenca) {
-        this.licenca = licenca;
-    }
     public String getObservacao() {
         return observacao;
     }
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+    public int getLicencaId() {return licencaId;}
+    public void setLicencaId(int licencaId) {this.licencaId = licencaId;}
 }

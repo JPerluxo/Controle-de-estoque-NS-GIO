@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{programa/layoutBasePrograma :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    Formulário
+    <form th:object="${programaDto}" method="post">
+      <div th:replace="~{programa/layoutBasePrograma :: form}"></div>
+      <button type="submit"> Salvar </button>
+    </form>
+
+    <div th:each="programa : ${listaDeProgramas}">
+      <p>
+      <div>
+
+        Descricao:   <span th:text="${programa.descricao}"></span>
+        Observaçao:  <span th:text="${programa.observacao}"></span>
+        Licença:     <span th:text="${programa.licenca}"></span>
+
+        <form action="#" th:action="@{programas/delete/{id}(id=${programa.id})}" method="post">
+          <button type="submit"> Deletar </button>
+        </form>
+
+        <form th:action="@{programas/update/{id}(id=${programa.id})}" method="get">
+          <button type="submit"> Editar </button>
+        </form>
+      </div>
+      </p>
+    </div>
+  </body>
+</html>
