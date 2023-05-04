@@ -1,7 +1,7 @@
 
 package com.controleestoquensgio.models;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -17,20 +17,14 @@ public class ImagemModel {
     @Column(name="img_descricao", nullable = false, length = 50)
     private String  descricao;
 
-    @OneToMany
-    private List<ProgramaModel> programas;
+    @ManyToMany
+    private Set<ProgramaModel> programas;
 
     public int getId() {
         return id;
     }  
     public void setId(int id) {
         this.id = id;
-    }
-    public List<ProgramaModel> getProgramas() {
-        return programas;
-    }
-    public void setProgramas(List<ProgramaModel> programas) {
-        this.programas = programas;
     }
     public String getDescricao() {
         return descricao;
@@ -40,5 +34,14 @@ public class ImagemModel {
     }
     public void addPrograma (ProgramaModel programa) {
         this.programas.add(programa);
+    }
+    public void removePrograma (ProgramaModel programa) {
+        this.programas.remove(programa);
+    }
+    public Set<ProgramaModel> getProgramas() {
+        return programas;
+    }
+    public void setProgramas(Set<ProgramaModel> programas) {
+        this.programas = programas;
     }
 }

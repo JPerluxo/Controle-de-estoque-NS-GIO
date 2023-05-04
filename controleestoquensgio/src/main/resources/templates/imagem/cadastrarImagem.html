@@ -23,6 +23,10 @@
         <form th:action="@{imagens/update/{id}(id=${imagem.id})}" method="get">
           <button type="submit"> Editar </button>
         </form>
+
+        <form th:action="@{imagens/update/{id}/addPrograma(id=${imagem.id})}" method="get">
+          <button type="submit"> Adicionar programa </button>
+        </form>
       </div>
       </p>
     </div>

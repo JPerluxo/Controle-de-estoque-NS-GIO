@@ -1,7 +1,11 @@
 package com.controleestoquensgio.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import com.controleestoquensgio.dtos.ListarProgramaDaImagemDto;
 import com.controleestoquensgio.models.ProgramaModel;
 import jakarta.transaction.Transactional;
 
@@ -11,6 +15,7 @@ import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import com.controleestoquensgio.repositories.ImagemRepository;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -101,7 +106,46 @@ public class ImagemService {
 
         ImagemModel imagemModel = imagemModelOptional.get();
 
+        if (imagemModel.getProgramas().contains(programaModelOptional.get())) {
+            return new Resultado(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.programaJaAssociadoAImagem()
+            );
+        }
+
         imagemModel.addPrograma(programaModelOptional.get());
+
+        imagemRpt.save(imagemModel);
+
+        return new Resultado(
+                ErroOuSucesso.SUCESSO.name(),
+                Mensagens.operacaoBemSucedida()
+        );
+    }
+
+    @Transactional
+    public Resultado removePrograma(int imagemId, int programaId) {
+        Optional<ImagemModel> imagemModelOptional = findById(imagemId);
+
+        if (imagemModelOptional.isEmpty()) {
+            return new Resultado(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.imagemNaoEncontrada()
+            );
+        }
+
+        Optional<ProgramaModel> programaModelOptional = programaSvc.findById(programaId);
+
+        if (programaModelOptional.isEmpty()) {
+            return new Resultado(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.programaNaoEncontrado()
+            );
+        }
+
+        ImagemModel imagemModel = imagemModelOptional.get();
+
+        imagemModel.removePrograma(programaModelOptional.get());
 
         imagemRpt.save(imagemModel);
 

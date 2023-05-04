@@ -19,6 +19,8 @@ public class ListarProgramaDto {
         this.licenca = programaModel.getLicenca().getDescricao();
     }
 
+    public ListarProgramaDto() {}
+
     public int getId() {
         return id;
     }

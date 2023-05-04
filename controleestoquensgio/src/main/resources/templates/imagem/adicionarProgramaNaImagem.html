@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{imagem/layoutBaseImagem :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    <form th:object="${addProgramaNaImagemDto}" method="post">
+      <select th:field="*{programaId}">
+        <option value="-1">Selecione...</option>
+        <option th:each="programa : ${listaDeProgramas}" th:value="${programa.id}" th:text="${programa.descricao}"/>
+      </select>
+      <div th:errors="*{programaId}">Erro programaId</div>
+
+      <button type="submit"> Adicionar </button>
+    </form>
+
+    Programas:
+
+    <div th:each="programaImagem : ${listarProgramasDaImagemDto}">
+      <p>
+      <div>
+        Descricao:  <span th:text="${programaImagem.descricao}"></span>
+        <form action="#" th:action="@{/imagens/update/{id}/removePrograma/{programaId}(id=${programaImagem.imagemId}, programaId=${programaImagem.id})}" method="post">
+          <button type="submit"> Remover </button>
+        </form>
+      </div>
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,10 +1,13 @@
 package com.controleestoquensgio.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import com.controleestoquensgio.dtos.AddProgramaNaImagemDto;
-import com.controleestoquensgio.dtos.CriarImagemDto;
+import com.controleestoquensgio.dtos.*;
 import com.controleestoquensgio.models.ImagemModel;
+import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.services.ImagemService;
 import com.controleestoquensgio.services.ProgramaService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -13,6 +16,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,23 +99,32 @@ public class ImagemController extends ControllerFather{
         return "redirect:/imagens";
     }
 
-    @PostMapping("/update/{id}/addPrograma/{programaId}")
-    public String addProgramaNaImagem(@PathVariable(value = "id") int id, @PathVariable(value = "programaId") int programaId, CriarImagemDto criarImagemDto, @Valid AddProgramaNaImagemDto addProgramaNaImagemDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
+    @PostMapping("/update/{id}/addPrograma")
+    public String addProgramOnImage(@PathVariable(value = "id") int id, @Valid AddProgramaNaImagemDto addProgramaNaImagemDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             addProgramaNaImagemDto.setImagemId(id);
-            model.addAttribute("criarImagemDto", criarImagemDto);
             model.addAttribute("addProgramaNaImagemDto", addProgramaNaImagemDto);
             model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable));
-            //model.addAttribute("listaDeProgramasDaImagem", imagemSvc.findById(id).get().getProgramas());
-            return "imagem/atualizarImagem";
+            model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
+            return "imagem/adicionarProgramaNaImagem";
         }
 
-        var resultado = imagemSvc.addPrograma(id, programaId);
+        var resultado = imagemSvc.addPrograma(id, addProgramaNaImagemDto.getProgramaId());
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
-        return "redirect:/update/"+id;
+        return "redirect:/imagens/update/"+id+"/addPrograma";
+    }
+
+    @PostMapping("/update/{id}/removePrograma/{programaId}")
+    public String removeProgramFromImage(@PathVariable(value = "id") int id, @PathVariable(value = "programaId") int programaId, RedirectAttributes redirectAttributes) {
+
+        var resultado = imagemSvc.removePrograma(id, programaId);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/imagens/update/"+id+"/addPrograma";
     }
 
     @GetMapping
@@ -140,9 +153,38 @@ public class ImagemController extends ControllerFather{
             return "redirect:/imagens";
         }
 
-        model.addAttribute("addProgramaNaImagemDto", new AddProgramaNaImagemDto(id));
+
         model.addAttribute("criarImagemDto", imagemModelOptional.get());
 
         return "imagem/atualizarImagem";
     }
+
+    @GetMapping("/update/{id}/addPrograma")
+    public String showFormAddProgramOnImage(@PathVariable(value = "id") int id, Model model, Pageable pageable) {
+
+        model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable));
+        model.addAttribute("addProgramaNaImagemDto", new AddProgramaNaImagemDto(id));
+        model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
+
+        return "imagem/adicionarProgramaNaImagem";
+    }
+
+    public List<ListarProgramaDaImagemDto> getListarProgramasDaImagemDto (int id) {
+        Set<ProgramaModel> listaDeProgramasDaImagemModel = imagemSvc.findById(id).get().getProgramas();
+
+        List<ListarProgramaDaImagemDto> listarProgramasDaImagemDto = new ArrayList<>();
+
+        ListarProgramaDaImagemDto listarProgramaDto;
+
+        for (ProgramaModel programaModel: listaDeProgramasDaImagemModel) {
+            listarProgramaDto = new ListarProgramaDaImagemDto();
+            BeanUtils.copyProperties(programaModel, listarProgramaDto);
+            listarProgramaDto.setLicenca(programaModel.getLicenca().getDescricao());
+            listarProgramaDto.setImagemId(id);
+            listarProgramasDaImagemDto.add(listarProgramaDto);
+        }
+
+        return listarProgramasDaImagemDto;
+    }
+
 }
