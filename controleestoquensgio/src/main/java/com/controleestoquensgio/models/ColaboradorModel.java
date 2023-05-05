@@ -1,7 +1,5 @@
 package com.controleestoquensgio.models;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -22,9 +20,6 @@ public class ColaboradorModel {
     @ManyToOne
     private ImagemModel imagem;
     
-    @OneToMany
-    private List<OcorrenciaModel> ocorrencias;
-    
     @ManyToOne
     private TipoAcessoModel tipoAcesso;
     
@@ -33,24 +28,6 @@ public class ColaboradorModel {
     
     @ManyToOne
     private RegimeTrabalhoModel regimeTrabalho;
-    
-    @ManyToOne
-    private PresidenciaModel presidencia;
-    
-    @ManyToOne
-    private DiretoriaModel diretoria;
-    
-    @ManyToOne
-    private GerenciaModel gerencia;
-
-    @ManyToOne
-    private NucleoModel nucleo;
-
-    @ManyToMany
-    private List<EmprestimoModel> equipamentosDisponibilizados;
-    
-    @ManyToMany
-    private List<ContratoComodatoModel> contratosComodato;
 
     public int getId() {
         return id;
@@ -76,12 +53,6 @@ public class ColaboradorModel {
     public void setImagem(ImagemModel imagem) {
         this.imagem = imagem;
     }
-    public List<OcorrenciaModel> getOcorrencias() {
-        return ocorrencias;
-    }
-    public void setOcorrencias(List<OcorrenciaModel> ocorrencias) {
-        this.ocorrencias = ocorrencias;
-    }
     public TipoAcessoModel getTipoAcesso() {
         return tipoAcesso;
     }
@@ -99,41 +70,5 @@ public class ColaboradorModel {
     }
     public void setRegimeTrabalho(RegimeTrabalhoModel regimeTrabalho) {
         this.regimeTrabalho = regimeTrabalho;
-    }
-    public List<EmprestimoModel> getEquipamentosDisponibilizados() {
-        return equipamentosDisponibilizados;
-    }
-    public void setEquipamentosDisponibilizados(List<EmprestimoModel> equipamentosDisponibilizados) {
-        this.equipamentosDisponibilizados = equipamentosDisponibilizados;
-    }
-    public List<ContratoComodatoModel> getContratosComodato() {
-        return contratosComodato;
-    }
-    public void setContratosComodato(List<ContratoComodatoModel> contratosComodato) {
-        this.contratosComodato = contratosComodato;
-    }
-    public NucleoModel getNucleo() {
-        return nucleo;
-    }
-    public void setNucleo(NucleoModel nucleo) {
-        this.nucleo = nucleo;
-    }
-    public GerenciaModel getGerencia() {
-        return gerencia;
-    }
-    public void setGerencia(GerenciaModel gerencia) {
-        this.gerencia = gerencia;
-    }
-    public DiretoriaModel getDiretoria() {
-        return diretoria;
-    }
-    public void setDiretoria(DiretoriaModel diretoria) {
-        this.diretoria = diretoria;
-    }
-    public PresidenciaModel getPresidencia() {
-        return presidencia;
-    }
-    public void setPresidencia(PresidenciaModel presidencia) {
-        this.presidencia = presidencia;
     }
 }

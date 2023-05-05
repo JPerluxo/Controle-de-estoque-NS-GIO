@@ -2,72 +2,146 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-
-import jakarta.validation.Valid;
-import com.controleestoquensgio.models.ColaboradorModel;
 import com.controleestoquensgio.dtos.ColaboradorDto;
-import com.controleestoquensgio.services.ColaboradorService;
+import com.controleestoquensgio.dtos.ListarColaboradoresDto;
+import com.controleestoquensgio.models.ColaboradorModel;
+import com.controleestoquensgio.services.*;
+import com.controleestoquensgio.util.ErroOuSucesso;
+import com.controleestoquensgio.util.Mensagens;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
-@CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/colaborador"})
+@Controller
+@RequestMapping(value = {"/colaboradores"})
 public class ColaboradorController extends ControllerFather{
 
     @Autowired
     ColaboradorService colaboradorSvc;
 
+    @Autowired
+    ImagemService imagemSvc;
+
+    @Autowired
+    TipoAcessoService tipoAcessoSvc;
+
+    @Autowired
+    TipoColaboradorService tipoColaboradorSvc;
+
+    @Autowired
+    RegimeTrabalhoService regimeTrabalhoSvc;
+
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid ColaboradorDto colaboradorDto){
-        var colaboradorModel = new ColaboradorModel();
-        BeanUtils.copyProperties(colaboradorDto, colaboradorModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(colaboradorSvc.save(colaboradorModel));
+    public String save(@Valid ColaboradorDto colaboradorDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes){
+
+        if (result.hasErrors()) {
+            model.addAttribute("colaboradorDto", colaboradorDto);
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+            return "colaborador/cadastrarColaborador";
+        }
+
+        var resultado = colaboradorSvc.save(colaboradorDto, new ColaboradorModel());
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/colaboradores";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable(value = "id") int id, RedirectAttributes redirectAttributes) {
+
+        var resultado = colaboradorSvc.deleteById(id);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/colaboradores";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable(value = "id") int id, @Valid ColaboradorDto colaboradorDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("colaboradorDto", colaboradorDto);
+            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+            return "colaborador/atualizarColaborador";
+        }
+
+
+        Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(id);
+
+        if (colaboradorModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.colaboradorNaoEncontrado()
+            );
+
+            return "redirect:/colaboradores";
+        }
+
+        var resultado = colaboradorSvc.save(colaboradorDto, colaboradorModelOptional.get());
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/colaboradores";
     }
 
     @GetMapping
-    public ResponseEntity<Page<ColaboradorModel>> getAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(colaboradorSvc.findAll(pageable));
+    public String getAll(Pageable pageable, Model model) {
+
+        model.addAttribute("colaboradorDto", new ColaboradorDto());
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+
+        return "colaborador/cadastrarColaborador";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
-        Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(id);
-        if(!colaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Colaborador não encontrado");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(colaboradorModelOptional.get());
-    }
+    @GetMapping("/update/{id}")
+    public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes, Pageable pageable) {
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(id);
-        if(!colaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Colaborador não encontrado");
-        }
-        colaboradorSvc.delete(colaboradorModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Colaborador deletado com sucesso");
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable(value = "id") int id,
-                                         @RequestBody @Valid ColaboradorDto colaboradorDto){
-        Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(id);
-        if(!colaboradorModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Colaborador não encontrado");
+        if (colaboradorModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.tipoDeColaboradorNaoEncontrado()
+            );
+
+            return "redirect:/colaboradores";
         }
 
-        var colaboradorModel = colaboradorModelOptional.get();
-        BeanUtils.copyProperties(colaboradorDto, colaboradorModel);
-        return ResponseEntity.status(HttpStatus.OK).body(colaboradorSvc.save(colaboradorModel));
+        ColaboradorDto colaboradorDto = new ColaboradorDto();
+        ColaboradorModel colaboradorModel = colaboradorModelOptional.get();
+
+        BeanUtils.copyProperties(colaboradorModel, colaboradorDto);
+
+        colaboradorDto.setImagemId(colaboradorModel.getImagem().getId());
+        colaboradorDto.setTipoAcessoId(colaboradorModel.getTipoAcesso().getId());
+        colaboradorDto.setTipoColaboradorId(colaboradorModel.getTipoColaborador().getId());
+        colaboradorDto.setRegimeTrabalhoId(colaboradorModel.getRegimeTrabalho().getId());
+
+        model.addAttribute("colaboradorDto", colaboradorDto);
+        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+
+        return "colaborador/atualizarColaborador";
     }
 }
