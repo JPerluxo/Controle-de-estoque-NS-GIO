@@ -1,11 +1,6 @@
 package com.controleestoquensgio.dtos;
 
-import java.util.List;
-
-import jakarta.validation.constraints.NotBlank;
-
-import com.controleestoquensgio.models.*;
-
+import jakarta.validation.constraints.Positive;
 
 public class EquipamentoDto {
 
@@ -13,65 +8,69 @@ public class EquipamentoDto {
     private String numPatrimonio;
     private String observacao;
 
-    @NotBlank(message = "Insira um tipo de equipamento!")
-    private TipoEquipamentoModel tipoEquipamento; 
+    @Positive(message = "Insira um tipo de equipamento!")
+    private int tipoEquipamentoId;
 
-    private NotaFiscalModel notaFiscal;
+    private int notaFiscalId;
 
-    @NotBlank(message = "Insira uma localização!")
-    private LocalizacaoModel localizacao;
+    @Positive(message = "Insira uma localização!")
+    private int localizacaoId;
 
-    private ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro;
-    private List <OcorrenciaModel> ocorrencias;
+    private int contratoEquipamentoTerceiroId;
 
     public String getSerial() {
         return serial;
     }
+
     public void setSerial(String serial) {
         this.serial = serial;
     }
+
     public String getNumPatrimonio() {
         return numPatrimonio;
     }
+
     public void setNumPatrimonio(String numPatrimonio) {
         this.numPatrimonio = numPatrimonio;
     }
+
     public String getObservacao() {
         return observacao;
     }
+
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
-    public TipoEquipamentoModel getTipoEquipamento() {
-        return tipoEquipamento;
-    }
-    public void setTipoEquipamento(TipoEquipamentoModel tipoEquipamento) {
-        this.tipoEquipamento = tipoEquipamento;
-    }
-    public NotaFiscalModel getNotaFiscal() {
-        return notaFiscal;
-    }
-    public void setNotaFiscal(NotaFiscalModel notaFiscal) {
-        this.notaFiscal = notaFiscal;
-    }
-    public LocalizacaoModel getLocalizacao() {
-        return localizacao;
-    }
-    public void setLocalizacao(LocalizacaoModel localizacao) {
-        this.localizacao = localizacao;
-    }
-    public ContratoEquipamentoTerceiroModel getContratoEquipamentoTerceiro() {
-        return contratoEquipamentoTerceiro;
-    }
-    public void setContratoEquipamentoTerceiro(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro) {
-        this.contratoEquipamentoTerceiro = contratoEquipamentoTerceiro;
-    }
-    public List<OcorrenciaModel> getOcorrencias() {
-        return ocorrencias;
-    }
-    public void setOcorrencias(List<OcorrenciaModel> ocorrencias) {
-        this.ocorrencias = ocorrencias;
+
+    public int getTipoEquipamentoId() {
+        return tipoEquipamentoId;
     }
 
-    
+    public void setTipoEquipamentoId(int tipoEquipamentoId) {
+        this.tipoEquipamentoId = tipoEquipamentoId;
+    }
+
+    public int getNotaFiscalId() {
+        return notaFiscalId;
+    }
+
+    public void setNotaFiscalId(int notaFiscalId) {
+        this.notaFiscalId = notaFiscalId;
+    }
+
+    public int getLocalizacaoId() {
+        return localizacaoId;
+    }
+
+    public void setLocalizacaoId(int localizacaoId) {
+        this.localizacaoId = localizacaoId;
+    }
+
+    public int getContratoEquipamentoTerceiroId() {
+        return contratoEquipamentoTerceiroId;
+    }
+
+    public void setContratoEquipamentoTerceiroId(int contratoEquipamentoTerceiroId) {
+        this.contratoEquipamentoTerceiroId = contratoEquipamentoTerceiroId;
+    }
 }

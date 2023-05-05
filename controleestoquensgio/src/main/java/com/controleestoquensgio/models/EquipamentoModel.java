@@ -1,7 +1,5 @@
 package com.controleestoquensgio.models;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -33,9 +31,6 @@ public class EquipamentoModel {
 
     @ManyToOne
     private ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro;
-    
-    @OneToMany
-    private List<OcorrenciaModel> ocorrencias;
 
     public int getId() {
         return id;
@@ -84,11 +79,5 @@ public class EquipamentoModel {
     }
     public void setContratoEquipamentoTerceiro(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro) {
         this.contratoEquipamentoTerceiro = contratoEquipamentoTerceiro;
-    }
-    public List<OcorrenciaModel> getOcorrencias() {
-        return ocorrencias;
-    }
-    public void setOcorrencias(List<OcorrenciaModel> ocorrencias) {
-        this.ocorrencias = ocorrencias;
     }
 }

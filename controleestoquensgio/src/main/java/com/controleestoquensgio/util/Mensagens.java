@@ -12,4 +12,7 @@ public class Mensagens {
     public static String programaNaoEncontrado() { return "Programa não encontrado!"; }
     public static String imagemNaoEncontrada() { return "Imagem não encontrada!"; }
     public static String programaJaAssociadoAImagem() { return "O programa já está associado a imagem!";}
+    public static String equipamentoNaoEncontrado() { return "Equipamento não encontrado!"; }
+    public static String insiraNumeroDeSerieOuNumeroDePatrimonio() { return "Insira um número de série ou um número de patrimonio!"; }
+    public static String notaFiscalNaoEncontrada() { return "Nota fiscal não encontrada!"; }
 }
