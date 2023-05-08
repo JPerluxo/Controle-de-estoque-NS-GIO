@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/tiposDeAcesso"})
-public class TipoAcessoController extends ControllerFather{
+public class TipoAcessoController {
 
     @Autowired
     TipoAcessoService tipoAcessoSvc;

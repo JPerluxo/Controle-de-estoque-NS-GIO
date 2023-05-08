@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/localizacoes"})
-public class LocalizacaoController extends ControllerFather{
+public class LocalizacaoController {
 
     @Autowired
     LocalizacaoService localizacaoService;

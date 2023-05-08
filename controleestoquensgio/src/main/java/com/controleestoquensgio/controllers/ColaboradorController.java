@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/colaboradores"})
-public class ColaboradorController extends ControllerFather{
+public class ColaboradorController {
 
     @Autowired
     ColaboradorService colaboradorSvc;

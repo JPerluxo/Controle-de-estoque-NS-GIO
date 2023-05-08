@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/ocorrencia"})
-public class OcorrenciaController extends ControllerFather{
+public class OcorrenciaController {
 
     @Autowired
     OcorrenciaService ocorrenciaSvc;

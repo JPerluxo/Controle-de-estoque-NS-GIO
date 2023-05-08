@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/tiposDeColaborador"})
-public class TipoColaboradorController extends ControllerFather{
+public class TipoColaboradorController {
 
     @Autowired
     TipoColaboradorService tipoColaboradorService;

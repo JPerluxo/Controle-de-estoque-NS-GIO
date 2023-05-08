@@ -5,25 +5,18 @@ import java.time.LocalDate;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import com.controleestoquensgio.models.ColaboradorModel;
-import com.controleestoquensgio.models.EquipamentoModel;
-
 public class EmprestimoDto {
 
     @NotNull
     private LocalDate dataDisponibilizacao;
-    
     @NotNull
     private LocalDate dataDevolucao;
-
-    private ColaboradorModel colaborador;
-    private EquipamentoModel equipamento;
+    private int colaborador;
+    private int equipamento;
     private boolean isVigente;
-    
     @NotBlank
     private String finalidade;
-    
-    private ColaboradorModel respEntrega;
+    private int respEntrega;
 
     public LocalDate getDataDisponibilizacao() {
         return dataDisponibilizacao;
@@ -41,19 +34,19 @@ public class EmprestimoDto {
         this.dataDevolucao = dataDevolucao;
     }
 
-    public ColaboradorModel getColaborador() {
+    public int getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(ColaboradorModel colaborador) {
+    public void setColaborador(int colaborador) {
         this.colaborador = colaborador;
     }
 
-    public EquipamentoModel getEquipamento() {
+    public int getEquipamento() {
         return equipamento;
     }
 
-    public void setEquipamento(EquipamentoModel equipamento) {
+    public void setEquipamento(int equipamento) {
         this.equipamento = equipamento;
     }
 
@@ -61,8 +54,8 @@ public class EmprestimoDto {
         return isVigente;
     }
 
-    public void setVigente(boolean isVigente) {
-        this.isVigente = isVigente;
+    public void setVigente(boolean vigente) {
+        isVigente = vigente;
     }
 
     public String getFinalidade() {
@@ -73,12 +66,11 @@ public class EmprestimoDto {
         this.finalidade = finalidade;
     }
 
-    public ColaboradorModel getRespEntrega() {
+    public int getRespEntrega() {
         return respEntrega;
     }
 
-    public void setRespEntrega(ColaboradorModel respEntrega) {
+    public void setRespEntrega(int respEntrega) {
         this.respEntrega = respEntrega;
     }
-    
 }

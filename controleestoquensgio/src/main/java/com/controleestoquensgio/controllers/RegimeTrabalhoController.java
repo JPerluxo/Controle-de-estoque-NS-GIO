@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping(value = {"regimesDeTrabalho"})
-public class RegimeTrabalhoController extends ControllerFather{
+public class RegimeTrabalhoController {
 
     @Autowired
     RegimeTrabalhoService regimeTrabalhoSvc;

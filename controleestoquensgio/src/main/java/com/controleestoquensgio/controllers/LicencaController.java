@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/licencas"})
-public class LicencaController extends ControllerFather{
+public class LicencaController {
 
     @Autowired
     LicencaService licencaSvc;

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RequestMapping(value = {"/controle-estoque/emprestimo"})
-public class EmprestimoController extends ControllerFather{
+public class EmprestimoController {
 
     @Autowired
     EmprestimoService emprestimoSvc;

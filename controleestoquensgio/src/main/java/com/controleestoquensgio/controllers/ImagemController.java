@@ -29,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/imagens"})
-public class ImagemController extends ControllerFather{
+public class ImagemController {
 
     @Autowired
     ImagemService imagemSvc;

@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/equipamentos"})
-public class EquipamentoController extends ControllerFather{
+public class EquipamentoController {
 
     @Autowired
     EquipamentoService equipamentoSvc;

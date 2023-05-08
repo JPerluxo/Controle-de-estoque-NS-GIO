@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/contratosDeEquipamentoDeTerceiro"})
-public class ContratoEquipamentoTerceiroController extends ControllerFather {
+public class ContratoEquipamentoTerceiroController {
 
     @Autowired
     ContratoEquipamentoTerceiroService contratoEquipamentoTerceiroService;

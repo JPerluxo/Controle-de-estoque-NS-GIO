@@ -27,7 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = {"/programas"})
-public class ProgramaController extends ControllerFather{
+public class ProgramaController {
 
     @Autowired
     ProgramaService programaSvc;
