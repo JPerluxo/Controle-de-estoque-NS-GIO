@@ -70,6 +70,13 @@ public class EmprestimoModel {
     public void setVigente(boolean isVigente) {
         this.isVigente = isVigente;
     }
+    public void setVigente(int isVigente) {
+        if (isVigente == 1) {
+            this.isVigente = true;
+        } else {
+            this.isVigente = false;
+        }
+    }
     public String getFinalidade() {
         return finalidade;
     }

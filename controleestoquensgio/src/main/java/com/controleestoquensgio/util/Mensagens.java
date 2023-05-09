@@ -16,4 +16,6 @@ public class Mensagens {
     public static String insiraNumeroDeSerieOuNumeroDePatrimonio() { return "Insira um número de série ou um número de patrimonio!"; }
     public static String notaFiscalNaoEncontrada() { return "Nota fiscal não encontrada!"; }
     public static String colaboradorNaoEncontrado() { return "Colaborador não encontrado!"; }
+    public static String emprestimoNaoEncontrado() { return "Empréstimo não encontrado!"; }
+    public static String respEntregaNaoEncontrado() { return "Responsável pela entrega não encontrado!"; }
 }

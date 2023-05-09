@@ -3,70 +3,134 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import jakarta.validation.Valid;
-import com.controleestoquensgio.models.EmprestimoModel;
 import com.controleestoquensgio.dtos.EmprestimoDto;
-import com.controleestoquensgio.services.EmprestimoService;
+import com.controleestoquensgio.dtos.ListarEmprestimosDto;
+import com.controleestoquensgio.models.EmprestimoModel;
+import com.controleestoquensgio.services.*;
+import com.controleestoquensgio.util.ErroOuSucesso;
+import com.controleestoquensgio.util.Mensagens;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-@RestController
-@CrossOrigin (origins = "*", maxAge = 3600)
-@RequestMapping(value = {"/controle-estoque/emprestimo"})
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+@RequestMapping(value = {"/emprestimos"})
 public class EmprestimoController {
 
     @Autowired
     EmprestimoService emprestimoSvc;
 
+    @Autowired
+    ColaboradorService colaboradorSvc;
+
+    @Autowired
+    EquipamentoService equipamentoSvc;
+
+
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid EmprestimoDto emprestimoDto){
-        var emprestimoModel = new EmprestimoModel();
-        BeanUtils.copyProperties(emprestimoDto, emprestimoModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoSvc.save(emprestimoModel));
+    public String save(@Valid EmprestimoDto emprestimoDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes){
+
+        if (result.hasErrors()) {
+            model.addAttribute("emprestimoDto", emprestimoDto);
+            model.addAttribute("listaDeEmprestimos", emprestimoSvc.findAll(pageable).map(ListarEmprestimosDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+            return "emprestimo/cadastrarEmprestimo";
+        }
+
+        var resultado = emprestimoSvc.save(emprestimoDto, new EmprestimoModel());
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/emprestimos";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable(value = "id") int id, RedirectAttributes redirectAttributes) {
+
+        var resultado = emprestimoSvc.deleteById(id);
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/emprestimos";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable(value = "id") int id, @Valid EmprestimoDto emprestimoDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("emprestimoDto", emprestimoDto);
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+            return "emprestimo/atualizarEmprestimo";
+        }
+
+
+        Optional<EmprestimoModel> emprestimoModelOptional = emprestimoSvc.findById(id);
+
+        if (emprestimoModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.emprestimoNaoEncontrado()
+            );
+
+            return "redirect:/emprestimos";
+        }
+
+        var resultado = emprestimoSvc.save(emprestimoDto, emprestimoModelOptional.get());
+
+        redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
+
+        return "redirect:/emprestimos";
     }
 
     @GetMapping
-    public ResponseEntity<Page<EmprestimoModel>> getAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(emprestimoSvc.findAll(pageable));
+    public String getAll(Pageable pageable, Model model) {
+
+        model.addAttribute("emprestimoDto", new EmprestimoDto());
+        model.addAttribute("listaDeEmprestimos", emprestimoSvc.findAll(pageable).map(ListarEmprestimosDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+
+        return "emprestimo/cadastrarEmprestimo";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getOne(@PathVariable(value = "id") int id){
-        Optional<EmprestimoModel> emprestimoModelOptional = emprestimoSvc.findById(id);
-        if(!emprestimoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Emprestimo não encontrado");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(emprestimoModelOptional.get());
-    }
+    @GetMapping("/update/{id}")
+    public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes, Pageable pageable) {
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(value = "id") int id){
         Optional<EmprestimoModel> emprestimoModelOptional = emprestimoSvc.findById(id);
-        if(!emprestimoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Emprestimo não encontrado");
-        }
-        emprestimoSvc.delete(emprestimoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Emprestimo deletado com sucesso");
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable(value = "id") int id,
-                                         @RequestBody @Valid EmprestimoDto emprestimoDto){
-        Optional<EmprestimoModel> emprestimoModelOptional = emprestimoSvc.findById(id);
-        if(!emprestimoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Emprestimo não encontrado");
+        if (emprestimoModelOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    ErroOuSucesso.ERRO.name(),
+                    Mensagens.emprestimoNaoEncontrado()
+            );
+
+            return "redirect:/emprestimos";
         }
 
-        var emprestimoModel = emprestimoModelOptional.get();
-        BeanUtils.copyProperties(emprestimoDto, emprestimoModel);
-        return ResponseEntity.status(HttpStatus.OK).body(emprestimoSvc.save(emprestimoModel));
+        EmprestimoDto emprestimoDto = new EmprestimoDto();
+        EmprestimoModel emprestimoModel = emprestimoModelOptional.get();
+
+        BeanUtils.copyProperties(emprestimoModel, emprestimoDto);
+
+        emprestimoDto.setColaboradorId(emprestimoModel.getColaborador().getId());
+        emprestimoDto.setEquipamentoId(emprestimoModel.getEquipamento().getId());
+        emprestimoDto.setRespEntregaId(emprestimoModel.getRespEntrega().getId());
+        emprestimoDto.setVigente(emprestimoDto.getVigenteNumero(emprestimoModel.isVigente()));
+
+        model.addAttribute("emprestimoDto", emprestimoDto);
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+
+        return "emprestimo/atualizarEmprestimo";
     }
 }
