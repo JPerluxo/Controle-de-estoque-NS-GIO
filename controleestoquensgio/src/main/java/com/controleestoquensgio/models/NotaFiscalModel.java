@@ -1,6 +1,6 @@
 package com.controleestoquensgio.models;
 
-import java.util.Date;
+import java.sql.Date;
 
 import jakarta.persistence.*;
 
@@ -16,8 +16,8 @@ public class NotaFiscalModel {
     @Column(name="nof_numero", nullable = false, length = 20)
     private String numero;
     
-    @Column(name="nof_dt", nullable = true)
-    private Date date;
+    @Column(name="nof_dt")
+    private Date data;
 
     public int getId() {
         return id;
@@ -25,11 +25,11 @@ public class NotaFiscalModel {
     public void setId(int id) {
         this.id = id;
     }
-    public void setDate(Date date) {
-        this.date = date;
+    public void setData(Date data) {
+        this.data = data;
     }
-    public Date getDate() {
-        return date;
+    public Date getData() {
+        return data;
     }
     public String getNumero() {
         return numero;

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="~{notaFiscal/layoutBaseNotaFiscal :: head}"></head>
+  <body>
+    <div th:replace="~{layoutBase :: mensagem}"></div>
+
+    Formulário
+
+    <form th:object="${notaFiscalDto}" method="post">
+      <div th:replace="~{notaFiscal/layoutBaseNotaFiscal :: form}"></div>
+      <button type="submit"> Atualizar </button>
+    </form>
+
+  </body>
+</html>

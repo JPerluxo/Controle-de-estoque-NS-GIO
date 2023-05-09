@@ -1,31 +1,33 @@
 package com.controleestoquensgio.dtos;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class NotaFiscalDto {
 
     @NotBlank(message = "Insira um número!")
     private String numero;
-    
-    @NotBlank(message = "Insira uma data!")
-    private LocalDate data;
 
-    public void setLocalDate(LocalDate data) {
-        this.data = data;
-    }
-    public LocalDate getLocalDate() {
-        return data;
-    }
+    @NotNull(message = "Insira uma data!")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date data;
+
     public String getNumero() {
         return numero;
     }
+
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    
+    public Date getData() {
+        return data;
+    }
 
+    public void setData(Date data) {
+        this.data = data;
+    }
 }
