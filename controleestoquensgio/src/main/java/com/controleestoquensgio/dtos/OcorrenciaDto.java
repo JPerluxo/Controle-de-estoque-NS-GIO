@@ -1,9 +1,7 @@
 package com.controleestoquensgio.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-
-import com.controleestoquensgio.models.ColaboradorModel;
-import com.controleestoquensgio.models.EquipamentoModel;
+import jakarta.validation.constraints.Positive;
 
 public class OcorrenciaDto {
 
@@ -13,35 +11,41 @@ public class OcorrenciaDto {
     @NotBlank(message = "Insira uma descrição!")
     private String descricao;
     
-    @NotBlank(message = "Insira um equipamento!")
-    private EquipamentoModel equipamento;
+    @Positive(message = "Insira um equipamento!")
+    private int equipamentoId;
     
-    @NotBlank(message = "Insira um colaborador!")
-    private ColaboradorModel colaborador;
-    
+    @Positive(message = "Insira um colaborador!")
+    private int colaboradorId;
+
     public String getOs() {
         return os;
     }
+
     public void setOs(String os) {
         this.os = os;
     }
+
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public EquipamentoModel getEquipamento() {
-        return equipamento;
+
+    public int getEquipamentoId() {
+        return equipamentoId;
     }
-    public void setEquipamento(EquipamentoModel equipamento) {
-        this.equipamento = equipamento;
+
+    public void setEquipamentoId(int equipamentoId) {
+        this.equipamentoId = equipamentoId;
     }
-    public ColaboradorModel getColaborador() {
-        return colaborador;
+
+    public int getColaboradorId() {
+        return colaboradorId;
     }
-    public void setColaborador(ColaboradorModel colaborador) {
-        this.colaborador = colaborador;
+
+    public void setColaboradorId(int colaboradorId) {
+        this.colaboradorId = colaboradorId;
     }
-    
 }

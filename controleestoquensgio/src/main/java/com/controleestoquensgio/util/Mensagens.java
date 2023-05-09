@@ -18,4 +18,5 @@ public class Mensagens {
     public static String colaboradorNaoEncontrado() { return "Colaborador não encontrado!"; }
     public static String emprestimoNaoEncontrado() { return "Empréstimo não encontrado!"; }
     public static String respEntregaNaoEncontrado() { return "Responsável pela entrega não encontrado!"; }
+    public static String ocorrenciaNaoEncontrada() { return "Ocorrencia nao encontrada!"; }
 }
