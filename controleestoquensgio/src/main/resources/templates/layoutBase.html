@@ -5,3 +5,26 @@
     <div th:text="${ERRO}" th:if="${ERRO}"></div>
 </div>
 
+<div th:fragment="menu">
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}">Home</a></li>
+            <li><a th:href="@{/emprestimos}">Empréstimo</a></li>
+            <li><a th:href="@{/equipamentos}">Equipamento</a></li>
+            <li><a th:href="@{/colaboradores}">Colaborador</a></li>
+            <li><a th:href="@{/imagens}">Imagem</a></li>
+            <li><a th:href="@{/programas}">Programa</a></li>
+            <li><a th:href="@{/ocorrencias}">Ocorrencia</a></li>
+            <li><a th:href="@{/licencas}">Licenca</a></li>
+            <li><a th:href="@{/contratosDeEquipamentoDeTerceiro}">Contrato de equipamentos de terceiros</a></li>
+            <li><a th:href="@{/localizacoes}">Localizacao</a></li>
+            <li><a th:href="@{/notasFiscais}">Notas fiscal</a></li>
+            <li><a th:href="@{/regimesDeTrabalho}">Regime de trabalho</a></li>
+            <li><a th:href="@{/tiposDeAcesso}">Tipo de acesso</a></li>
+            <li><a th:href="@{/tiposDeColaborador}">Tipo de colaborador</a></li>
+            <li><a th:href="@{/tiposDeEquipamento}">Tipo de equipamento</a></li>
+            <li><a th:href="@{/logout}">Sair</a></li>
+        </ul>
+    </nav>
+</div>
+

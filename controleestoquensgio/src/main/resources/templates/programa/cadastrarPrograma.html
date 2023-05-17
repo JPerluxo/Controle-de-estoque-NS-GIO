@@ -5,6 +5,7 @@
   <head th:replace="~{programa/layoutBasePrograma :: head}"></head>
   <body>
     <div th:replace="~{layoutBase :: mensagem}"></div>
+    <div th:replace="~{layoutBase :: menu}"></div>
 
     Usuário logado: <span sec:authentication="principal.username"/>
     <a class="link-primary" th:href="@{/logout}">Logout</a>
