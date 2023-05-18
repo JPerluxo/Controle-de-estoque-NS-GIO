@@ -2,6 +2,8 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.VisualizarTipoEquipamentoDto;
+import com.controleestoquensgio.dtos.ListarTipoEquipamentoDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import jakarta.validation.Valid;
@@ -29,7 +31,7 @@ public class TipoEquipamentoController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoEquipamentoDto", tipoEquipamentoDto);
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable));
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable).map(ListarTipoEquipamentoDto::new));
             return "tipoEquipamento/cadastrarTipoEquipamento";
         }
 
@@ -59,7 +61,7 @@ public class TipoEquipamentoController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoEquipamentoDto", tipoEquipamentoDto);
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable));
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable).map(ListarTipoEquipamentoDto::new));
             return "tipoEquipamento/atualizarTipoEquipamento";
         }
 
@@ -88,7 +90,7 @@ public class TipoEquipamentoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<TipoEquipamentoModel> listaDeTiposDeEquipamento = tipoEquipamentoService.findAll(pageable);
+        Iterable<ListarTipoEquipamentoDto> listaDeTiposDeEquipamento = tipoEquipamentoService.findAll(pageable).map(ListarTipoEquipamentoDto::new);
         TipoEquipamentoDto tipoDeEquipamento = new TipoEquipamentoDto();
 
         model.addAttribute("listaDeTiposDeEquipamento", listaDeTiposDeEquipamento);
@@ -111,7 +113,7 @@ public class TipoEquipamentoController {
             return "redirect:/tiposDeEquipamento";
         }
 
-        model.addAttribute("tipoEquipamentoDto", tipoEquipamentoModelOptional.get());
+        model.addAttribute("tipoEquipamentoDto", new VisualizarTipoEquipamentoDto(tipoEquipamentoModelOptional.get()));
 
         return "tipoEquipamento/atualizarTipoEquipamento";
     }
