@@ -2,8 +2,13 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ColaboradorDto;
-import com.controleestoquensgio.dtos.ListarColaboradoresDto;
+import com.controleestoquensgio.dtos.RegimeTrabalho.ListarRegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.colaborador.ColaboradorDto;
+import com.controleestoquensgio.dtos.colaborador.ListarColaboradoresDto;
+import com.controleestoquensgio.dtos.colaborador.VisualizarColaboradoresDto;
+import com.controleestoquensgio.dtos.imagem.ListarImagemDto;
+import com.controleestoquensgio.dtos.tipoAcesso.ListarTipoAcessoDto;
+import com.controleestoquensgio.dtos.tipoColaborador.ListarTipoColaboradorDto;
 import com.controleestoquensgio.models.ColaboradorModel;
 import com.controleestoquensgio.services.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -44,10 +49,10 @@ public class ColaboradorController {
         if (result.hasErrors()) {
             model.addAttribute("colaboradorDto", colaboradorDto);
             model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
-            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
-            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
-            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable).map(ListarTipoColaboradorDto::new));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
             return "colaborador/cadastrarColaborador";
         }
 
@@ -73,10 +78,10 @@ public class ColaboradorController {
 
         if (result.hasErrors()) {
             model.addAttribute("colaboradorDto", colaboradorDto);
-            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
-            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
-            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable).map(ListarTipoColaboradorDto::new));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
             return "colaborador/atualizarColaborador";
         }
 
@@ -104,10 +109,10 @@ public class ColaboradorController {
 
         model.addAttribute("colaboradorDto", new ColaboradorDto());
         model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
-        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
-        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
-        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
-        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable).map(ListarTipoColaboradorDto::new));
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
 
         return "colaborador/cadastrarColaborador";
     }
@@ -126,21 +131,11 @@ public class ColaboradorController {
             return "redirect:/colaboradores";
         }
 
-        ColaboradorDto colaboradorDto = new ColaboradorDto();
-        ColaboradorModel colaboradorModel = colaboradorModelOptional.get();
-
-        BeanUtils.copyProperties(colaboradorModel, colaboradorDto);
-
-        colaboradorDto.setImagemId(colaboradorModel.getImagem().getId());
-        colaboradorDto.setTipoAcessoId(colaboradorModel.getTipoAcesso().getId());
-        colaboradorDto.setTipoColaboradorId(colaboradorModel.getTipoColaborador().getId());
-        colaboradorDto.setRegimeTrabalhoId(colaboradorModel.getRegimeTrabalho().getId());
-
-        model.addAttribute("colaboradorDto", colaboradorDto);
-        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
-        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
-        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable));
-        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+        model.addAttribute("colaboradorDto", new VisualizarColaboradoresDto(colaboradorModelOptional.get()));
+        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable).map(ListarTipoColaboradorDto::new));
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
 
         return "colaborador/atualizarColaborador";
     }

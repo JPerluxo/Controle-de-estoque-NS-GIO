@@ -4,7 +4,7 @@ import java.util.Optional;
 
 
 import com.controleestoquensgio.dtos.emprestimo.EmprestimoDto;
-import com.controleestoquensgio.dtos.ListarColaboradoresDto;
+import com.controleestoquensgio.dtos.colaborador.ListarColaboradoresDto;
 import com.controleestoquensgio.dtos.emprestimo.ListarEmprestimosDto;
 import com.controleestoquensgio.dtos.emprestimo.VisualizarEmprestimoDto;
 import com.controleestoquensgio.dtos.equipamento.ListarEquipamentosDto;

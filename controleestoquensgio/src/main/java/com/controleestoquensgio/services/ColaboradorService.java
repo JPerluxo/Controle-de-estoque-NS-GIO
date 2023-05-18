@@ -2,7 +2,7 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ColaboradorDto;
+import com.controleestoquensgio.dtos.colaborador.ColaboradorDto;
 import com.controleestoquensgio.models.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;

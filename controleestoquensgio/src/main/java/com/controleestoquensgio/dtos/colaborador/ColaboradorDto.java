@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.colaborador;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;

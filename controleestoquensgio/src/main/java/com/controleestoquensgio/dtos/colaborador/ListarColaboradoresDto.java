@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.colaborador;
 
 import com.controleestoquensgio.models.ColaboradorModel;
 

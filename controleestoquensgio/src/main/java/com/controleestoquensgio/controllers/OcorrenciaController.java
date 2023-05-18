@@ -2,7 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ListarColaboradoresDto;
+import com.controleestoquensgio.dtos.colaborador.ListarColaboradoresDto;
 import com.controleestoquensgio.dtos.equipamento.ListarEquipamentosDto;
 import com.controleestoquensgio.dtos.ocorrencia.ListarOcorrenciasDto;
 import com.controleestoquensgio.dtos.ocorrencia.OcorrenciaDto;
