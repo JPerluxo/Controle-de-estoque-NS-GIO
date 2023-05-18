@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.ocorrencia;
 
 import com.controleestoquensgio.models.OcorrenciaModel;
 

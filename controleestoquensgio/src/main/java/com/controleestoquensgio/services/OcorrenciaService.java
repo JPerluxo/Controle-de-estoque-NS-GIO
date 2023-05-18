@@ -2,7 +2,7 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.OcorrenciaDto;
+import com.controleestoquensgio.dtos.ocorrencia.OcorrenciaDto;
 import com.controleestoquensgio.models.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;

@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.ocorrencia;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;

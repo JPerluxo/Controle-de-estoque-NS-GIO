@@ -2,8 +2,11 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ListarOcorrenciasDto;
-import com.controleestoquensgio.dtos.OcorrenciaDto;
+import com.controleestoquensgio.dtos.ListarColaboradoresDto;
+import com.controleestoquensgio.dtos.ListarEquipamentosDto;
+import com.controleestoquensgio.dtos.ocorrencia.ListarOcorrenciasDto;
+import com.controleestoquensgio.dtos.ocorrencia.OcorrenciaDto;
+import com.controleestoquensgio.dtos.ocorrencia.VisualizarOcorrenciaDto;
 import com.controleestoquensgio.models.OcorrenciaModel;
 import com.controleestoquensgio.services.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -40,8 +43,8 @@ public class OcorrenciaController {
         if (result.hasErrors()) {
             model.addAttribute("ocorrenciaDto", ocorrenciaDto);
             model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAll(pageable).map(ListarOcorrenciasDto::new));
-            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
             return "ocorrencia/cadastrarOcorrencia";
         }
 
@@ -71,8 +74,8 @@ public class OcorrenciaController {
 
         if (result.hasErrors()) {
             model.addAttribute("ocorrenciaDto", ocorrenciaDto);
-            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
             return "ocorrencia/atualizarOcorrencia";
         }
 
@@ -103,8 +106,8 @@ public class OcorrenciaController {
 
         model.addAttribute("ocorrenciaDto", new OcorrenciaDto());
         model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAll(pageable).map(ListarOcorrenciasDto::new));
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
 
         return "ocorrencia/cadastrarOcorrencia";
     }
@@ -113,7 +116,6 @@ public class OcorrenciaController {
     public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes, Pageable pageable) {
 
         Optional<OcorrenciaModel> ocorrenciaModelOptional = ocorrenciaSvc.findById(id);
-        OcorrenciaDto ocorrenciaDto = new OcorrenciaDto();
 
         if (ocorrenciaModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -124,14 +126,9 @@ public class OcorrenciaController {
             return "redirect:/ocorrencias";
         }
 
-        BeanUtils.copyProperties(ocorrenciaModelOptional.get(), ocorrenciaDto);
-
-        ocorrenciaDto.setColaboradorId((ocorrenciaModelOptional.get()).getColaborador().getId());
-        ocorrenciaDto.setEquipamentoId((ocorrenciaModelOptional.get()).getEquipamento().getId());
-
-        model.addAttribute("ocorrenciaDto", ocorrenciaDto);
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
+        model.addAttribute("ocorrenciaDto", new VisualizarOcorrenciaDto(ocorrenciaModelOptional.get()));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
 
         return "ocorrencia/atualizarOcorrencia";
     }
