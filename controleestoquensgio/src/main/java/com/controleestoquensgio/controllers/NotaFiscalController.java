@@ -3,7 +3,9 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import com.controleestoquensgio.dtos.NotaFiscalDto;
+import com.controleestoquensgio.dtos.notaFiscal.ListarNotaFiscalDto;
+import com.controleestoquensgio.dtos.notaFiscal.NotaFiscalDto;
+import com.controleestoquensgio.dtos.notaFiscal.VisualizarNotaFiscalDto;
 import com.controleestoquensgio.models.NotaFiscalModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
@@ -30,7 +32,7 @@ public class NotaFiscalController {
 
         if (result.hasErrors()) {
             model.addAttribute("notaFiscalDto", notaFiscalDto);
-            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable));
+            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
             return "notaFiscal/cadastrarNotaFiscal";
         }
 
@@ -92,11 +94,8 @@ public class NotaFiscalController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<NotaFiscalModel> listaDeNotasFiscais = notaFiscalSvc.findAll(pageable);
-        NotaFiscalDto notaFiscalDto = new NotaFiscalDto();
-
-        model.addAttribute("listaDeNotasFiscais", listaDeNotasFiscais);
-        model.addAttribute("notaFiscalDto", notaFiscalDto);
+        model.addAttribute("notaFiscalDto", new NotaFiscalDto());
+        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
 
         return "notaFiscal/cadastrarNotaFiscal";
     }
@@ -115,7 +114,7 @@ public class NotaFiscalController {
             return "redirect:/notasFiscais";
         }
 
-        model.addAttribute("notaFiscalDto", notaFiscalModelOptional.get());
+        model.addAttribute("notaFiscalDto", new VisualizarNotaFiscalDto(notaFiscalModelOptional.get()));
 
         return "notaFiscal/atualizarNotaFiscal";
     }
