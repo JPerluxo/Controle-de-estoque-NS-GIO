@@ -2,10 +2,12 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.tipoAcesso.ListarTipoAcessoDto;
+import com.controleestoquensgio.dtos.tipoAcesso.VisualizarTipoAcessoDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import jakarta.validation.Valid;
 
-import com.controleestoquensgio.dtos.TipoAcessoDto;
+import com.controleestoquensgio.dtos.tipoAcesso.TipoAcessoDto;
 import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.services.TipoAcessoService;
@@ -31,7 +33,7 @@ public class TipoAcessoController {
         
         if (result.hasErrors()) {
             model.addAttribute("tipoAcessoDto", tipoAcessoDto);
-            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
             return "tipoAcesso/cadastrarTipoAcesso";
         }
         
@@ -61,7 +63,7 @@ public class TipoAcessoController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoAcessoDto", tipoAcessoDto);
-            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
             return "tipoAcesso/atualizarTipoAcesso";
         }
 
@@ -90,11 +92,8 @@ public class TipoAcessoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<TipoAcessoModel> listaDeTiposDeAcesso = tipoAcessoSvc.findAll(pageable);
-        TipoAcessoDto tipoAcessoDto = new TipoAcessoDto();
-
-        model.addAttribute("listaDeTiposDeAcesso", listaDeTiposDeAcesso);
-        model.addAttribute("tipoAcessoDto", tipoAcessoDto);
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+        model.addAttribute("tipoAcessoDto", new TipoAcessoDto());
 
         return "tipoAcesso/cadastrarTipoAcesso";
     }
@@ -113,7 +112,7 @@ public class TipoAcessoController {
             return "redirect:/tiposDeAcesso";
         }
 
-        model.addAttribute("tipoAcessoDto", tipoAcessoModelOptional.get());
+        model.addAttribute("tipoAcessoDto", new VisualizarTipoAcessoDto(tipoAcessoModelOptional.get()));
 
         return "tipoAcesso/atualizarTipoAcesso";
     }
