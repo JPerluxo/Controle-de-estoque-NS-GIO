@@ -4,6 +4,8 @@ import java.util.Optional;
 
 
 import com.controleestoquensgio.dtos.licenca.LicencaDto;
+import com.controleestoquensgio.dtos.licenca.ListarLicencaDto;
+import com.controleestoquensgio.dtos.licenca.VisualizarLicencaDto;
 import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -32,7 +34,7 @@ public class LicencaController {
 
         if (result.hasErrors()) {
             model.addAttribute("licencaDto", licencaDto);
-            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable));
+            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
             return "licenca/cadastrarLicenca";
         }
 
@@ -62,7 +64,7 @@ public class LicencaController {
 
         if (result.hasErrors()) {
             model.addAttribute("licencaDto", licencaDto);
-            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable));
+            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
             return "licenca/atualizarLicenca";
         }
 
@@ -91,11 +93,8 @@ public class LicencaController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<LicencaModel> listaDeLicencas = licencaSvc.findAll(pageable);
-        LicencaDto licencaDto = new LicencaDto();
-
-        model.addAttribute("listaDeLicencas", listaDeLicencas);
-        model.addAttribute("licencaDto", licencaDto);
+        model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
+        model.addAttribute("licencaDto", new LicencaDto());
 
         return "licenca/cadastrarLicenca";
     }
@@ -114,7 +113,7 @@ public class LicencaController {
             return "redirect:/licencas";
         }
 
-        model.addAttribute("licencaDto", licencaModelOptional.get());
+        model.addAttribute("licencaDto", new VisualizarLicencaDto(licencaModelOptional.get()));
 
         return "licenca/atualizarLicenca";
     }
