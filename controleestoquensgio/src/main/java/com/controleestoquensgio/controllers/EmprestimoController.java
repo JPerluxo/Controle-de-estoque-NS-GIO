@@ -3,15 +3,17 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import com.controleestoquensgio.dtos.EmprestimoDto;
-import com.controleestoquensgio.dtos.ListarEmprestimosDto;
+import com.controleestoquensgio.dtos.emprestimo.EmprestimoDto;
+import com.controleestoquensgio.dtos.ListarColaboradoresDto;
+import com.controleestoquensgio.dtos.emprestimo.ListarEmprestimosDto;
+import com.controleestoquensgio.dtos.emprestimo.VisualizarEmprestimoDto;
+import com.controleestoquensgio.dtos.equipamento.ListarEquipamentosDto;
 import com.controleestoquensgio.models.EmprestimoModel;
 import com.controleestoquensgio.services.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import jakarta.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 
@@ -41,8 +43,8 @@ public class EmprestimoController {
         if (result.hasErrors()) {
             model.addAttribute("emprestimoDto", emprestimoDto);
             model.addAttribute("listaDeEmprestimos", emprestimoSvc.findAll(pageable).map(ListarEmprestimosDto::new));
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
-            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
             return "emprestimo/cadastrarEmprestimo";
         }
 
@@ -68,8 +70,8 @@ public class EmprestimoController {
 
         if (result.hasErrors()) {
             model.addAttribute("emprestimoDto", emprestimoDto);
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
-            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
             return "emprestimo/atualizarEmprestimo";
         }
 
@@ -97,8 +99,8 @@ public class EmprestimoController {
 
         model.addAttribute("emprestimoDto", new EmprestimoDto());
         model.addAttribute("listaDeEmprestimos", emprestimoSvc.findAll(pageable).map(ListarEmprestimosDto::new));
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
 
         return "emprestimo/cadastrarEmprestimo";
     }
@@ -117,19 +119,9 @@ public class EmprestimoController {
             return "redirect:/emprestimos";
         }
 
-        EmprestimoDto emprestimoDto = new EmprestimoDto();
-        EmprestimoModel emprestimoModel = emprestimoModelOptional.get();
-
-        BeanUtils.copyProperties(emprestimoModel, emprestimoDto);
-
-        emprestimoDto.setColaboradorId(emprestimoModel.getColaborador().getId());
-        emprestimoDto.setEquipamentoId(emprestimoModel.getEquipamento().getId());
-        emprestimoDto.setRespEntregaId(emprestimoModel.getRespEntrega().getId());
-        emprestimoDto.setVigente(emprestimoDto.getVigenteNumero(emprestimoModel.isVigente()));
-
-        model.addAttribute("emprestimoDto", emprestimoDto);
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable));
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable));
+        model.addAttribute("emprestimoDto", new VisualizarEmprestimoDto(emprestimoModelOptional.get()));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
 
         return "emprestimo/atualizarEmprestimo";
     }
