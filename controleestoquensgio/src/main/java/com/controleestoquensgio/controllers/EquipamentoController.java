@@ -2,16 +2,20 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ListarEquipamentosDto;
+import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.ListarContratoEquipamentoTerceiroDto;
+import com.controleestoquensgio.dtos.equipamento.ListarEquipamentosDto;
+import com.controleestoquensgio.dtos.equipamento.VisualizarEquipamentoDto;
+import com.controleestoquensgio.dtos.localizacao.ListarLocalizacaoDto;
+import com.controleestoquensgio.dtos.notaFiscal.ListarNotaFiscalDto;
+import com.controleestoquensgio.dtos.tipoEquipamento.ListarTipoEquipamentoDto;
 import com.controleestoquensgio.services.*;
 import jakarta.validation.Valid;
 
-import com.controleestoquensgio.dtos.EquipamentoDto;
+import com.controleestoquensgio.dtos.equipamento.EquipamentoDto;
 import com.controleestoquensgio.models.EquipamentoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -45,10 +49,10 @@ public class EquipamentoController {
         if (result.hasErrors()) {
             model.addAttribute("equipamentoDto", equipamentoDto);
             model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable));
-            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable));
-            model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable));
-            model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable).map(ListarTipoEquipamentoDto::new));
+            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
+            model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable).map(ListarLocalizacaoDto::new));
+            model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
             return "equipamento/cadastrarEquipamento";
         }
 
@@ -74,10 +78,10 @@ public class EquipamentoController {
 
         if (result.hasErrors()) {
             model.addAttribute("equipamentoDto", equipamentoDto);
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable));
-            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable));
-            model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable));
-            model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable));
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable).map(ListarTipoEquipamentoDto::new));
+            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
+            model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable).map(ListarLocalizacaoDto::new));
+            model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
             return "equipamento/atualizarEquipamento";
         }
 
@@ -102,12 +106,12 @@ public class EquipamentoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
         model.addAttribute("equipamentoDto", new EquipamentoDto());
-        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable));
-        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable));
-        model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable));
-        model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable).map(ListarTipoEquipamentoDto::new));
+        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
+        model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable).map(ListarLocalizacaoDto::new));
+        model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
 
         return "equipamento/cadastrarEquipamento";
     }
@@ -126,22 +130,11 @@ public class EquipamentoController {
             return "redirect:/equipamentos";
         }
 
-        EquipamentoDto equipamentoDto = new EquipamentoDto();
-        EquipamentoModel equipamentoModel = equipamentoModelOptional.get();
-
-        BeanUtils.copyProperties(equipamentoModel, equipamentoDto);
-
-        equipamentoDto.setTipoEquipamentoId(equipamentoModel.getTipoEquipamento().getId());
-        equipamentoDto.setLocalizacaoId(equipamentoModel.getLocalizacao().getId());
-
-        if (equipamentoModel.getNotaFiscal() != null) equipamentoDto.setNotaFiscalId(equipamentoModel.getNotaFiscal().getId());
-        if (equipamentoModel.getContratoEquipamentoTerceiro() != null) equipamentoDto.setContratoEquipamentoTerceiroId(equipamentoModel.getContratoEquipamentoTerceiro().getId());
-
-        model.addAttribute("equipamentoDto", equipamentoDto);
-        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable));
-        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable));
-        model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable));
-        model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable));
+        model.addAttribute("equipamentoDto", new VisualizarEquipamentoDto(equipamentoModelOptional.get()));
+        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable).map(ListarTipoEquipamentoDto::new));
+        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
+        model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable).map(ListarLocalizacaoDto::new));
+        model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
 
         return "equipamento/atualizarEquipamento";
     }

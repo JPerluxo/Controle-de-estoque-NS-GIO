@@ -2,7 +2,7 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.EquipamentoDto;
+import com.controleestoquensgio.dtos.equipamento.EquipamentoDto;
 import com.controleestoquensgio.models.*;
 import jakarta.transaction.Transactional;
 

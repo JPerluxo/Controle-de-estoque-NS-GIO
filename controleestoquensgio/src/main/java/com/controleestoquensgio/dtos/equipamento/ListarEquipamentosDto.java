@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.equipamento;
 
 import com.controleestoquensgio.models.EquipamentoModel;
 import com.controleestoquensgio.models.LocalizacaoModel;

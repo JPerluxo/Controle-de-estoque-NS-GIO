@@ -2,7 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ContratoEquipamentoTerceiroDto;
+import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.ContratoEquipamentoTerceiroDto;
 import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
 import com.controleestoquensgio.services.ContratoEquipamentoTerceiroService;
 import com.controleestoquensgio.util.ErroOuSucesso;
