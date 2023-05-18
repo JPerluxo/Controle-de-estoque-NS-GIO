@@ -3,6 +3,8 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.ContratoEquipamentoTerceiroDto;
+import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.ListarContratoEquipamentoTerceiroDto;
+import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.VisualizarContratoEquipamentoTerceiroDto;
 import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
 import com.controleestoquensgio.services.ContratoEquipamentoTerceiroService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -31,7 +33,7 @@ public class ContratoEquipamentoTerceiroController {
 
         if (result.hasErrors()) {
             model.addAttribute("contratoEquipamentoTerceiroDto", contratoEquipamentoTerceiroDto);
-            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable));
+            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
             return "contratoEquipamentoTerceiro/cadastrarContratoEquipamentoTerceiro";
         }
 
@@ -64,7 +66,7 @@ public class ContratoEquipamentoTerceiroController {
 
         if (result.hasErrors()) {
             model.addAttribute("contratoEquipamentoTerceiroDto", contratoEquipamentoTerceiroDto);
-            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable));
+            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
             return "contratoEquipamentoTerceiro/atualizarContratoEquipamentoTerceiro";
         }
 
@@ -96,11 +98,8 @@ public class ContratoEquipamentoTerceiroController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<ContratoEquipamentoTerceiroModel> listaDeContratosDeEquipamentoDeTerceiro = contratoEquipamentoTerceiroService.findAll(pageable);
-        ContratoEquipamentoTerceiroDto contratoDeEquipamentoDeTerceiro = new ContratoEquipamentoTerceiroDto();
-
-        model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", listaDeContratosDeEquipamentoDeTerceiro);
-        model.addAttribute("contratoEquipamentoTerceiroDto", contratoDeEquipamentoDeTerceiro);
+        model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
+        model.addAttribute("contratoEquipamentoTerceiroDto", new ContratoEquipamentoTerceiroDto());
 
         return "contratoEquipamentoTerceiro/cadastrarContratoEquipamentoTerceiro";
     }
@@ -119,7 +118,7 @@ public class ContratoEquipamentoTerceiroController {
             return "redirect:/contratosDeEquipamentoDeTerceiro";
         }
 
-        model.addAttribute("contratoEquipamentoTerceiroDto", contratoEquipamentoTerceiroModelOptional.get());
+        model.addAttribute("contratoEquipamentoTerceiroDto", new VisualizarContratoEquipamentoTerceiroDto(contratoEquipamentoTerceiroModelOptional.get()));
 
         return "contratoEquipamentoTerceiro/atualizarContratoEquipamentoTerceiro";
     }
