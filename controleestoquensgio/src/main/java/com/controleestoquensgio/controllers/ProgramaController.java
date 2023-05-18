@@ -2,12 +2,13 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ListarProgramaDto;
-import com.controleestoquensgio.models.LicencaModel;
+import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
+import com.controleestoquensgio.dtos.licenca.ListarLicencaDto;
+import com.controleestoquensgio.dtos.programa.VisualizarProgramaDto;
 import com.controleestoquensgio.services.LicencaService;
 import jakarta.validation.Valid;
 
-import com.controleestoquensgio.dtos.ProgramaDto;
+import com.controleestoquensgio.dtos.programa.ProgramaDto;
 import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
@@ -41,7 +42,7 @@ public class ProgramaController {
         if (result.hasErrors()) {
             model.addAttribute("programaDto", programaDto);
             model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
-            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable));
+            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
             return "programa/cadastrarPrograma";
         }
 
@@ -72,7 +73,7 @@ public class ProgramaController {
         if (result.hasErrors()) {
             model.addAttribute("programaDto", programaDto);
             model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
-            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable));
+            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
             return "programa/atualizarPrograma";
         }
 
@@ -102,7 +103,7 @@ public class ProgramaController {
     public String getAll(Pageable pageable, Model model) {
 
         model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
-        model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable));
+        model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
         model.addAttribute("programaDto", new ProgramaDto());
 
         return "programa/cadastrarPrograma";
@@ -112,7 +113,6 @@ public class ProgramaController {
     public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes, Pageable pageable) {
 
         Optional<ProgramaModel> programaModelOptional = programaSvc.findById(id);
-        ProgramaDto programaDto = new ProgramaDto();
 
         if (programaModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -123,11 +123,8 @@ public class ProgramaController {
             return "redirect:/programas";
         }
 
-        BeanUtils.copyProperties(programaModelOptional.get(), programaDto);
-        programaDto.setLicencaId((programaModelOptional.get()).getLicenca().getId());
-
-        model.addAttribute("programaDto", programaDto);
-        model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable));
+        model.addAttribute("programaDto", new VisualizarProgramaDto(programaModelOptional.get()));
+        model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
 
         return "programa/atualizarPrograma";
     }

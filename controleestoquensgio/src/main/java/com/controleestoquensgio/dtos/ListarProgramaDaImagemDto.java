@@ -1,8 +1,9 @@
 package com.controleestoquensgio.dtos;
 
+import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
 import com.controleestoquensgio.models.ProgramaModel;
 
-public class ListarProgramaDaImagemDto extends ListarProgramaDto{
+public class ListarProgramaDaImagemDto extends ListarProgramaDto {
 
     private int imagemId;
 

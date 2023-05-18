@@ -3,7 +3,7 @@ package com.controleestoquensgio.controllers;
 import java.util.Optional;
 
 
-import com.controleestoquensgio.dtos.LicencaDto;
+import com.controleestoquensgio.dtos.licenca.LicencaDto;
 import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.util.ErroOuSucesso;

@@ -2,7 +2,7 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.ProgramaDto;
+import com.controleestoquensgio.dtos.programa.ProgramaDto;
 import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -10,7 +10,6 @@ import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 
-import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.repositories.ProgramaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
