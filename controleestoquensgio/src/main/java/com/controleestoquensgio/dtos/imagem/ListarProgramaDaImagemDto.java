@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.imagem;
 
 import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
 import com.controleestoquensgio.models.ProgramaModel;

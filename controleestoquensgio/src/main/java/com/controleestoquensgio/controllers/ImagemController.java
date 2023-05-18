@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import com.controleestoquensgio.dtos.*;
+import com.controleestoquensgio.dtos.imagem.*;
+import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
 import com.controleestoquensgio.models.ImagemModel;
 import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.services.ImagemService;
@@ -16,7 +17,6 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +42,7 @@ public class ImagemController {
 
         if (result.hasErrors()) {
             model.addAttribute("criarImagemDto", criarImagemDto);
-            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
+            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
             return "imagem/cadastrarImagem";
         }
 
@@ -73,7 +73,7 @@ public class ImagemController {
         if (result.hasErrors()) {
             model.addAttribute("criarImagemDto", criarImagemDto);
             model.addAttribute("addProgramaNaImagemDto", new AddProgramaNaImagemDto(id));
-            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable));
+            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
             return "imagem/atualizarImagem";
         }
 
@@ -105,7 +105,7 @@ public class ImagemController {
         if (result.hasErrors()) {
             addProgramaNaImagemDto.setImagemId(id);
             model.addAttribute("addProgramaNaImagemDto", addProgramaNaImagemDto);
-            model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable));
+            model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
             model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
             return "imagem/adicionarProgramaNaImagem";
         }
@@ -130,11 +130,8 @@ public class ImagemController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<ImagemModel> listaDeImagens = imagemSvc.findAll(pageable);
-        CriarImagemDto criarImagemDto = new CriarImagemDto();
-
-        model.addAttribute("listaDeImagens", listaDeImagens);
-        model.addAttribute("criarImagemDto", criarImagemDto);
+        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+        model.addAttribute("criarImagemDto",new CriarImagemDto());
 
         return "imagem/cadastrarImagem";
     }
@@ -154,7 +151,7 @@ public class ImagemController {
         }
 
 
-        model.addAttribute("criarImagemDto", imagemModelOptional.get());
+        model.addAttribute("criarImagemDto", new VisualizarImagemDto(imagemModelOptional.get()));
 
         return "imagem/atualizarImagem";
     }
@@ -162,7 +159,7 @@ public class ImagemController {
     @GetMapping("/update/{id}/addPrograma")
     public String showFormAddProgramOnImage(@PathVariable(value = "id") int id, Model model, Pageable pageable) {
 
-        model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable));
+        model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
         model.addAttribute("addProgramaNaImagemDto", new AddProgramaNaImagemDto(id));
         model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
 
