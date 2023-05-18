@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.localizacao;
 
 import jakarta.validation.constraints.NotBlank;
 
