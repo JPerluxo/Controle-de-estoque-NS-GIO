@@ -2,10 +2,12 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.tipoColaborador.ListarTipoColaboradorDto;
+import com.controleestoquensgio.dtos.tipoColaborador.VisualizarTipoColaboradorDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import jakarta.validation.Valid;
 
-import com.controleestoquensgio.dtos.TipoColaboradorDto;
+import com.controleestoquensgio.dtos.tipoColaborador.TipoColaboradorDto;
 import com.controleestoquensgio.models.TipoColaboradorModel;
 import com.controleestoquensgio.services.TipoColaboradorService;
 import com.controleestoquensgio.util.Mensagens;
@@ -31,7 +33,7 @@ public class TipoColaboradorController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoColaboradorDto", tipoColaboradorDto);
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable).map(ListarTipoColaboradorDto::new));
             return "tipoColaborador/cadastrarTipoColaborador";
         }
 
@@ -61,7 +63,7 @@ public class TipoColaboradorController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoColaboradorDto", tipoColaboradorDto);
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable).map(ListarTipoColaboradorDto::new));
             return "tipoColaborador/atualizarTipoColaborador";
         }
 
@@ -90,11 +92,8 @@ public class TipoColaboradorController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<TipoColaboradorModel> listaDeTiposDeEquipamento = tipoColaboradorService.findAll(pageable);
-        TipoColaboradorDto tipodeColaborador = new TipoColaboradorDto();
-
-        model.addAttribute("listaDeTiposDeColaborador", listaDeTiposDeEquipamento);
-        model.addAttribute("tipoColaboradorDto", tipodeColaborador);
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable).map(ListarTipoColaboradorDto::new));
+        model.addAttribute("tipoColaboradorDto", new TipoColaboradorDto());
 
         return "tipoColaborador/cadastrarTipoColaborador";
     }
@@ -113,7 +112,7 @@ public class TipoColaboradorController {
             return "redirect:/tiposDeColaborador";
         }
 
-        model.addAttribute("tipoColaboradorDto", tipoColaboradorModelOptional.get());
+        model.addAttribute("tipoColaboradorDto", new VisualizarTipoColaboradorDto(tipoColaboradorModelOptional.get()));
 
         return "tipoColaborador/atualizarTipoColaborador";
     }

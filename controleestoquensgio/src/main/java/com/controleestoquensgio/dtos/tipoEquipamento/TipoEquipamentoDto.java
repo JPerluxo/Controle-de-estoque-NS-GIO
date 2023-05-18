@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.tipoEquipamento;
 
 import jakarta.validation.constraints.NotBlank;
 

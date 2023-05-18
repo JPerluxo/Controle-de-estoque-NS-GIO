@@ -2,13 +2,13 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.VisualizarTipoEquipamentoDto;
-import com.controleestoquensgio.dtos.ListarTipoEquipamentoDto;
+import com.controleestoquensgio.dtos.tipoEquipamento.VisualizarTipoEquipamentoDto;
+import com.controleestoquensgio.dtos.tipoEquipamento.ListarTipoEquipamentoDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import jakarta.validation.Valid;
 import com.controleestoquensgio.models.TipoEquipamentoModel;
-import com.controleestoquensgio.dtos.TipoEquipamentoDto;
+import com.controleestoquensgio.dtos.tipoEquipamento.TipoEquipamentoDto;
 import com.controleestoquensgio.services.TipoEquipamentoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

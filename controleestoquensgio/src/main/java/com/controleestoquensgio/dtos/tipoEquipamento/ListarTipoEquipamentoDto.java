@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos;
+package com.controleestoquensgio.dtos.tipoEquipamento;
 
 import com.controleestoquensgio.models.TipoEquipamentoModel;
 import lombok.Getter;
