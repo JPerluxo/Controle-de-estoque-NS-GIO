@@ -2,7 +2,9 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.RegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.RegimeTrabalho.ListarRegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.RegimeTrabalho.RegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.RegimeTrabalho.VisualizarRegimeTrabalhoDto;
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
 import com.controleestoquensgio.services.RegimeTrabalhoService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -31,7 +33,7 @@ public class RegimeTrabalhoController {
 
         if (result.hasErrors()) {
             model.addAttribute("regimeTrabalhoDto", regimeTrabalhoDto);
-            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
             return "regimeTrabalho/cadastrarRegimeTrabalho";
         }
 
@@ -61,7 +63,7 @@ public class RegimeTrabalhoController {
 
         if (result.hasErrors()) {
             model.addAttribute("regimeTrabalhoDto", regimeTrabalhoDto);
-            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
             return "regimeTrabalho/atualizarRegimeTrabalho";
         }
 
@@ -90,11 +92,8 @@ public class RegimeTrabalhoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<RegimeTrabalhoModel> listaDeRegimesDeTrabalho = regimeTrabalhoSvc.findAll(pageable);
-        RegimeTrabalhoDto regimeTrabalhoDto = new RegimeTrabalhoDto();
-
-        model.addAttribute("listaDeRegimesDeTrabalho", listaDeRegimesDeTrabalho);
-        model.addAttribute("regimeTrabalhoDto", regimeTrabalhoDto);
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
+        model.addAttribute("regimeTrabalhoDto", new RegimeTrabalhoDto());
 
         return "regimeTrabalho/cadastrarRegimeTrabalho";
     }
@@ -113,7 +112,7 @@ public class RegimeTrabalhoController {
             return "redirect:/regimesDeTrabalho";
         }
 
-        model.addAttribute("regimeTrabalhoDto", regimeTrabalhoModelOptional.get());
+        model.addAttribute("regimeTrabalhoDto", new VisualizarRegimeTrabalhoDto(regimeTrabalhoModelOptional.get()));
 
         return "regimeTrabalho/atualizarRegimeTrabalho";
     }
