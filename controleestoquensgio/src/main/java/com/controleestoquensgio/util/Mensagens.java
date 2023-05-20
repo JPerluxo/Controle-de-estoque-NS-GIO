@@ -19,4 +19,9 @@ public class Mensagens {
     public static String emprestimoNaoEncontrado() { return "Empréstimo não encontrado!"; }
     public static String respEntregaNaoEncontrado() { return "Responsável pela entrega não encontrado!"; }
     public static String ocorrenciaNaoEncontrada() { return "Ocorrencia nao encontrada!"; }
+    public static String setorNaoEncontrado() { return "Setor nao encontrado!"; }
+    public static String presidenciaNaoEncontrada() { return "Presidencia nao encontrada!"; }
+    public static String diretoriaNaoEncontrada() { return "Diretoria nao encontrada!"; }
+    public static String gerenciaNaoEncontrada() { return "Gerencia nao encontrada!"; }
+    public static String nucleoNaoEncontrado() { return "Núcleo nao encontrado!"; }
 }

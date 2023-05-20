@@ -34,6 +34,9 @@ public class ColaboradorService {
     @Autowired
     RegimeTrabalhoService regimeTrabalhoSvc;
 
+    @Autowired
+    SetorService setorSvc;
+
     @Transactional
     public ColaboradorModel save(ColaboradorModel colaboradorMdl){
         return colaboradorRpt.save(colaboradorMdl);
@@ -45,48 +48,87 @@ public class ColaboradorService {
         BeanUtils.copyProperties(colaboradorDto, colaboradorModel);
 
         Optional<ImagemModel> imagemModelOption = imagemSvc.findById(colaboradorDto.getImagemId());
-
         if (imagemModelOption.isEmpty()) {
             return new Resultado(
                     ErroOuSucesso.ERRO.name(),
                     Mensagens.imagemNaoEncontrada()
             );
         }
-
         colaboradorModel.setImagem(imagemModelOption.get());
 
-        Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(colaboradorDto.getTipoAcessoId());
 
+        Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(colaboradorDto.getTipoAcessoId());
         if (tipoAcessoModelOptional.isEmpty()) {
             return new Resultado(
                     ErroOuSucesso.ERRO.name(),
                     Mensagens.tipoDeAcessoNaoEncontrado()
             );
         }
-
         colaboradorModel.setTipoAcesso(tipoAcessoModelOptional.get());
 
-        Optional<TipoColaboradorModel> tipoColaboradorModelOption = tipoColaboradorSvc.findById(colaboradorDto.getTipoColaboradorId());
 
+        Optional<TipoColaboradorModel> tipoColaboradorModelOption = tipoColaboradorSvc.findById(colaboradorDto.getTipoColaboradorId());
         if (tipoColaboradorModelOption.isEmpty()) {
             return new Resultado(
                     ErroOuSucesso.ERRO.name(),
                     Mensagens.tipoDeColaboradorNaoEncontrado()
             );
         }
-
         colaboradorModel.setTipoColaborador(tipoColaboradorModelOption.get());
 
-        Optional<RegimeTrabalhoModel> regimeTrabalhoModelOptional = regimeTrabalhoSvc.findById(colaboradorDto.getRegimeTrabalhoId());
 
+        Optional<RegimeTrabalhoModel> regimeTrabalhoModelOptional = regimeTrabalhoSvc.findById(colaboradorDto.getRegimeTrabalhoId());
         if (regimeTrabalhoModelOptional.isEmpty()) {
             return new Resultado(
                     ErroOuSucesso.ERRO.name(),
                     Mensagens.regimeDeTrabalhoNaoEncontrado()
             );
         }
-
         colaboradorModel.setRegimeTrabalho(regimeTrabalhoModelOptional.get());
+
+        if (colaboradorDto.getPresidenciaId() > 0 ) {
+            Optional<SetorModel> presidenciaOptional = setorSvc.findById(colaboradorDto.getPresidenciaId());
+            if (presidenciaOptional.isEmpty()) {
+                return new Resultado(
+                        ErroOuSucesso.ERRO.name(),
+                        Mensagens.presidenciaNaoEncontrada()
+                );
+            }
+            colaboradorModel.setPresidencia(presidenciaOptional.get());
+        }
+
+        if (colaboradorDto.getDiretoriaId() > 0) {
+            Optional<SetorModel> diretoriaOptional = setorSvc.findById(colaboradorDto.getDiretoriaId());
+            if (diretoriaOptional.isEmpty()) {
+                return new Resultado(
+                        ErroOuSucesso.ERRO.name(),
+                        Mensagens.diretoriaNaoEncontrada()
+                );
+            }
+            colaboradorModel.setDiretoria(diretoriaOptional.get());
+        }
+
+        if (colaboradorDto.getGerenciaId() > 0) {
+            Optional<SetorModel> gerenciaOptional = setorSvc.findById(colaboradorDto.getGerenciaId());
+            if (gerenciaOptional.isEmpty()) {
+                return new Resultado(
+                        ErroOuSucesso.ERRO.name(),
+                        Mensagens.gerenciaNaoEncontrada()
+                );
+            }
+            colaboradorModel.setGerencia(gerenciaOptional.get());
+        }
+
+        if (colaboradorDto.getNucleoId() > 0) {
+            Optional<SetorModel> nucleoOptional = setorSvc.findById(colaboradorDto.getNucleoId());
+            if (nucleoOptional.isEmpty()) {
+                return new Resultado(
+                        ErroOuSucesso.ERRO.name(),
+                        Mensagens.nucleoNaoEncontrado()
+                );
+            }
+            colaboradorModel.setNucleo(nucleoOptional.get());
+        }
 
         colaboradorRpt.save(colaboradorModel);
 

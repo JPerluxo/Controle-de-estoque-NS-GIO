@@ -2,9 +2,9 @@ package com.controleestoquensgio.controllers;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.dtos.RegimeTrabalho.ListarRegimeTrabalhoDto;
-import com.controleestoquensgio.dtos.RegimeTrabalho.RegimeTrabalhoDto;
-import com.controleestoquensgio.dtos.RegimeTrabalho.VisualizarRegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.regimeTrabalho.ListarRegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.regimeTrabalho.RegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.regimeTrabalho.VisualizarRegimeTrabalhoDto;
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
 import com.controleestoquensgio.services.RegimeTrabalhoService;
 import com.controleestoquensgio.util.ErroOuSucesso;

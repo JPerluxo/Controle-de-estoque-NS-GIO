@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos.RegimeTrabalho;
+package com.controleestoquensgio.dtos.regimeTrabalho;
 
 import com.controleestoquensgio.dtos.TipoDto;
 

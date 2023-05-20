@@ -1,8 +1,12 @@
 package com.controleestoquensgio.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "COLABORADORES")
 public class ColaboradorModel {
 
@@ -29,46 +33,16 @@ public class ColaboradorModel {
     @ManyToOne
     private RegimeTrabalhoModel regimeTrabalho;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getRf() {
-        return rf;
-    }
-    public void setRf(String rf) {
-        this.rf = rf;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public ImagemModel getImagem() {
-        return imagem;
-    }
-    public void setImagem(ImagemModel imagem) {
-        this.imagem = imagem;
-    }
-    public TipoAcessoModel getTipoAcesso() {
-        return tipoAcesso;
-    }
-    public void setTipoAcesso(TipoAcessoModel tipoAcesso) {
-        this.tipoAcesso = tipoAcesso;
-    }
-    public TipoColaboradorModel getTipoColaborador() {
-        return tipoColaborador;
-    }
-    public void setTipoColaborador(TipoColaboradorModel tipoColaborador) {
-        this.tipoColaborador = tipoColaborador;
-    }
-    public RegimeTrabalhoModel getRegimeTrabalho() {
-        return regimeTrabalho;
-    }
-    public void setRegimeTrabalho(RegimeTrabalhoModel regimeTrabalho) {
-        this.regimeTrabalho = regimeTrabalho;
-    }
+    @OneToOne
+    private SetorModel presidencia;
+
+    @OneToOne
+    private SetorModel diretoria;
+
+    @OneToOne
+    private SetorModel gerencia;
+
+    @OneToOne
+    private SetorModel nucleo;
+
 }

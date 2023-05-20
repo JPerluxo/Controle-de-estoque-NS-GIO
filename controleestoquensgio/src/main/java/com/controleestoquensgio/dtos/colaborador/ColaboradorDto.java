@@ -2,12 +2,16 @@ package com.controleestoquensgio.dtos.colaborador;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ColaboradorDto{
 
     @NotBlank(message = "Insira o RF!")
     private String rf;
-    
+
     @NotBlank(message = "Insira um nome!")
     private String nome;
 
@@ -23,51 +27,11 @@ public class ColaboradorDto{
     @Positive(message = "Insira um regime de trabalho!")
     private int regimeTrabalhoId;
 
-    public String getRf() {
-        return rf;
-    }
+    private int presidenciaId;
 
-    public void setRf(String rf) {
-        this.rf = rf;
-    }
+    private int diretoriaId;
 
-    public String getNome() {
-        return nome;
-    }
+    private int gerenciaId;
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getImagemId() {
-        return imagemId;
-    }
-
-    public void setImagemId(int imagemId) {
-        this.imagemId = imagemId;
-    }
-
-    public int getTipoAcessoId() {
-        return tipoAcessoId;
-    }
-
-    public void setTipoAcessoId(int tipoAcessoId) {
-        this.tipoAcessoId = tipoAcessoId;
-    }
-
-    public int getTipoColaboradorId() {
-        return tipoColaboradorId;
-    }
-
-    public void setTipoColaboradorId(int tipoColaboradorId) {
-        this.tipoColaboradorId = tipoColaboradorId;
-    }
-
-    public int getRegimeTrabalhoId() {
-        return regimeTrabalhoId;
-    }
-
-    public void setRegimeTrabalhoId(int regimeTrabalhoId) {
-        this.regimeTrabalhoId = regimeTrabalhoId;
-    }
+    private int nucleoId;
 }

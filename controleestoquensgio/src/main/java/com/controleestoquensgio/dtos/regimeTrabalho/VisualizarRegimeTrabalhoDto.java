@@ -1,4 +1,4 @@
-package com.controleestoquensgio.dtos.RegimeTrabalho;
+package com.controleestoquensgio.dtos.regimeTrabalho;
 
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
 import lombok.Getter;
@@ -6,12 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ListarRegimeTrabalhoDto {
+public class VisualizarRegimeTrabalhoDto {
 
     private int id;
     private String descricao;
 
-    public ListarRegimeTrabalhoDto(RegimeTrabalhoModel regimeTrabalhoModel) {
+    public VisualizarRegimeTrabalhoDto(RegimeTrabalhoModel regimeTrabalhoModel) {
         this.id = regimeTrabalhoModel.getId();
         this.descricao = regimeTrabalhoModel.getDescricao();
     }

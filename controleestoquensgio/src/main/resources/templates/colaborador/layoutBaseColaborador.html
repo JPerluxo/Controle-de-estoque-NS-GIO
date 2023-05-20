@@ -41,5 +41,33 @@
         <option th:each="regimeTrabalho : ${listaDeRegimesDeTrabalho}" th:value="${regimeTrabalho.id}" th:text="${regimeTrabalho.descricao}"/>
     </select>
     <div th:errors="*{regimeTrabalhoId}">Erro contratoEquipamentoTerceiroId</div>
+
+    Presidencia:
+    <select th:field="*{presidenciaId}">
+        <option value="-1">Selecione...</option>
+        <option th:each="presidencia : ${listaDePresidencias}" th:value="${presidencia.id}" th:text="${presidencia.descricao}"/>
+    </select>
+    <div th:errors="*{presidenciaId}">Erro presidenciaId</div>
+
+    Diretoria:
+    <select th:field="*{diretoriaId}">
+        <option value="-1">Selecione...</option>
+        <option th:each="diretoria : ${listaDeDiretorias}" th:value="${diretoria.id}" th:text="${diretoria.descricao}"/>
+    </select>
+    <div th:errors="*{diretoriaId}">Erro diretoriaId</div>
+
+    Gerencia:
+    <select th:field="*{gerenciaId}">
+        <option value="-1">Selecione...</option>
+        <option th:each="gerencia : ${listaDeGerencias}" th:value="${gerencia.id}" th:text="${gerencia.descricao}"/>
+    </select>
+    <div th:errors="*{gerenciaId}">Erro gerenciaId</div>
+
+    Núcleo:
+    <select th:field="*{nucleoId}">
+        <option value="-1">Selecione...</option>
+        <option th:each="nucleo : ${listaDeNucleos}" th:value="${nucleo.id}" th:text="${nucleo.descricao}"/>
+    </select>
+    <div th:errors="*{nucleoId}">Erro nucleoId</div>
 </div>
 
