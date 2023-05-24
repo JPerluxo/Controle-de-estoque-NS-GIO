@@ -2,15 +2,20 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{equipamento/layoutBaseEquipamento :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
+    <div class="body">
+      <h4 id="body-title">Equipamentos</h4>
 
-    <form th:object="${equipamentoDto}" method="post">
-      <div th:replace="~{equipamento/layoutBaseEquipamento :: form}"></div>
-      <button type="submit"> Atualizar </button>
-    </form>
+      <form class="register-div" th:object="${equipamentoDto}" method="post">
+        <div th:replace="~{equipamento/layoutBaseEquipamento :: form}"></div>
+        <button id="submit-btn" type="submit"> Atualizar </button>
+      </form>
+    </div>
 
   </body>
 </html>

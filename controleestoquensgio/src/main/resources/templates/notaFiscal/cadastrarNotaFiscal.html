@@ -2,31 +2,36 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{notaFiscal/layoutBaseNotaFiscal :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
-    <form th:object="${notaFiscalDto}" method="post">
-      <div th:replace="~{notaFiscal/layoutBaseNotaFiscal :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+    <div class="body">
+      Formulário
+      <form th:object="${notaFiscalDto}" method="post">
+        <div th:replace="~{notaFiscal/layoutBaseNotaFiscal :: form}"></div>
+        <button type="submit"> Salvar </button>
+      </form>
 
-    <div th:each="notaFiscal : ${listaDeNotasFiscais}">
-      <p>
-      <div>
+      <div th:each="notaFiscal : ${listaDeNotasFiscais}">
+        <p>
+        <div>
 
-        Número:  <span th:text="${notaFiscal.numero}"></span>
-        Data:  <span th:text="${notaFiscal.data}"></span>
+          Número:  <span th:text="${notaFiscal.numero}"></span>
+          Data:  <span th:text="${notaFiscal.data}"></span>
 
-        <form action="#" th:action="@{notasFiscais/delete/{id}(id=${notaFiscal.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
+          <form action="#" th:action="@{notasFiscais/delete/{id}(id=${notaFiscal.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        <form th:action="@{notasFiscais/update/{id}(id=${notaFiscal.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{notasFiscais/update/{id}(id=${notaFiscal.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>

@@ -2,35 +2,40 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{colaborador/layoutBaseColaborador :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
-    <form th:object="${colaboradorDto}" method="post">
-      <div th:replace="~{colaborador/layoutBaseColaborador :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+    <div class="body">
+      Formulário
+      <form th:object="${colaboradorDto}" method="post">
+        <div th:replace="~{colaborador/layoutBaseColaborador :: form}"></div>
+        <button type="submit"> Salvar </button>
+      </form>
 
-    <div th:each="colaborador : ${listaDeColaboradores}">
-      <p>
-      <div>
+      <div th:each="colaborador : ${listaDeColaboradores}">
+        <p>
+        <div>
 
-        Registro de funcionário (RF):   <span th:text="${colaborador.rf}"></span>
-        Nome:   <span th:text="${colaborador.nome}"></span>
-        Imagem:   <span th:text="${colaborador.imagem}"></span>
-        Tipo de Acesso:   <span th:text="${colaborador.tipoAcesso}"></span>
-        Tipo de Colaborador:   <span th:text="${colaborador.tipoColaborador}"></span>
-        Regime de Trabalho:   <span th:text="${colaborador.regimeTrabalho}"></span>
+          Registro de funcionário (RF):   <span th:text="${colaborador.rf}"></span>
+          Nome:   <span th:text="${colaborador.nome}"></span>
+          Imagem:   <span th:text="${colaborador.imagem}"></span>
+          Tipo de Acesso:   <span th:text="${colaborador.tipoAcesso}"></span>
+          Tipo de Colaborador:   <span th:text="${colaborador.tipoColaborador}"></span>
+          Regime de Trabalho:   <span th:text="${colaborador.regimeTrabalho}"></span>
 
-        <form action="#" th:action="@{colaboradores/delete/{id}(id=${colaborador.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
+          <form action="#" th:action="@{colaboradores/delete/{id}(id=${colaborador.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        <form th:action="@{colaboradores/update/{id}(id=${colaborador.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{colaboradores/update/{id}(id=${colaborador.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>

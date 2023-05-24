@@ -1,41 +1,39 @@
 <!DOCTYPE html>
-<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{setor/layoutBaseSetor :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Usuário logado: <span sec:authentication="principal.username"/>
-    <a class="link-primary" th:href="@{/logout}">Logout</a>
+    <div class="body">
+      Formulário
+      <form th:object="${setorDto}" method="post">
+        <div th:replace="~{setor/layoutBaseSetor :: form}"></div>
+        <button type="submit"> Salvar </button>
+      </form>
 
-    <p>
+      <div th:each="setor : ${listaDeSetores}">
+        <p>
+        <div>
 
-    Formulário
-    <form th:object="${setorDto}" method="post">
-      <div th:replace="~{setor/layoutBaseSetor :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+          Sigla:   <span th:text="${setor.sigla}"></span>
+          Descriçao:  <span th:text="${setor.descricao}"></span>
+          Responsável:     <span th:text="${setor.responsavel}"></span>
+          Nível: <span th:text="${setor.nivel}"></span>
 
-    <div th:each="setor : ${listaDeSetores}">
-      <p>
-      <div>
+          <form action="#" th:action="@{setores/delete/{id}(id=${setor.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        Sigla:   <span th:text="${setor.sigla}"></span>
-        Descriçao:  <span th:text="${setor.descricao}"></span>
-        Responsável:     <span th:text="${setor.responsavel}"></span>
-        Nível: <span th:text="${setor.nivel}"></span>
-
-        <form action="#" th:action="@{setores/delete/{id}(id=${setor.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
-
-        <form th:action="@{setores/update/{id}(id=${setor.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{setores/update/{id}(id=${setor.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>

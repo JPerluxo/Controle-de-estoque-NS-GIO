@@ -2,33 +2,38 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{ocorrencia/layoutBaseOcorrencia :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
-    <form th:object="${ocorrenciaDto}" method="post">
-      <div th:replace="~{ocorrencia/layoutBaseOcorrencia :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+    <div class="body">
+      Formulário
+      <form th:object="${ocorrenciaDto}" method="post">
+        <div th:replace="~{ocorrencia/layoutBaseOcorrencia :: form}"></div>
+        <button type="submit"> Salvar </button>
+      </form>
 
-    <div th:each="ocorrencia : ${listaDeOcorrencias}">
-      <p>
-      <div>
+      <div th:each="ocorrencia : ${listaDeOcorrencias}">
+        <p>
+        <div>
 
-        OS:              <span th:text="${ocorrencia.os}"></span>
-        Descriçao:       <span th:text="${ocorrencia.descricao}"></span>
-        Colaborador:     <span th:text="${ocorrencia.colaborador}"></span>
-        Equipamento:     <span th:text="${ocorrencia.equipamento}"></span>
+          OS:              <span th:text="${ocorrencia.os}"></span>
+          Descriçao:       <span th:text="${ocorrencia.descricao}"></span>
+          Colaborador:     <span th:text="${ocorrencia.colaborador}"></span>
+          Equipamento:     <span th:text="${ocorrencia.equipamento}"></span>
 
-        <form action="#" th:action="@{ocorrencias/delete/{id}(id=${ocorrencia.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
+          <form action="#" th:action="@{ocorrencias/delete/{id}(id=${ocorrencia.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        <form th:action="@{ocorrencias/update/{id}(id=${ocorrencia.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{ocorrencias/update/{id}(id=${ocorrencia.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>

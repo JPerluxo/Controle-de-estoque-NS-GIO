@@ -2,33 +2,38 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{localizacao/layoutBaseLocalizacao :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
-    <form th:object="${localizacaoDto}" method="post">
-      <div th:replace="~{localizacao/layoutBaseLocalizacao :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+    <div class="body">
+      Formulário
+      <form th:object="${localizacaoDto}" method="post">
+        <div th:replace="~{localizacao/layoutBaseLocalizacao :: form}"></div>
+        <button type="submit"> Salvar </button>
+      </form>
 
-    <div th:each="localizacao : ${listaDeLocalizacoes}">
-      <p>
-      <div>
+      <div th:each="localizacao : ${listaDeLocalizacoes}">
+        <p>
+        <div>
 
-        Descricao:  <span th:text="${localizacao.referencia}"></span>
-        Lado:       <span th:text="${localizacao.lado}"></span>
-        Andar:      <span th:text="${localizacao.andar}"></span>
-        Prédio:     <span th:text="${localizacao.predio}"></span>
+          Descricao:  <span th:text="${localizacao.referencia}"></span>
+          Lado:       <span th:text="${localizacao.lado}"></span>
+          Andar:      <span th:text="${localizacao.andar}"></span>
+          Prédio:     <span th:text="${localizacao.predio}"></span>
 
-        <form action="#" th:action="@{localizacoes/delete/{id}(id=${localizacao.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
+          <form action="#" th:action="@{localizacoes/delete/{id}(id=${localizacao.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        <form th:action="@{localizacoes/update/{id}(id=${localizacao.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{localizacoes/update/{id}(id=${localizacao.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>

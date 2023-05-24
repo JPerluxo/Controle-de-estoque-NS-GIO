@@ -1,0 +1,36 @@
+.sidebar {
+    grid-area: sidebar;
+    background-color: #4e4c4c;
+    width: 320px;
+}
+
+#CENS-GIO {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh;
+    background-color: #716c6c;
+    color: #2be5c3;
+    font: bold 24px arial;
+}
+
+#sidebar-menu {
+    border-radius: 0;
+}
+
+.sidebar-item {
+    background-color: #716c6c;
+    border: #4e4c4c;
+    margin: 1px 0;
+}
+
+.sidebar-item:hover {
+    border-left-style: solid;
+    border-left-color: #2be5c3;
+    border-left-width: 10px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+}

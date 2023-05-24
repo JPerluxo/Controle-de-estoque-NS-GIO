@@ -1,40 +1,38 @@
 <!DOCTYPE html>
-<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{programa/layoutBasePrograma :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Usuário logado: <span sec:authentication="principal.username"/>
-    <a class="link-primary" th:href="@{/logout}">Logout</a>
+    <div class="body">
+      Formulário
+      <form th:object="${programaDto}" method="post">
+        <div th:replace="~{programa/layoutBasePrograma :: form}"></div>
+        <button type="submit"> Salvar </button>
+      </form>
 
-    <p>
+      <div th:each="programa : ${listaDeProgramas}">
+        <p>
+        <div>
 
-    Formulário
-    <form th:object="${programaDto}" method="post">
-      <div th:replace="~{programa/layoutBasePrograma :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+          Descricao:   <span th:text="${programa.descricao}"></span>
+          Observaçao:  <span th:text="${programa.observacao}"></span>
+          Licença:     <span th:text="${programa.licenca}"></span>
 
-    <div th:each="programa : ${listaDeProgramas}">
-      <p>
-      <div>
+          <form action="#" th:action="@{programas/delete/{id}(id=${programa.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        Descricao:   <span th:text="${programa.descricao}"></span>
-        Observaçao:  <span th:text="${programa.observacao}"></span>
-        Licença:     <span th:text="${programa.licenca}"></span>
-
-        <form action="#" th:action="@{programas/delete/{id}(id=${programa.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
-
-        <form th:action="@{programas/update/{id}(id=${programa.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{programas/update/{id}(id=${programa.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>

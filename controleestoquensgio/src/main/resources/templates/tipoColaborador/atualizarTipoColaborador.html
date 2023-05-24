@@ -2,15 +2,20 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
+    <div class="body">
+      Formulário
 
-    <form th:object="${tipoColaboradorDto}" method="post">
-      <div th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: form}"></div>
-      <button type="submit"> Atualizar </button>
-    </form>
+      <form th:object="${tipoColaboradorDto}" method="post">
+        <div th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: form}"></div>
+        <button type="submit"> Atualizar </button>
+      </form>
+    </div>
 
   </body>
 </html>

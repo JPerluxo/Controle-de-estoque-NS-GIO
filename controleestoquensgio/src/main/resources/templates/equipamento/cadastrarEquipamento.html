@@ -2,36 +2,41 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{equipamento/layoutBaseEquipamento :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
-    <form th:object="${equipamentoDto}" method="post">
-      <div th:replace="~{equipamento/layoutBaseEquipamento :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+    <div class="body">
+      <h4 id="body-title">Equipamentos</h4>
+      <form class="register-div" th:object="${equipamentoDto}" method="post">
+        <div th:replace="~{equipamento/layoutBaseEquipamento :: form}"></div>
+        <button id="submit-btn" type="submit"> Salvar </button>
+      </form>
 
-    <div th:each="equipamento : ${listaDeEquipamentos}">
-      <p>
-      <div>
+      <div th:each="equipamento : ${listaDeEquipamentos}">
+        <p>
+        <div>
 
-        Número de série:   <span th:text="${equipamento.serial}"></span>
-        Número de patrimonio:   <span th:text="${equipamento.numPatrimonio}"></span>
-        Observacao:   <span th:text="${equipamento.observacao}"></span>
-        Tipo de Equipamento:   <span th:text="${equipamento.tipoEquipamento}"></span>
-        Nota fiscal:   <span th:text="${equipamento.notaFiscal}"></span>
-        Localizacao:   <span th:text="${equipamento.localizacao}"></span>
-        Contrato de equipamento de terceiro:   <span th:text="${equipamento.contratoDeEquipamentoDeTerceiro}"></span>
+          Número de série:   <span th:text="${equipamento.serial}"></span>
+          Número de patrimonio:   <span th:text="${equipamento.numPatrimonio}"></span>
+          Observacao:   <span th:text="${equipamento.observacao}"></span>
+          Tipo de Equipamento:   <span th:text="${equipamento.tipoEquipamento}"></span>
+          Nota fiscal:   <span th:text="${equipamento.notaFiscal}"></span>
+          Localizacao:   <span th:text="${equipamento.localizacao}"></span>
+          Contrato de equipamento de terceiro:   <span th:text="${equipamento.contratoDeEquipamentoDeTerceiro}"></span>
 
-        <form action="#" th:action="@{equipamentos/delete/{id}(id=${equipamento.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
+          <form action="#" th:action="@{equipamentos/delete/{id}(id=${equipamento.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        <form th:action="@{equipamentos/update/{id}(id=${equipamento.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{equipamentos/update/{id}(id=${equipamento.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>

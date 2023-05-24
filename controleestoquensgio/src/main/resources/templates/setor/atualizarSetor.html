@@ -2,15 +2,20 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{setor/layoutBaseSetor :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
+    <div class="body">
+      Formulário
 
-    <form th:object="${setorDto}" method="post">
-      <div th:replace="~{setor/layoutBaseSetor :: form}"></div>
-      <button type="submit"> Atualizar </button>
-    </form>
+      <form th:object="${setorDto}" method="post">
+        <div th:replace="~{setor/layoutBaseSetor :: form}"></div>
+        <button type="submit"> Atualizar </button>
+      </form>
+    </div>
 
   </body>
 </html>

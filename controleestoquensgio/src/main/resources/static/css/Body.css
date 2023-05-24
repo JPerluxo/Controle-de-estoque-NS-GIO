@@ -1,0 +1,47 @@
+body {
+    display: grid;
+    grid: "sidebar body" 1fr / auto 1fr;
+    gap: 8px;
+    height: 100vh;
+    background-color: #f8f6f6;
+}
+
+.body {
+    grid-area: body;
+    padding: 0 2.5vh;
+}
+
+#body-title {
+    padding-top: 2vh;
+    color: #716c6c;
+    font-weight: 400;
+    margin-bottom: 6vh;
+}
+
+.register-div {
+    background-color: white;
+    border: solid 2px #e9e4e4;
+    border-radius: 7px;
+    padding: 3vh;
+    display: grid;
+}
+
+.register-form {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.register-label {
+    font-size: small;
+    font-weight: bold;
+}
+
+#submit-btn {
+    border: none;
+    padding: 3px 3vh;
+    border-radius: 6px;
+    background-color: #2be5c3;
+    font-weight: 500;
+    justify-self: flex-end;
+}

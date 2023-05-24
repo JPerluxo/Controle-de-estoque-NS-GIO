@@ -3,46 +3,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="/css/Body.css" rel="stylesheet"/>
+    <link href="/css/Navbar.css" rel="stylesheet"/>
     <title>Equipamentos</title>
 </head>
 
-<div th:fragment="form">
+<div class="register-form" th:fragment="form">
 
-    Número de série:  <input th:field="*{serial}"  type="text">
-    <div th:errors="*{serial}">Erro serial</div>
+    <div class="mb-3">
+        <label for="serial" class="form-label register-label">Número de série:</label>
+        <input th:field="*{serial}" type="text" class="form-control" id="serial">
+        <div th:errors="*{serial}" class="invalid-feedback">Erro serial</div>
+    </div>
 
-    Número de patrimonio:  <input th:field="*{numPatrimonio}"  type="text">
-    <div th:errors="*{numPatrimonio}">Erro numPatrimonio</div>
+    <div class="mb-3">
+        <label for="numPatrimonio" class="form-label register-label">Número de patrimônio:</label>
+        <input th:field="*{numPatrimonio}" type="text" class="form-control" id="numPatrimonio">
+        <div th:errors="*{numPatrimonio}" class="invalid-feedback">Erro numPatrimonio</div>
+    </div>
 
-    Observaçao:  <input th:field="*{observacao}"  type="text">
-    <div th:errors="*{observacao}">Erro observacao</div>
+    <div class="mb-3">
+        <label for="observacao" class="form-label register-label">Observação:</label>
+        <input th:field="*{observacao}" type="text" class="form-control" id="observacao">
+        <div th:errors="*{observacao}" class="invalid-feedback">Erro observacao</div>
+    </div>
 
-    Tipo de Equipamento:
-    <select th:field="*{tipoEquipamentoId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="tipoEquipamento : ${listaDeTiposDeEquipamento}" th:value="${tipoEquipamento.id}" th:text="${tipoEquipamento.descricao}"/>
-    </select>
-    <div th:errors="*{tipoEquipamentoId}">Erro tipoEquipamentoId</div>
+    <div class="mb-3">
+        <label for="tipoEquipamento" class="form-label register-label">Tipo de Equipamento:</label>
+        <select th:field="*{tipoEquipamentoId}" class="form-select" id="tipoEquipamento">
+            <option value="-1">Selecione...</option>
+            <option th:each="tipoEquipamento : ${listaDeTiposDeEquipamento}" th:value="${tipoEquipamento.id}" th:text="${tipoEquipamento.descricao}"></option>
+        </select>
+        <div th:errors="*{tipoEquipamentoId}" class="invalid-feedback">Erro tipoEquipamentoId</div>
+    </div>
 
-    Nota Fiscal:
-    <select th:field="*{notaFiscalId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="notaFiscal : ${listaDeNotasFiscais}" th:value="${notaFiscal.id}" th:text="${notaFiscal.numero}"/>
-    </select>
-    <div th:errors="*{notaFiscalId}">Erro notaFiscalId</div>
+    <div class="mb-3">
+        <label for="notaFiscal" class="form-label register-label">Nota Fiscal:</label>
+        <select th:field="*{notaFiscalId}" class="form-select" id="notaFiscal">
+            <option value="-1">Selecione...</option>
+            <option th:each="notaFiscal : ${listaDeNotasFiscais}" th:value="${notaFiscal.id}" th:text="${notaFiscal.numero}"></option>
+        </select>
+        <div th:errors="*{notaFiscalId}" class="invalid-feedback">Erro notaFiscalId</div>
+    </div>
 
-    Localizaçao
-    <select th:field="*{localizacaoId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="localizacao : ${listaDeLocalizacoes}" th:value="${localizacao.id}" th:text="${localizacao.predio}"/>
-    </select>
-    <div th:errors="*{localizacaoId}">Erro localizacaoId</div>
+    <div class="mb-3">
+        <label for="localizacao" class="form-label register-label">Localização:</label>
+        <select th:field="*{localizacaoId}" class="form-select" id="localizacao">
+            <option value="-1">Selecione...</option>
+            <option th:each="localizacao : ${listaDeLocalizacoes}" th:value="${localizacao.id}" th:text="${localizacao.predio}"></option>
+        </select>
+        <div th:errors="*{localizacaoId}" class="invalid-feedback">Erro localizacaoId</div>
+    </div>
 
-    Contrato de equipamento de terceiro
-    <select th:field="*{contratoEquipamentoTerceiroId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="contratoEquipamentoTerceiro : ${listaDeContratosDeEquipamentosDeTerceiros}" th:value="${contratoEquipamentoTerceiro.id}" th:text="${contratoEquipamentoTerceiro.fornecedor}"/>
-    </select>
+    <div class="mb-3">
+        <label for="contratoEquipamentoTerceiro" class="form-label register-label">Contrato de equipamento de terceiro:</label>
+        <select th:field="*{contratoEquipamentoTerceiroId}" class="form-select" id="contratoEquipamentoTerceiro">
+            <option value="-1">Selecione...</option>
+            <option th:each="contratoEquipamentoTerceiro : ${listaDeContratosDeEquipamentosDeTerceiros}" th:value="${contratoEquipamentoTerceiro.id}" th:text="${contratoEquipamentoTerceiro.fornecedor}"></option>
+        </select>
+        <div th:errors="*{contratoEquipamentoTerceiroId}" class="invalid-feedback">Erro contratoEquipamentoTerceiroId</div>
+    </div>
+
     <div th:errors="*{contratoEquipamentoTerceiroId}">Erro contratoEquipamentoTerceiroId</div>
 </div>
 

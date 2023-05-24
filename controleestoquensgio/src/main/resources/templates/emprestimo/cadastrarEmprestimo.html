@@ -2,36 +2,41 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{emprestimo/layoutBaseEmprestimo :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    Formulário
-    <form th:object="${emprestimoDto}" method="post">
-      <div th:replace="~{emprestimo/layoutBaseEmprestimo :: form}"></div>
-      <button type="submit"> Salvar </button>
-    </form>
+    <div class="body">
+      Formulário
+      <form th:object="${emprestimoDto}" method="post">
+        <div th:replace="~{emprestimo/layoutBaseEmprestimo :: form}"></div>
+        <button type="submit"> Salvar </button>
+      </form>
 
-    <div th:each="emprestimo : ${listaDeEmprestimos}">
-      <p>
-      <div>
+      <div th:each="emprestimo : ${listaDeEmprestimos}">
+        <p>
+        <div>
 
-        Data de Disponibilizacao:   <span th:text="${emprestimo.dataDisponibilizacao}"></span>
-        Data de Devolucao:          <span th:text="${emprestimo.dataDevolucao}"></span>
-        Colaborador:                <span th:text="${emprestimo.colaborador}"></span>
-        Equipamento:                <span th:text="${emprestimo.equipamento}"></span>
-        Está vigente:               <span th:text="${emprestimo.isVigente}"></span>
-        Finalidade:                 <span th:text="${emprestimo.finalidade}"></span>
-        Responsável pela entrega:   <span th:text="${emprestimo.respEntrega}"></span>
+          Data de Disponibilizacao:   <span th:text="${emprestimo.dataDisponibilizacao}"></span>
+          Data de Devolucao:          <span th:text="${emprestimo.dataDevolucao}"></span>
+          Colaborador:                <span th:text="${emprestimo.colaborador}"></span>
+          Equipamento:                <span th:text="${emprestimo.equipamento}"></span>
+          Está vigente:               <span th:text="${emprestimo.isVigente}"></span>
+          Finalidade:                 <span th:text="${emprestimo.finalidade}"></span>
+          Responsável pela entrega:   <span th:text="${emprestimo.respEntrega}"></span>
 
-        <form action="#" th:action="@{emprestimos/delete/{id}(id=${emprestimo.id})}" method="post">
-          <button type="submit"> Deletar </button>
-        </form>
+          <form action="#" th:action="@{emprestimos/delete/{id}(id=${emprestimo.id})}" method="post">
+            <button type="submit"> Deletar </button>
+          </form>
 
-        <form th:action="@{emprestimos/update/{id}(id=${emprestimo.id})}" method="get">
-          <button type="submit"> Editar </button>
-        </form>
+          <form th:action="@{emprestimos/update/{id}(id=${emprestimo.id})}" method="get">
+            <button type="submit"> Editar </button>
+          </form>
+        </div>
+        </p>
       </div>
-      </p>
     </div>
   </body>
 </html>
