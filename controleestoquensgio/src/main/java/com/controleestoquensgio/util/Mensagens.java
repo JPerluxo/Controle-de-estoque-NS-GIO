@@ -24,4 +24,7 @@ public class Mensagens {
     public static String diretoriaNaoEncontrada() { return "Diretoria nao encontrada!"; }
     public static String gerenciaNaoEncontrada() { return "Gerencia nao encontrada!"; }
     public static String nucleoNaoEncontrado() { return "Núcleo nao encontrado!"; }
+    public static String paginaNaoEncontrada() { return "Erro 404: Página nao encontrada!"; }
+    public static String erroForbidden() { return "Erro 403: Forbidden!"; }
+    public static String erroInterno() { return "Erro 500: Houve um problema interno! Por favor, recarregue a página!"; }
 }

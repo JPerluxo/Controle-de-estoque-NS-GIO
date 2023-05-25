@@ -1,29 +1,31 @@
 package com.controleestoquensgio.controllers;
 
-import java.util.Optional;
-
 import com.controleestoquensgio.dtos.colaborador.ListarColaboradoresDto;
 import com.controleestoquensgio.dtos.equipamento.ListarEquipamentosDto;
 import com.controleestoquensgio.dtos.ocorrencia.ListarOcorrenciasDto;
 import com.controleestoquensgio.dtos.ocorrencia.OcorrenciaDto;
 import com.controleestoquensgio.dtos.ocorrencia.VisualizarOcorrenciaDto;
 import com.controleestoquensgio.models.OcorrenciaModel;
-import com.controleestoquensgio.services.*;
+import com.controleestoquensgio.services.ColaboradorService;
+import com.controleestoquensgio.services.EquipamentoService;
+import com.controleestoquensgio.services.OcorrenciaService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
-import com.controleestoquensgio.services.OcorrenciaService;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = {"/ocorrencias"})

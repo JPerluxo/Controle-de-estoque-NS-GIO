@@ -1,8 +1,5 @@
 package com.controleestoquensgio.controllers;
 
-import java.util.Optional;
-
-
 import com.controleestoquensgio.dtos.licenca.LicencaDto;
 import com.controleestoquensgio.dtos.licenca.ListarLicencaDto;
 import com.controleestoquensgio.dtos.licenca.VisualizarLicencaDto;
@@ -10,18 +7,21 @@ import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
-
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = {"/licencas"})
