@@ -3,9 +3,12 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.LocalizacaoModel;
+import com.controleestoquensgio.models.LocalizacaoModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.LocalizacaoRepository;
@@ -37,6 +40,10 @@ public class LocalizacaoService {
         return localizacaoRpt.findAll(pageable);
     }
 
+    public Page<LocalizacaoModel> findAllAtivo(Pageable pageable, String ativo) {
+        return localizacaoRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<LocalizacaoModel> findById(Integer id) {
         return localizacaoRpt.findById(id);
     }
@@ -53,7 +60,10 @@ public class LocalizacaoService {
             );
         }
 
-        localizacaoRpt.delete(localizacaoModelOptional.get());
+        LocalizacaoModel localizacaoModel = localizacaoModelOptional.get();
+        localizacaoModel.setAtivo(SimOuNao.NAO.name());
+
+        localizacaoRpt.save(localizacaoModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

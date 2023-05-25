@@ -3,6 +3,9 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.ProgramaModel;
+import com.controleestoquensgio.models.ImagemModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.models.ImagemModel;
@@ -43,6 +46,10 @@ public class ImagemService {
         return imagemRpt.findAll(pageable);
     }
 
+    public Page<ImagemModel> findAllAtivo(Pageable pageable, String ativo) {
+        return imagemRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<ImagemModel> findById(Integer id) {
         return imagemRpt.findById(id);
     }
@@ -59,7 +66,10 @@ public class ImagemService {
             );
         }
 
-        imagemRpt.delete(imagemModelOptional.get());
+        ImagemModel imagemModel = imagemModelOptional.get();
+        imagemModel.setAtivo(SimOuNao.NAO.name());
+
+        imagemRpt.save(imagemModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

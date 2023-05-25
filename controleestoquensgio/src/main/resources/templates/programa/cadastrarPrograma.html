@@ -22,6 +22,7 @@
           Descricao:   <span th:text="${programa.descricao}"></span>
           Observaçao:  <span th:text="${programa.observacao}"></span>
           Licença:     <span th:text="${programa.licenca}"></span>
+          Ativo:       <span th:text="${programa.ativo}"></span>
 
           <form action="#" th:action="@{programas/delete/{id}(id=${programa.id})}" method="post">
             <button type="submit"> Deletar </button>

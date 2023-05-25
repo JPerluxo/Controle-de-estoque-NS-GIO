@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.models.TipoEquipamentoModel;
@@ -36,6 +37,9 @@ public class TipoEquipamentoService {
     public Page<TipoEquipamentoModel> findAll(Pageable pageable) {
         return tipoEquipamentoRpt.findAll(pageable);
     }
+    public Page<TipoEquipamentoModel> findAllAtivo(Pageable pageable, String ativo) {
+        return tipoEquipamentoRpt.findAllByAtivo(pageable, ativo);
+    }
 
     public Optional<TipoEquipamentoModel> findById(Integer id) {
         return tipoEquipamentoRpt.findById(id);
@@ -53,7 +57,10 @@ public class TipoEquipamentoService {
             );
         }
 
-        tipoEquipamentoRpt.delete(tipoEquipamentoModelOptional.get());
+        TipoEquipamentoModel tipoEquipamentoModel = tipoEquipamentoModelOptional.get();
+        tipoEquipamentoModel.setAtivo(SimOuNao.NAO.name());
+
+        tipoEquipamentoRpt.save(tipoEquipamentoModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),
@@ -71,5 +78,4 @@ public class TipoEquipamentoService {
                 Mensagens.operacaoBemSucedida()
         );
     }
-
 }

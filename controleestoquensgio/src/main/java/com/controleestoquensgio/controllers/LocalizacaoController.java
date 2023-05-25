@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.controleestoquensgio.dtos.localizacao.ListarLocalizacaoDto;
 import com.controleestoquensgio.dtos.localizacao.VisualizarLocalizacaoDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.localizacao.LocalizacaoDto;
@@ -33,7 +34,7 @@ public class LocalizacaoController {
 
         if (result.hasErrors()) {
             model.addAttribute("localizacaoDto", localizacaoDto);
-            model.addAttribute("listaDeLocalizacoes", localizacaoService.findAll(pageable).map(ListarLocalizacaoDto::new));
+            model.addAttribute("listaDeLocalizacoes", localizacaoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
             return "localizacao/cadastrarLocalizacao";
         }
 
@@ -63,7 +64,7 @@ public class LocalizacaoController {
 
         if (result.hasErrors()) {
             model.addAttribute("localizacaoDto", localizacaoDto);
-            model.addAttribute("listaDeLocalizacoes", localizacaoService.findAll(pageable).map(ListarLocalizacaoDto::new));
+            model.addAttribute("listaDeLocalizacoes", localizacaoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
             return "localizacao/atualizarLocalizacao";
         }
 
@@ -92,7 +93,7 @@ public class LocalizacaoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeLocalizacoes", localizacaoService.findAll(pageable).map(ListarLocalizacaoDto::new));
+        model.addAttribute("listaDeLocalizacoes", localizacaoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
         model.addAttribute("localizacaoDto", new LocalizacaoDto());
 
         return "localizacao/cadastrarLocalizacao";

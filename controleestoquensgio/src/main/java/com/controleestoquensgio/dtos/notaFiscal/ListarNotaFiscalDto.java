@@ -13,10 +13,11 @@ public class ListarNotaFiscalDto {
     private int id;
     private String numero;
     private Date data;
-
+    private String ativo;
     public ListarNotaFiscalDto(NotaFiscalModel notaFiscalModel) {
         this.id = notaFiscalModel.getId();
         this.numero = notaFiscalModel.getNumero();
         this.data = notaFiscalModel.getData();
+        this.ativo = notaFiscalModel.getAtivo();
     }
 }

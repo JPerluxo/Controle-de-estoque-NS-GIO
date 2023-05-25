@@ -10,6 +10,7 @@ import com.controleestoquensgio.services.ContratoEquipamentoTerceiroService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -33,7 +34,7 @@ public class ContratoEquipamentoTerceiroController {
 
         if (result.hasErrors()) {
             model.addAttribute("contratoEquipamentoTerceiroDto", contratoEquipamentoTerceiroDto);
-            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
+            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
             return "contratoEquipamentoTerceiro/cadastrarContratoEquipamentoTerceiro";
         }
 
@@ -66,7 +67,7 @@ public class ContratoEquipamentoTerceiroController {
 
         if (result.hasErrors()) {
             model.addAttribute("contratoEquipamentoTerceiroDto", contratoEquipamentoTerceiroDto);
-            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
+            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
             return "contratoEquipamentoTerceiro/atualizarContratoEquipamentoTerceiro";
         }
 
@@ -98,7 +99,7 @@ public class ContratoEquipamentoTerceiroController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
+        model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
         model.addAttribute("contratoEquipamentoTerceiroDto", new ContratoEquipamentoTerceiroDto());
 
         return "contratoEquipamentoTerceiro/cadastrarContratoEquipamentoTerceiro";

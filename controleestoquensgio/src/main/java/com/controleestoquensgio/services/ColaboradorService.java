@@ -7,6 +7,7 @@ import com.controleestoquensgio.models.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.ColaboradorRepository;
@@ -142,6 +143,10 @@ public class ColaboradorService {
         return colaboradorRpt.findAll(pageable);
     }
 
+    public Page<ColaboradorModel> findAllAtivo(Pageable pageable, String ativo) {
+        return colaboradorRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<ColaboradorModel> findById(Integer id) {
         return colaboradorRpt.findById(id);
     }
@@ -158,7 +163,10 @@ public class ColaboradorService {
             );
         }
 
-        colaboradorRpt.delete(colaboradorModelOptional.get());
+        ColaboradorModel colaboradorModel = colaboradorModelOptional.get();
+        colaboradorModel.setAtivo(SimOuNao.NAO.name());
+
+        colaboradorRpt.save(colaboradorModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

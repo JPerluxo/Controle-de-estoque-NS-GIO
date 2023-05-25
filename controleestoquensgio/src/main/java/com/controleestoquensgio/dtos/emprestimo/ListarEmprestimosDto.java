@@ -1,8 +1,13 @@
 package com.controleestoquensgio.dtos.emprestimo;
 
 import com.controleestoquensgio.models.EmprestimoModel;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Getter
+@Setter
 public class ListarEmprestimosDto {
 
     private int id;
@@ -23,70 +28,6 @@ public class ListarEmprestimosDto {
         this.isVigente = getIsVigente(emprestimoModel.isVigente());
         this.finalidade = emprestimoModel.getFinalidade();
         this.respEntrega = emprestimoModel.getRespEntrega().getNome();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getDataDisponibilizacao() {
-        return dataDisponibilizacao;
-    }
-
-    public void setDataDisponibilizacao(Date dataDisponibilizacao) {
-        this.dataDisponibilizacao = dataDisponibilizacao;
-    }
-
-    public Date getDataDevolucao() {
-        return dataDevolucao;
-    }
-
-    public void setDataDevolucao(Date dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
-
-    public String getColaborador() {
-        return colaborador;
-    }
-
-    public void setColaborador(String colaborador) {
-        this.colaborador = colaborador;
-    }
-
-    public String getEquipamento() {
-        return equipamento;
-    }
-
-    public void setEquipamento(String equipamento) {
-        this.equipamento = equipamento;
-    }
-
-    public String getIsVigente() {
-        return isVigente;
-    }
-
-    public void setIsVigente(String isVigente) {
-        this.isVigente = isVigente;
-    }
-
-    public String getFinalidade() {
-        return finalidade;
-    }
-
-    public void setFinalidade(String finalidade) {
-        this.finalidade = finalidade;
-    }
-
-    public String getRespEntrega() {
-        return respEntrega;
-    }
-
-    public void setRespEntrega(String respEntrega) {
-        this.respEntrega = respEntrega;
     }
 
     public String getIsVigente (boolean isVigente) {

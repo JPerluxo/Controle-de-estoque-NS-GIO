@@ -1,8 +1,13 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "TIPOS_EQUIPAMENTO")
 public class TipoEquipamentoModel {
 
@@ -26,40 +31,10 @@ public class TipoEquipamentoModel {
     @Column(name="teq_polegadas", nullable = false, length = 4)
     private String polegadas;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public String getPolegadas() {
-        return polegadas;
-    }
-    public void setPolegadas(String polegadas) {
-        this.polegadas = polegadas;
-    }
-    public String getFornecedor() {
-        return fornecedor;
-    }
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-    public String getModelo() {
-        return modelo;
-    }
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-    public String getMarca() {
-        return marca;
-    }
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    @Column(name="teq_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public TipoEquipamentoModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

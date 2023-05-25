@@ -1,6 +1,7 @@
 package com.controleestoquensgio.models;
 
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +29,10 @@ public class SetorModel {
     @Column(name="set_nivel", nullable = false, length = 50)
     private String nivel;
 
+    @Column(name="set_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public SetorModel () {
+        this.ativo = SimOuNao.SIM.name();
+    }
 }

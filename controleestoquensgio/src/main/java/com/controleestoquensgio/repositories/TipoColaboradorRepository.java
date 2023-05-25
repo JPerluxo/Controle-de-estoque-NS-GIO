@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TipoColaboradorRepository extends JpaRepository<TipoColaboradorModel, Integer>{
     Page<TipoColaboradorModel> findAll(Pageable pageable);
+    Page<TipoColaboradorModel> findAllByAtivo(Pageable pageable, String ativo);
 }

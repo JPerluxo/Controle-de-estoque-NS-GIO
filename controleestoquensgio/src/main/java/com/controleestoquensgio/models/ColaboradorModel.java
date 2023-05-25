@@ -1,5 +1,6 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,4 +46,10 @@ public class ColaboradorModel {
     @OneToOne
     private SetorModel nucleo;
 
+    @Column(name="col_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public ColaboradorModel () {
+        this.ativo = SimOuNao.SIM.name();
+    }
 }

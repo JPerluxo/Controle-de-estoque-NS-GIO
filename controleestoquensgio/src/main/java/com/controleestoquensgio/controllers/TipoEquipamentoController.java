@@ -6,6 +6,7 @@ import com.controleestoquensgio.dtos.tipoEquipamento.VisualizarTipoEquipamentoDt
 import com.controleestoquensgio.dtos.tipoEquipamento.ListarTipoEquipamentoDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 import com.controleestoquensgio.models.TipoEquipamentoModel;
 import com.controleestoquensgio.dtos.tipoEquipamento.TipoEquipamentoDto;
@@ -31,7 +32,7 @@ public class TipoEquipamentoController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoEquipamentoDto", tipoEquipamentoDto);
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable).map(ListarTipoEquipamentoDto::new));
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
             return "tipoEquipamento/cadastrarTipoEquipamento";
         }
 
@@ -61,7 +62,6 @@ public class TipoEquipamentoController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoEquipamentoDto", tipoEquipamentoDto);
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAll(pageable).map(ListarTipoEquipamentoDto::new));
             return "tipoEquipamento/atualizarTipoEquipamento";
         }
 
@@ -90,11 +90,8 @@ public class TipoEquipamentoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        Iterable<ListarTipoEquipamentoDto> listaDeTiposDeEquipamento = tipoEquipamentoService.findAll(pageable).map(ListarTipoEquipamentoDto::new);
-        TipoEquipamentoDto tipoDeEquipamento = new TipoEquipamentoDto();
-
-        model.addAttribute("listaDeTiposDeEquipamento", listaDeTiposDeEquipamento);
-        model.addAttribute("tipoEquipamentoDto", tipoDeEquipamento);
+        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
+        model.addAttribute("tipoEquipamentoDto", new TipoEquipamentoDto());
 
         return "tipoEquipamento/cadastrarTipoEquipamento";
     }

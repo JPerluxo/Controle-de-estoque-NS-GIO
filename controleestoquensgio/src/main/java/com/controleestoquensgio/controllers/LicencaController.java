@@ -11,6 +11,7 @@ import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -34,7 +35,7 @@ public class LicencaController {
 
         if (result.hasErrors()) {
             model.addAttribute("licencaDto", licencaDto);
-            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
+            model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
             return "licenca/cadastrarLicenca";
         }
 
@@ -64,7 +65,7 @@ public class LicencaController {
 
         if (result.hasErrors()) {
             model.addAttribute("licencaDto", licencaDto);
-            model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
+            model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
             return "licenca/atualizarLicenca";
         }
 
@@ -93,7 +94,7 @@ public class LicencaController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
+        model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
         model.addAttribute("licencaDto", new LicencaDto());
 
         return "licenca/cadastrarLicenca";

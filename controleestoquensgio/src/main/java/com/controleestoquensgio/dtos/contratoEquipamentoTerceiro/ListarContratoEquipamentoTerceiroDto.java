@@ -14,11 +14,12 @@ public class ListarContratoEquipamentoTerceiroDto {
     private String fornecedor;
     private Date dataInicio;
     private Date dataFinal;
-
+    private String ativo;
     public ListarContratoEquipamentoTerceiroDto(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiroModel) {
         this.id = contratoEquipamentoTerceiroModel.getId();
         this.fornecedor = contratoEquipamentoTerceiroModel.getFornecedor();
         this.dataInicio = contratoEquipamentoTerceiroModel.getDataInicio();
         this.dataFinal = contratoEquipamentoTerceiroModel.getDataFinal();
+        this.ativo = contratoEquipamentoTerceiroModel.getAtivo();
     }
 }

@@ -13,12 +13,13 @@ public class ListarLocalizacaoDto {
     private String andar;
     private String lado;
     private String referencia;
-
+    private String ativo;
     public ListarLocalizacaoDto(LocalizacaoModel localizacaoModel) {
         this.id = localizacaoModel.getId();
         this.predio = localizacaoModel.getPredio();
         this.andar = localizacaoModel.getAndar();
         this.lado = localizacaoModel.getLado();
         this.referencia = localizacaoModel.getReferencia();
+        this.ativo = localizacaoModel.getAtivo();
     }
 }

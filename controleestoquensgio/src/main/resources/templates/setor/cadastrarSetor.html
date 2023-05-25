@@ -23,7 +23,8 @@
           Descriçao:  <span th:text="${setor.descricao}"></span>
           Responsável:     <span th:text="${setor.responsavel}"></span>
           Nível: <span th:text="${setor.nivel}"></span>
-
+          Ativo:           <span th:text="${setor.ativo}"></span>
+          
           <form action="#" th:action="@{setores/delete/{id}(id=${setor.id})}" method="post">
             <button type="submit"> Deletar </button>
           </form>

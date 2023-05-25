@@ -15,8 +15,8 @@ import com.controleestoquensgio.services.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.NivelSetores;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -133,7 +133,7 @@ public class ColaboradorController {
     private void setDominios(Pageable pageable, Model model, Boolean getAllColaboradoresToo) {
 
         if (getAllColaboradoresToo) {
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
         }
 
         model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));

@@ -2,9 +2,14 @@ package com.controleestoquensgio.models;
 
 import java.sql.Date;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "NOTAS_FISCAIS")
 public class NotaFiscalModel {
 
@@ -19,22 +24,10 @@ public class NotaFiscalModel {
     @Column(name="nof_dt")
     private Date data;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public void setData(Date data) {
-        this.data = data;
-    }
-    public Date getData() {
-        return data;
-    }
-    public String getNumero() {
-        return numero;
-    }
-    public void setNumero(String numero) {
-        this.numero = numero;
+    @Column(name="nof_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public NotaFiscalModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

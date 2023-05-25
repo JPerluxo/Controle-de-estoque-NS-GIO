@@ -14,6 +14,7 @@ public class ListarSetorDto {
     private String descricao;
     private String responsavel;
     private String nivel;
+    private String ativo;
 
     public ListarSetorDto(SetorModel setorModel) {
         this.id = setorModel.getId();
@@ -21,6 +22,7 @@ public class ListarSetorDto {
         this.descricao = setorModel.getDescricao();
         this.responsavel = setorModel.getResponsavel().getNome();
         this.nivel = getNivelDescricao(setorModel.getNivel());
+        this.ativo = setorModel.getAtivo();
     }
 
     public String getNivelDescricao (String nivel) {

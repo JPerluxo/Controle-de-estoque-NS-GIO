@@ -10,9 +10,10 @@ public class ListarTipoAcessoDto {
 
     private int id;
     private String descricao;
-
+    private String ativo;
     public ListarTipoAcessoDto(TipoAcessoModel tipoAcessoModel) {
         this.id = tipoAcessoModel.getId();
         this.descricao = tipoAcessoModel.getDescricao();
+        this.ativo = tipoAcessoModel.getAtivo();
     }
 }

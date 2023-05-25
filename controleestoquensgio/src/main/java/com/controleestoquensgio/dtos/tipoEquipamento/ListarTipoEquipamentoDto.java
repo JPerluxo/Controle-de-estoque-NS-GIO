@@ -14,6 +14,7 @@ public class ListarTipoEquipamentoDto {
     private String modelo;
     private String fornecedor;
     private String polegadas;
+    private String ativo;
 
     public ListarTipoEquipamentoDto(TipoEquipamentoModel tipoEquipamentoModel) {
         this.id = tipoEquipamentoModel.getId();
@@ -22,5 +23,6 @@ public class ListarTipoEquipamentoDto {
         this.modelo = tipoEquipamentoModel.getModelo();
         this.fornecedor = tipoEquipamentoModel.getFornecedor();
         this.polegadas = tipoEquipamentoModel.getPolegadas();
+        this.ativo = tipoEquipamentoModel.getAtivo();
     }
 }

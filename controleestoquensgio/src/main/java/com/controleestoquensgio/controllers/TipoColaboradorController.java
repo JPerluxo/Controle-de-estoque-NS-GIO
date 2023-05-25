@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.controleestoquensgio.dtos.tipoColaborador.ListarTipoColaboradorDto;
 import com.controleestoquensgio.dtos.tipoColaborador.VisualizarTipoColaboradorDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.tipoColaborador.TipoColaboradorDto;
@@ -33,7 +34,7 @@ public class TipoColaboradorController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoColaboradorDto", tipoColaboradorDto);
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable).map(ListarTipoColaboradorDto::new));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
             return "tipoColaborador/cadastrarTipoColaborador";
         }
 
@@ -63,7 +64,7 @@ public class TipoColaboradorController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoColaboradorDto", tipoColaboradorDto);
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable).map(ListarTipoColaboradorDto::new));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
             return "tipoColaborador/atualizarTipoColaborador";
         }
 
@@ -92,7 +93,7 @@ public class TipoColaboradorController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAll(pageable).map(ListarTipoColaboradorDto::new));
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
         model.addAttribute("tipoColaboradorDto", new TipoColaboradorDto());
 
         return "tipoColaborador/cadastrarTipoColaborador";

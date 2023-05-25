@@ -3,9 +3,14 @@ package com.controleestoquensgio.models;
 
 import java.util.Set;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "IMAGENS")
 public class ImagemModel {
 
@@ -20,28 +25,17 @@ public class ImagemModel {
     @ManyToMany
     private Set<ProgramaModel> programas;
 
-    public int getId() {
-        return id;
-    }  
-    public void setId(int id) {
-        this.id = id;
+    @Column(name="img_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public ImagemModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+
     public void addPrograma (ProgramaModel programa) {
         this.programas.add(programa);
     }
     public void removePrograma (ProgramaModel programa) {
         this.programas.remove(programa);
-    }
-    public Set<ProgramaModel> getProgramas() {
-        return programas;
-    }
-    public void setProgramas(Set<ProgramaModel> programas) {
-        this.programas = programas;
     }
 }

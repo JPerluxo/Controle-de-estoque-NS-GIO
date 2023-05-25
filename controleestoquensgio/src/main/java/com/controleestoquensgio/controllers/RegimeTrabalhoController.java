@@ -10,6 +10,7 @@ import com.controleestoquensgio.services.RegimeTrabalhoService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 
+import com.controleestoquensgio.util.SimOuNao;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,7 @@ public class RegimeTrabalhoController {
 
         if (result.hasErrors()) {
             model.addAttribute("regimeTrabalhoDto", regimeTrabalhoDto);
-            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarRegimeTrabalhoDto::new));
             return "regimeTrabalho/cadastrarRegimeTrabalho";
         }
 
@@ -63,7 +64,7 @@ public class RegimeTrabalhoController {
 
         if (result.hasErrors()) {
             model.addAttribute("regimeTrabalhoDto", regimeTrabalhoDto);
-            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
+            model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarRegimeTrabalhoDto::new));
             return "regimeTrabalho/atualizarRegimeTrabalho";
         }
 
@@ -92,7 +93,7 @@ public class RegimeTrabalhoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarRegimeTrabalhoDto::new));
         model.addAttribute("regimeTrabalhoDto", new RegimeTrabalhoDto());
 
         return "regimeTrabalho/cadastrarRegimeTrabalho";

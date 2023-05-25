@@ -7,6 +7,7 @@ import com.controleestoquensgio.models.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.models.OcorrenciaModel;
@@ -73,6 +74,10 @@ public class OcorrenciaService {
         return ocorrenciaRpt.findAll(pageable);
     }
 
+    public Page<OcorrenciaModel> findAllAtivo(Pageable pageable, String ativo) {
+        return ocorrenciaRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<OcorrenciaModel> findById(Integer id) {
         return ocorrenciaRpt.findById(id);
     }
@@ -89,7 +94,10 @@ public class OcorrenciaService {
             );
         }
 
-        ocorrenciaRpt.delete(ocorrenciaModelOptional.get());
+        OcorrenciaModel ocorrenciaModel = ocorrenciaModelOptional.get();
+        ocorrenciaModel.setAtivo(SimOuNao.NAO.name());
+
+        ocorrenciaRpt.save(ocorrenciaModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

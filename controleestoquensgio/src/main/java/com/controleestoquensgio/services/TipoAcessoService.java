@@ -3,9 +3,12 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.models.TipoEquipamentoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.TipoAcessoRepository;
@@ -37,6 +40,10 @@ public class TipoAcessoService {
         return tipoAcessoRpt.findAll(pageable);
     }
 
+    public Page<TipoAcessoModel> findAllAtivo(Pageable pageable, String ativo) {
+        return tipoAcessoRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<TipoAcessoModel> findById(Integer id) {
         return tipoAcessoRpt.findById(id);
     }
@@ -53,7 +60,10 @@ public class TipoAcessoService {
             );
         }
 
-        tipoAcessoRpt.delete(tipoAcessoModelOptional.get());
+        TipoAcessoModel tipoAcessoModel = tipoAcessoModelOptional.get();
+        tipoAcessoModel.setAtivo(SimOuNao.NAO.name());
+
+        tipoAcessoRpt.save(tipoAcessoModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

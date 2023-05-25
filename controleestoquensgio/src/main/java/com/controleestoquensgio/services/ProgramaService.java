@@ -5,9 +5,12 @@ import java.util.Optional;
 import com.controleestoquensgio.dtos.programa.ProgramaDto;
 import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.models.ProgramaModel;
+import com.controleestoquensgio.models.ProgramaModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.ProgramaRepository;
@@ -66,6 +69,10 @@ public class ProgramaService {
         return programaRpt.findAll(pageable);
     }
 
+    public Page<ProgramaModel> findAllAtivo(Pageable pageable, String ativo) {
+        return programaRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<ProgramaModel> findById(Integer id) {
         return programaRpt.findById(id);
     }
@@ -82,7 +89,10 @@ public class ProgramaService {
             );
         }
 
-        programaRpt.delete(programaModelOptional.get());
+        ProgramaModel programaModel = programaModelOptional.get();
+        programaModel.setAtivo(SimOuNao.NAO.name());
+
+        programaRpt.save(programaModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

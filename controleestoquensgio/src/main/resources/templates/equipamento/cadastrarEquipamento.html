@@ -19,13 +19,14 @@
         <p>
         <div>
 
-          Número de série:   <span th:text="${equipamento.serial}"></span>
-          Número de patrimonio:   <span th:text="${equipamento.numPatrimonio}"></span>
-          Observacao:   <span th:text="${equipamento.observacao}"></span>
-          Tipo de Equipamento:   <span th:text="${equipamento.tipoEquipamento}"></span>
-          Nota fiscal:   <span th:text="${equipamento.notaFiscal}"></span>
-          Localizacao:   <span th:text="${equipamento.localizacao}"></span>
-          Contrato de equipamento de terceiro:   <span th:text="${equipamento.contratoDeEquipamentoDeTerceiro}"></span>
+        Número de série:                       <span th:text="${equipamento.serial}"></span>
+        Número de patrimonio:                  <span th:text="${equipamento.numPatrimonio}"></span>
+        Observacao:                            <span th:text="${equipamento.observacao}"></span>
+        Tipo de Equipamento:                   <span th:text="${equipamento.tipoEquipamento}"></span>
+        Nota fiscal:                           <span th:text="${equipamento.notaFiscal}"></span>
+        Localizacao:                           <span th:text="${equipamento.localizacao}"></span>
+        Contrato de equipamento de terceiro:   <span th:text="${equipamento.contratoDeEquipamentoDeTerceiro}"></span>
+        Ativo:                                 <span th:text="${equipamento.ativo}"></span>
 
           <form action="#" th:action="@{equipamentos/delete/{id}(id=${equipamento.id})}" method="post">
             <button type="submit"> Deletar </button>

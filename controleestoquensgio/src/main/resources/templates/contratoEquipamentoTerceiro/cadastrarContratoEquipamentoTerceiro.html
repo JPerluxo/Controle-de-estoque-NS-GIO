@@ -19,9 +19,10 @@
         <p>
         <div>
 
-          Data final:  <span th:text="${contratoEquipamentoTerceiro.dataFinal}"></span>
-          Data Inicio: <span th:text="${contratoEquipamentoTerceiro.dataInicio}"></span>
-          Fornecedor:  <span th:text="${contratoEquipamentoTerceiro.fornecedor}"></span>
+        Data final:  <span th:text="${contratoEquipamentoTerceiro.dataFinal}"></span>
+        Data Inicio: <span th:text="${contratoEquipamentoTerceiro.dataInicio}"></span>
+        Fornecedor:  <span th:text="${contratoEquipamentoTerceiro.fornecedor}"></span>
+        Ativo:       <span th:text="${contratoEquipamentoTerceiro.ativo}"></span>
 
           <form action="#" th:action="@{contratosDeEquipamentoDeTerceiro/delete/{id}(id=${contratoEquipamentoTerceiro.id})}" method="post">
             <button type="submit"> Deletar </button>

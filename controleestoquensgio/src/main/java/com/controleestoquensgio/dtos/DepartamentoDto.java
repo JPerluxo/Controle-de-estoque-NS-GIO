@@ -3,7 +3,11 @@ package com.controleestoquensgio.dtos;
 import jakarta.validation.constraints.NotBlank;
 
 import com.controleestoquensgio.models.ColaboradorModel;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public abstract class DepartamentoDto{
     
     @NotBlank(message = "Informe uma descrição!")
@@ -14,23 +18,4 @@ public abstract class DepartamentoDto{
     
     @NotBlank
     protected ColaboradorModel responsavel;
-
-    public String getDescricao() {
-        return descricao;
-    }
-    public ColaboradorModel getResponsavel() {
-        return responsavel;
-    }
-    public void setResponsavel(ColaboradorModel responsavel) {
-        this.responsavel = responsavel;
-    }
-    public String getSigla() {
-        return sigla;
-    }
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    } 
 }

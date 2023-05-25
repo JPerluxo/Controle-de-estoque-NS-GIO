@@ -19,12 +19,13 @@
         <p>
         <div>
 
-          Registro de funcionário (RF):   <span th:text="${colaborador.rf}"></span>
-          Nome:   <span th:text="${colaborador.nome}"></span>
-          Imagem:   <span th:text="${colaborador.imagem}"></span>
-          Tipo de Acesso:   <span th:text="${colaborador.tipoAcesso}"></span>
-          Tipo de Colaborador:   <span th:text="${colaborador.tipoColaborador}"></span>
-          Regime de Trabalho:   <span th:text="${colaborador.regimeTrabalho}"></span>
+        Registro de funcionário (RF):   <span th:text="${colaborador.rf}"></span>
+        Nome:                           <span th:text="${colaborador.nome}"></span>
+        Imagem:                         <span th:text="${colaborador.imagem}"></span>
+        Tipo de Acesso:                 <span th:text="${colaborador.tipoAcesso}"></span>
+        Tipo de Colaborador:            <span th:text="${colaborador.tipoColaborador}"></span>
+        Regime de Trabalho:             <span th:text="${colaborador.regimeTrabalho}"></span>
+        Ativo:                          <span th:text="${colaborador.ativo}"></span>
 
           <form action="#" th:action="@{colaboradores/delete/{id}(id=${colaborador.id})}" method="post">
             <button type="submit"> Deletar </button>

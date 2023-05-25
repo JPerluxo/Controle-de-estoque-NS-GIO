@@ -4,6 +4,7 @@ import com.controleestoquensgio.dtos.setor.SetorDto;
 import com.controleestoquensgio.models.ColaboradorModel;
 import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.models.SetorModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.repositories.ColaboradorRepository;
 import com.controleestoquensgio.repositories.SetorRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -62,6 +63,10 @@ public class SetorService {
 
     public Page<SetorModel> findAll(Pageable pageable) {
         return setorRpt.findAll(pageable);
+    }
+
+    public Page<SetorModel> findAllAtivo(Pageable pageable, String ativo) {
+        return setorRpt.findAllByAtivo(pageable, ativo);
     }
 
     public Page<SetorModel> findAllByNivel(Pageable pageable, String nivel) {

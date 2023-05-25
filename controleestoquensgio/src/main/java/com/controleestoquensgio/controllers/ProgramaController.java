@@ -6,6 +6,7 @@ import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
 import com.controleestoquensgio.dtos.licenca.ListarLicencaDto;
 import com.controleestoquensgio.dtos.programa.VisualizarProgramaDto;
 import com.controleestoquensgio.services.LicencaService;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.programa.ProgramaDto;
@@ -41,7 +42,7 @@ public class ProgramaController {
 
         if (result.hasErrors()) {
             model.addAttribute("programaDto", programaDto);
-            model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
+            model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
             model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
             return "programa/cadastrarPrograma";
         }
@@ -72,7 +73,7 @@ public class ProgramaController {
 
         if (result.hasErrors()) {
             model.addAttribute("programaDto", programaDto);
-            model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
+            model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
             model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
             return "programa/atualizarPrograma";
         }
@@ -102,7 +103,7 @@ public class ProgramaController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
+        model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
         model.addAttribute("listaDeLicencas", licencaSvc.findAll(pageable).map(ListarLicencaDto::new));
         model.addAttribute("programaDto", new ProgramaDto());
 

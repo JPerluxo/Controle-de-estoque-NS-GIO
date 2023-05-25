@@ -11,6 +11,7 @@ import com.controleestoquensgio.models.OcorrenciaModel;
 import com.controleestoquensgio.services.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 import com.controleestoquensgio.services.OcorrenciaService;
 
@@ -42,7 +43,7 @@ public class OcorrenciaController {
 
         if (result.hasErrors()) {
             model.addAttribute("ocorrenciaDto", ocorrenciaDto);
-            model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAll(pageable).map(ListarOcorrenciasDto::new));
+            model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarOcorrenciasDto::new));
             model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
             model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
             return "ocorrencia/cadastrarOcorrencia";
@@ -105,7 +106,7 @@ public class OcorrenciaController {
     public String getAll(Pageable pageable, Model model) {
 
         model.addAttribute("ocorrenciaDto", new OcorrenciaDto());
-        model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAll(pageable).map(ListarOcorrenciasDto::new));
+        model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarOcorrenciasDto::new));
         model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
         model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
 

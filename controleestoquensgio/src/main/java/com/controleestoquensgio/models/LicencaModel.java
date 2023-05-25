@@ -5,9 +5,14 @@
 
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "LICENCAS")
 public class LicencaModel {
     
@@ -19,17 +24,10 @@ public class LicencaModel {
     @Column(name="lic_descricao", nullable = false, length = 50)
     private String  descricao;
 
-    
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public void setDescricao (String descricao){
-        this.descricao = descricao;
-    }
-    public String getDescricao (){
-        return this.descricao;
+    @Column(name="lic_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public LicencaModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

@@ -3,11 +3,12 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.TipoColaboradorModel;
+import com.controleestoquensgio.models.TipoEquipamentoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import com.controleestoquensgio.repositories.TipoColaboradorRepository;
-
+import com.controleestoquensgio.util.SimOuNao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,10 @@ public class TipoColaboradorService {
         return tipoColaboradorRpt.findAll(pageable);
     }
 
+    public Page<TipoColaboradorModel> findAllAtivo(Pageable pageable, String ativo) {
+        return tipoColaboradorRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<TipoColaboradorModel> findById(Integer id) {
         return tipoColaboradorRpt.findById(id);
     }
@@ -52,7 +57,10 @@ public class TipoColaboradorService {
             );
         }
 
-        tipoColaboradorRpt.delete(tipoColaboradorModelOptional.get());
+        TipoColaboradorModel tipoColaboradorModel = tipoColaboradorModelOptional.get();
+        tipoColaboradorModel.setAtivo(SimOuNao.NAO.name());
+
+        tipoColaboradorRpt.save(tipoColaboradorModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

@@ -19,7 +19,8 @@
         <p>
         <div>
 
-          Descricao:  <span th:text="${imagem.descricao}"></span>
+        Descricao:  <span th:text="${imagem.descricao}"></span>
+        Ativo:      <span th:text="${imagem.ativo}"></span>
 
           <form action="#" th:action="@{imagens/delete/{id}(id=${imagem.id})}" method="post">
             <button type="submit"> Deletar </button>

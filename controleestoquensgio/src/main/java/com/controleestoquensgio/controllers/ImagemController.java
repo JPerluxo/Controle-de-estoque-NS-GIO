@@ -13,6 +13,7 @@ import com.controleestoquensgio.services.ImagemService;
 import com.controleestoquensgio.services.ProgramaService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -42,7 +43,7 @@ public class ImagemController {
 
         if (result.hasErrors()) {
             model.addAttribute("criarImagemDto", criarImagemDto);
-            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+            model.addAttribute("listaDeImagens", imagemSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarImagemDto::new));
             return "imagem/cadastrarImagem";
         }
 
@@ -73,7 +74,7 @@ public class ImagemController {
         if (result.hasErrors()) {
             model.addAttribute("criarImagemDto", criarImagemDto);
             model.addAttribute("addProgramaNaImagemDto", new AddProgramaNaImagemDto(id));
-            model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+            model.addAttribute("listaDeImagens", imagemSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarImagemDto::new));
             return "imagem/atualizarImagem";
         }
 
@@ -130,7 +131,7 @@ public class ImagemController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
+        model.addAttribute("listaDeImagens", imagemSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarImagemDto::new));
         model.addAttribute("criarImagemDto",new CriarImagemDto());
 
         return "imagem/cadastrarImagem";

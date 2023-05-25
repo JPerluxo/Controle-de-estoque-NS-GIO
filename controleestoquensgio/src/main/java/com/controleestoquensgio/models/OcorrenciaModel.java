@@ -1,8 +1,13 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "OCORRENCIAS")
 public class OcorrenciaModel {
 
@@ -23,34 +28,10 @@ public class OcorrenciaModel {
     @ManyToOne
     private ColaboradorModel colaborador;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getOs() {
-        return os;
-    }
-    public void setOs(String os) {
-        this.os = os;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-    public EquipamentoModel getEquipamento() {
-        return equipamento;
-    }
-    public void setEquipamento(EquipamentoModel equipamento) {
-        this.equipamento = equipamento;
-    }
-    public ColaboradorModel getColaborador() {
-        return colaborador;
-    }
-    public void setColaborador(ColaboradorModel colaborador) {
-        this.colaborador = colaborador;
+    @Column(name="oco_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public OcorrenciaModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

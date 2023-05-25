@@ -3,9 +3,12 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.NotaFiscalModel;
+import com.controleestoquensgio.models.NotaFiscalModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.NotaFiscalRepository;
@@ -37,6 +40,10 @@ public class NotaFiscalService {
         return notaFiscalRpt.findAll(pageable);
     }
 
+    public Page<NotaFiscalModel> findAllAtivo(Pageable pageable, String ativo) {
+        return notaFiscalRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<NotaFiscalModel> findById(Integer id) {
         return notaFiscalRpt.findById(id);
     }
@@ -53,7 +60,10 @@ public class NotaFiscalService {
             );
         }
 
-        notaFiscalRpt.delete(notaFiscalModelOptional.get());
+        NotaFiscalModel notaFiscalModel = notaFiscalModelOptional.get();
+        notaFiscalModel.setAtivo(SimOuNao.NAO.name());
+
+        notaFiscalRpt.save(notaFiscalModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

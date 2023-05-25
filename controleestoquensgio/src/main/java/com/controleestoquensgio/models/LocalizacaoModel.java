@@ -1,8 +1,13 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "LOCALIZACOES")
 public class LocalizacaoModel {
 
@@ -23,34 +28,10 @@ public class LocalizacaoModel {
     @Column(name="loc_referencia", nullable = true, length = 200)
     private String referencia;
 
-    public int getId() {
-        return id;
+    @Column(name="loc_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public LocalizacaoModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getPredio() {
-        return predio;
-    }
-    public String getReferencia() {
-        return referencia;
-    }
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
-    }
-    public String getLado() {
-        return lado;
-    }
-    public void setLado(String lado) {
-        this.lado = lado;
-    }
-    public String getAndar() {
-        return andar;
-    }
-    public void setAndar(String andar) {
-        this.andar = andar;
-    }
-    public void setPredio(String predio) {
-        this.predio = predio;
-    }      
 }

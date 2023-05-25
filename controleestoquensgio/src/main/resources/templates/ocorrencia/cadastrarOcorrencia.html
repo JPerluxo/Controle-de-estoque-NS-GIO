@@ -19,10 +19,11 @@
         <p>
         <div>
 
-          OS:              <span th:text="${ocorrencia.os}"></span>
-          Descriçao:       <span th:text="${ocorrencia.descricao}"></span>
-          Colaborador:     <span th:text="${ocorrencia.colaborador}"></span>
-          Equipamento:     <span th:text="${ocorrencia.equipamento}"></span>
+        OS:              <span th:text="${ocorrencia.os}"></span>
+        Descriçao:       <span th:text="${ocorrencia.descricao}"></span>
+        Colaborador:     <span th:text="${ocorrencia.colaborador}"></span>
+        Equipamento:     <span th:text="${ocorrencia.equipamento}"></span>
+        Ativo:           <span th:text="${ocorrencia.ativo}"></span>
 
           <form action="#" th:action="@{ocorrencias/delete/{id}(id=${ocorrencia.id})}" method="post">
             <button type="submit"> Deletar </button>

@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.controleestoquensgio.dtos.tipoAcesso.ListarTipoAcessoDto;
 import com.controleestoquensgio.dtos.tipoAcesso.VisualizarTipoAcessoDto;
 import com.controleestoquensgio.util.ErroOuSucesso;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.tipoAcesso.TipoAcessoDto;
@@ -33,7 +34,7 @@ public class TipoAcessoController {
         
         if (result.hasErrors()) {
             model.addAttribute("tipoAcessoDto", tipoAcessoDto);
-            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoAcessoDto::new));
             return "tipoAcesso/cadastrarTipoAcesso";
         }
         
@@ -63,7 +64,7 @@ public class TipoAcessoController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoAcessoDto", tipoAcessoDto);
-            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+            model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoAcessoDto::new));
             return "tipoAcesso/atualizarTipoAcesso";
         }
 
@@ -92,7 +93,7 @@ public class TipoAcessoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoAcessoDto::new));
         model.addAttribute("tipoAcessoDto", new TipoAcessoDto());
 
         return "tipoAcesso/cadastrarTipoAcesso";

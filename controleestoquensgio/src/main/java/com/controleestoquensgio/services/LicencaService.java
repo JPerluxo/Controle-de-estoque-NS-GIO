@@ -3,9 +3,12 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.LicencaModel;
+import com.controleestoquensgio.models.LicencaModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.LicencaRepository;
@@ -37,6 +40,10 @@ public class LicencaService {
         return licencaRpt.findAll(pageable);
     }
 
+    public Page<LicencaModel> findAllAtivo(Pageable pageable, String ativo) {
+        return licencaRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<LicencaModel> findById(Integer id) {
         return licencaRpt.findById(id);
     }
@@ -53,7 +60,10 @@ public class LicencaService {
             );
         }
 
-        licencaRpt.delete(licencaModelOptional.get());
+        LicencaModel licencaModel = licencaModelOptional.get();
+        licencaModel.setAtivo(SimOuNao.NAO.name());
+
+        licencaRpt.save(licencaModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

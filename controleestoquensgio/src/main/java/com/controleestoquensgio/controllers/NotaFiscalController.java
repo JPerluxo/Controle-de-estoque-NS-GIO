@@ -9,6 +9,7 @@ import com.controleestoquensgio.dtos.notaFiscal.VisualizarNotaFiscalDto;
 import com.controleestoquensgio.models.NotaFiscalModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 import com.controleestoquensgio.services.NotaFiscalService;
 import org.springframework.beans.BeanUtils;
@@ -32,7 +33,7 @@ public class NotaFiscalController {
 
         if (result.hasErrors()) {
             model.addAttribute("notaFiscalDto", notaFiscalDto);
-            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
+            model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarNotaFiscalDto::new));
             return "notaFiscal/cadastrarNotaFiscal";
         }
 
@@ -95,7 +96,7 @@ public class NotaFiscalController {
     public String getAll(Pageable pageable, Model model) {
 
         model.addAttribute("notaFiscalDto", new NotaFiscalDto());
-        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
+        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarNotaFiscalDto::new));
 
         return "notaFiscal/cadastrarNotaFiscal";
     }

@@ -19,7 +19,8 @@
         <p>
         <div>
 
-          Descricao:  <span th:text="${tipoAcesso.descricao}"></span>
+        Descricao:  <span th:text="${tipoAcesso.descricao}"></span>
+        Ativo:      <span th:text="${tipoAcesso.ativo}"></span>
 
           <form action="#" th:action="@{tiposDeAcesso/delete/{id}(id=${tipoAcesso.id})}" method="post">
             <button type="submit"> Deletar </button>

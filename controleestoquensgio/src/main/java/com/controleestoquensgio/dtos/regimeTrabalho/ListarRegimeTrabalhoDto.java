@@ -10,9 +10,10 @@ public class ListarRegimeTrabalhoDto {
 
     private int id;
     private String descricao;
-
+    private String ativo;
     public ListarRegimeTrabalhoDto(RegimeTrabalhoModel regimeTrabalhoModel) {
         this.id = regimeTrabalhoModel.getId();
         this.descricao = regimeTrabalhoModel.getDescricao();
+        this.ativo = regimeTrabalhoModel.getAtivo();
     }
 }

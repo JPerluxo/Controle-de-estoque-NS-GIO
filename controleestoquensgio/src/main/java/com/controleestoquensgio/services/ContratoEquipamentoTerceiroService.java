@@ -3,9 +3,12 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
+import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.ContratoEquipamentoTerceiroRepository;
@@ -36,6 +39,10 @@ public class ContratoEquipamentoTerceiroService {
         return contratoEquipamentoTerceiroRpt.findAll(pageable);
     }
 
+    public Page<ContratoEquipamentoTerceiroModel> findAllAtivo(Pageable pageable, String ativo) {
+        return contratoEquipamentoTerceiroRpt.findAllByAtivo(pageable, ativo);
+
+    }
     public Optional<ContratoEquipamentoTerceiroModel> findById(Integer id) {
         return contratoEquipamentoTerceiroRpt.findById(id);
     }
@@ -51,7 +58,10 @@ public class ContratoEquipamentoTerceiroService {
             );
         }
 
-        contratoEquipamentoTerceiroRpt.delete(contratoEquipamentoTerceiroModelOptional.get());
+        ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiroModel = contratoEquipamentoTerceiroModelOptional.get();
+        contratoEquipamentoTerceiroModel.setAtivo(SimOuNao.NAO.name());
+
+        contratoEquipamentoTerceiroRpt.save(contratoEquipamentoTerceiroModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(), Mensagens.operacaoBemSucedida()

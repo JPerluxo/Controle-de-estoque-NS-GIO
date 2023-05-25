@@ -1,8 +1,13 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "EQUIPAMENTOS")
 public class EquipamentoModel {
     
@@ -32,52 +37,10 @@ public class EquipamentoModel {
     @ManyToOne
     private ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getSerial() {
-        return serial;
-    }
-    public void setSerial(String serial) {
-        this.serial = serial;
-    }
-    public String getNumPatrimonio() {
-        return numPatrimonio;
-    }
-    public void setNumPatrimonio(String numPatrimonio) {
-        this.numPatrimonio = numPatrimonio;
-    }
-    public String getObservacao() {
-        return observacao;
-    }
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-    public TipoEquipamentoModel getTipoEquipamento() {
-        return tipoEquipamento;
-    }
-    public void setTipoEquipamento(TipoEquipamentoModel tipoEquipamento) {
-        this.tipoEquipamento = tipoEquipamento;
-    }
-    public NotaFiscalModel getNotaFiscal() {
-        return notaFiscal;
-    }
-    public void setNotaFiscal(NotaFiscalModel notaFiscal) {
-        this.notaFiscal = notaFiscal;
-    }
-    public LocalizacaoModel getLocalizacao() {
-        return localizacao;
-    }
-    public void setLocalizacao(LocalizacaoModel localizacao) {
-        this.localizacao = localizacao;
-    }
-    public ContratoEquipamentoTerceiroModel getContratoEquipamentoTerceiro() {
-        return contratoEquipamentoTerceiro;
-    }
-    public void setContratoEquipamentoTerceiro(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro) {
-        this.contratoEquipamentoTerceiro = contratoEquipamentoTerceiro;
+    @Column(name="eqp_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public EquipamentoModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

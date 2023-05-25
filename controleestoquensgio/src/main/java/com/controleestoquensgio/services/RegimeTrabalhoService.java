@@ -3,9 +3,12 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
+import com.controleestoquensgio.models.RegimeTrabalhoModel;
+import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.repositories.RegimeTrabalhoRepository;
@@ -37,6 +40,10 @@ public class RegimeTrabalhoService {
         return regimeTrabalhoRpt.findAll(pageable);
     }
 
+    public Page<RegimeTrabalhoModel> findAllAtivo(Pageable pageable, String ativo) {
+        return regimeTrabalhoRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<RegimeTrabalhoModel> findById(Integer id) {
         return regimeTrabalhoRpt.findById(id);
     }
@@ -53,7 +60,10 @@ public class RegimeTrabalhoService {
             );
         }
 
-        regimeTrabalhoRpt.delete(regimeTrabalhoModelOptional.get());
+        RegimeTrabalhoModel regimeTrabalhoModel = regimeTrabalhoModelOptional.get();
+        regimeTrabalhoModel.setAtivo(SimOuNao.NAO.name());
+
+        regimeTrabalhoRpt.save(regimeTrabalhoModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

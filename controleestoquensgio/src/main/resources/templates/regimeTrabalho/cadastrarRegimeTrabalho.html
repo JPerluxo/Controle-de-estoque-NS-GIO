@@ -19,7 +19,8 @@
         <p>
         <div>
 
-          Descricao:  <span th:text="${regimeTrabalho.descricao}"></span>
+        Descricao:  <span th:text="${regimeTrabalho.descricao}"></span>
+        Ativo:      <span th:text="${regimeTrabalho.ativo}"></span>
 
           <form action="#" th:action="@{regimesDeTrabalho/delete/{id}(id=${regimeTrabalho.id})}" method="post">
             <button type="submit"> Deletar </button>

@@ -15,9 +15,10 @@ public class ListarImagemDto {
 
     private int id;
     private String  descricao;
-
+    private String ativo;
     public ListarImagemDto (ImagemModel imagemModel) {
         this.id = imagemModel.getId();
         this.descricao = imagemModel.getDescricao();
+        this.ativo = imagemModel.getAtivo();
     }
 }

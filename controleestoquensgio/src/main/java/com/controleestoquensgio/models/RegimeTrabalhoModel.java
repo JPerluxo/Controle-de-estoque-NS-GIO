@@ -1,8 +1,13 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "REGIMES_TRABALHO")
 public class RegimeTrabalhoModel {
 
@@ -14,16 +19,9 @@ public class RegimeTrabalhoModel {
     @Column(name="rgt_descricao", nullable = false, length = 200)
     private String descricao;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    @Column(name="rgt_ativo", nullable = false, length = 4)
+    private String ativo;
+    public RegimeTrabalhoModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

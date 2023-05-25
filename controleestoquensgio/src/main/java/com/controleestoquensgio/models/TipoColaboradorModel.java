@@ -1,8 +1,13 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "TIPOS_COLABORADOR")
 public class TipoColaboradorModel {
 
@@ -13,17 +18,11 @@ public class TipoColaboradorModel {
 
     @Column(name="tco_descricao", nullable = false, length = 200)
     private String descricao;
-    
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+
+    @Column(name="tco_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public TipoColaboradorModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 } 

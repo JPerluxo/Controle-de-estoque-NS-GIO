@@ -19,7 +19,8 @@
         <p>
         <div>
 
-          Descricao:  <span th:text="${tipoColaborador.descricao}"></span>
+        Descricao:  <span th:text="${tipoColaborador.descricao}"></span>
+        Ativo:      <span th:text="${tipoColaborador.ativo}"></span>
 
           <form action="#" th:action="@{tiposDeColaborador/delete/{id}(id=${tipoColaborador.id})}" method="post">
             <button type="submit"> Deletar </button>

@@ -11,9 +11,10 @@ public class ListarLicencaDto {
 
     private int id;
     private String descricao;
-
+    private String ativo;
     public ListarLicencaDto(LicencaModel licencaModel) {
         this.id = licencaModel.getId();
         this.descricao = licencaModel.getDescricao();
+        this.ativo = licencaModel.getAtivo();
     }
 }

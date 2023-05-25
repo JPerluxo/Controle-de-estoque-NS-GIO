@@ -19,10 +19,11 @@
         <p>
         <div>
 
-          Descricao:  <span th:text="${localizacao.referencia}"></span>
-          Lado:       <span th:text="${localizacao.lado}"></span>
-          Andar:      <span th:text="${localizacao.andar}"></span>
-          Prédio:     <span th:text="${localizacao.predio}"></span>
+        Descricao:  <span th:text="${localizacao.referencia}"></span>
+        Lado:       <span th:text="${localizacao.lado}"></span>
+        Andar:      <span th:text="${localizacao.andar}"></span>
+        Prédio:     <span th:text="${localizacao.predio}"></span>
+        Ativo:      <span th:text="${localizacao.ativo}"></span>
 
           <form action="#" th:action="@{localizacoes/delete/{id}(id=${localizacao.id})}" method="post">
             <button type="submit"> Deletar </button>

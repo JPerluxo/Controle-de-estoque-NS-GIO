@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.controleestoquensgio.dtos.equipamento.EquipamentoDto;
 import com.controleestoquensgio.models.*;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -122,6 +123,10 @@ public class EquipamentoService {
         return equipamentoRpt.findAll(pageable);
     }
 
+    public Page<EquipamentoModel> findAllAtivo(Pageable pageable, String ativo) {
+        return equipamentoRpt.findAllByAtivo(pageable, ativo);
+    }
+
     public Optional<EquipamentoModel> findById(Integer id) {
         return equipamentoRpt.findById(id);
     }
@@ -138,7 +143,10 @@ public class EquipamentoService {
             );
         }
 
-        equipamentoRpt.delete(equipamentoModelOptional.get());
+        EquipamentoModel equipamentoModel = equipamentoModelOptional.get();
+        equipamentoModel.setAtivo(SimOuNao.NAO.name());
+
+        equipamentoRpt.save(equipamentoModel);
 
         return new Resultado(
                 ErroOuSucesso.SUCESSO.name(),

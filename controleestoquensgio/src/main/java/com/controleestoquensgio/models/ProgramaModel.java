@@ -1,8 +1,13 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table (name = "PROGRAMAS")
 public class ProgramaModel {
 
@@ -20,28 +25,10 @@ public class ProgramaModel {
     @ManyToOne
     private LicencaModel licenca;
 
-    public int getId() {
-        return id;
-    }  
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-    public LicencaModel getLicenca() {
-        return licenca;
-    }
-    public void setLicenca(LicencaModel licenca) {
-        this.licenca = licenca;
-    }
-    public String getObservacao() {
-        return observacao;
-    }
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
+    @Column(name="prg_ativo", nullable = false, length = 4)
+    private String ativo;
+
+    public ProgramaModel () {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

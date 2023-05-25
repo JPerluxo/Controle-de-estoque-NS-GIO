@@ -9,6 +9,7 @@ import com.controleestoquensgio.dtos.localizacao.ListarLocalizacaoDto;
 import com.controleestoquensgio.dtos.notaFiscal.ListarNotaFiscalDto;
 import com.controleestoquensgio.dtos.tipoEquipamento.ListarTipoEquipamentoDto;
 import com.controleestoquensgio.services.*;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 
 import com.controleestoquensgio.dtos.equipamento.EquipamentoDto;
@@ -48,7 +49,7 @@ public class EquipamentoController {
 
         if (result.hasErrors()) {
             model.addAttribute("equipamentoDto", equipamentoDto);
-            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
             model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable).map(ListarTipoEquipamentoDto::new));
             model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
             model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable).map(ListarLocalizacaoDto::new));
@@ -78,7 +79,7 @@ public class EquipamentoController {
 
         if (result.hasErrors()) {
             model.addAttribute("equipamentoDto", equipamentoDto);
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable).map(ListarTipoEquipamentoDto::new));
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
             model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
             model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable).map(ListarLocalizacaoDto::new));
             model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAll(pageable).map(ListarContratoEquipamentoTerceiroDto::new));
@@ -107,7 +108,7 @@ public class EquipamentoController {
     public String getAll(Pageable pageable, Model model) {
 
         model.addAttribute("equipamentoDto", new EquipamentoDto());
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
         model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAll(pageable).map(ListarTipoEquipamentoDto::new));
         model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAll(pageable).map(ListarNotaFiscalDto::new));
         model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAll(pageable).map(ListarLocalizacaoDto::new));

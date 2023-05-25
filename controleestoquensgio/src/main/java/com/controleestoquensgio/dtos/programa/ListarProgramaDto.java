@@ -1,7 +1,11 @@
 package com.controleestoquensgio.dtos.programa;
 
 import com.controleestoquensgio.models.ProgramaModel;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ListarProgramaDto {
 
     private int id;
@@ -11,45 +15,15 @@ public class ListarProgramaDto {
     private String observacao;
 
     private String licenca;
-
+    private String ativo;
     public ListarProgramaDto(ProgramaModel programaModel) {
         this.id = programaModel.getId();
         this.descricao = programaModel.getDescricao();
         this.observacao = programaModel.getObservacao();
         this.licenca = programaModel.getLicenca().getDescricao();
+        this.ativo = programaModel.getAtivo();
     }
 
     public ListarProgramaDto() {}
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getObservacao() {
-        return observacao;
-    }
-
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    public String getLicenca() {
-        return licenca;
-    }
-
-    public void setLicenca(String licenca) {
-        this.licenca = licenca;
-    }
 }

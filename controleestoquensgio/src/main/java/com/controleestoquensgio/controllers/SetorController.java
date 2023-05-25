@@ -9,6 +9,7 @@ import com.controleestoquensgio.services.ColaboradorService;
 import com.controleestoquensgio.services.SetorService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class SetorController {
 
         if (result.hasErrors()) {
             model.addAttribute("setorDto", setorDto);
-            model.addAttribute("listaDeSetores", setorSvc.findAll(pageable).map(ListarSetorDto::new));
+            model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
             model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
             return "setor/cadastrarSetor";
         }
@@ -70,7 +71,7 @@ public class SetorController {
 
         if (result.hasErrors()) {
             model.addAttribute("setorDto", setorDto);
-            model.addAttribute("listaDeSetores", setorSvc.findAll(pageable).map(ListarSetorDto::new));
+            model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
             model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
             return "setor/atualizarSetor";
         }
@@ -100,7 +101,7 @@ public class SetorController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeSetores", setorSvc.findAll(pageable).map(ListarSetorDto::new));
+        model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
         model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
         model.addAttribute("setorDto", new SetorDto());
 
