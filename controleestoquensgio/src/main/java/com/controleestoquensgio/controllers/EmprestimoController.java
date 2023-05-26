@@ -11,6 +11,7 @@ import com.controleestoquensgio.services.EmprestimoService;
 import com.controleestoquensgio.services.EquipamentoService;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
+import com.controleestoquensgio.util.SimOuNao;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -45,8 +46,8 @@ public class EmprestimoController {
         if (result.hasErrors()) {
             model.addAttribute("emprestimoDto", emprestimoDto);
             model.addAttribute("listaDeEmprestimos", emprestimoSvc.findAll(pageable).map(ListarEmprestimosDto::new));
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
-            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
             return "emprestimo/cadastrarEmprestimo";
         }
 
@@ -72,8 +73,8 @@ public class EmprestimoController {
 
         if (result.hasErrors()) {
             model.addAttribute("emprestimoDto", emprestimoDto);
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
-            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
             return "emprestimo/atualizarEmprestimo";
         }
 
@@ -101,8 +102,8 @@ public class EmprestimoController {
 
         model.addAttribute("emprestimoDto", new EmprestimoDto());
         model.addAttribute("listaDeEmprestimos", emprestimoSvc.findAll(pageable).map(ListarEmprestimosDto::new));
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
 
         return "emprestimo/cadastrarEmprestimo";
     }
@@ -122,8 +123,8 @@ public class EmprestimoController {
         }
 
         model.addAttribute("emprestimoDto", new VisualizarEmprestimoDto(emprestimoModelOptional.get()));
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
-        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAll(pageable).map(ListarEquipamentosDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
 
         return "emprestimo/atualizarEmprestimo";
     }

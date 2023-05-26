@@ -136,10 +136,10 @@ public class ColaboradorController {
             model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
         }
 
-        model.addAttribute("listaDeImagens", imagemSvc.findAll(pageable).map(ListarImagemDto::new));
-        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAll(pageable).map(ListarTipoAcessoDto::new));
-        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAll(pageable).map(ListarTipoColaboradorDto::new));
-        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAll(pageable).map(ListarRegimeTrabalhoDto::new));
+        model.addAttribute("listaDeImagens", imagemSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarImagemDto::new));
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoAcessoDto::new));
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarRegimeTrabalhoDto::new));
         model.addAttribute("listaDePresidencias", setorService.findAllByNivel(pageable, NivelSetores.PRESIDENCIA.name()).map(ListarSetorDto::new));
         model.addAttribute("listaDeDiretorias", setorService.findAllByNivel(pageable, NivelSetores.DIRETORIA.name()).map(ListarSetorDto::new));
         model.addAttribute("listaDeGerencias", setorService.findAllByNivel(pageable, NivelSetores.GERENCIA.name()).map(ListarSetorDto::new));

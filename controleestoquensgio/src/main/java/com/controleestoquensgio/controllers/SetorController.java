@@ -41,7 +41,7 @@ public class SetorController {
         if (result.hasErrors()) {
             model.addAttribute("setorDto", setorDto);
             model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
             return "setor/cadastrarSetor";
         }
 
@@ -71,8 +71,7 @@ public class SetorController {
 
         if (result.hasErrors()) {
             model.addAttribute("setorDto", setorDto);
-            model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
-            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+            model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
             return "setor/atualizarSetor";
         }
 
@@ -102,7 +101,7 @@ public class SetorController {
     public String getAll(Pageable pageable, Model model) {
 
         model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
         model.addAttribute("setorDto", new SetorDto());
 
         return "setor/cadastrarSetor";
@@ -123,7 +122,7 @@ public class SetorController {
         }
 
         model.addAttribute("setorDto", new VisualizarSetorDto(setorModelOptional.get()));
-        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAll(pageable).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
 
         return "setor/atualizarSetor";
     }

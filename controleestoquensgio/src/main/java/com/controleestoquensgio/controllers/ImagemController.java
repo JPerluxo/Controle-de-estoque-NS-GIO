@@ -105,7 +105,7 @@ public class ImagemController {
         if (result.hasErrors()) {
             addProgramaNaImagemDto.setImagemId(id);
             model.addAttribute("addProgramaNaImagemDto", addProgramaNaImagemDto);
-            model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
+            model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
             model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
             return "imagem/adicionarProgramaNaImagem";
         }
@@ -159,7 +159,7 @@ public class ImagemController {
     @GetMapping("/update/{id}/addPrograma")
     public String showFormAddProgramOnImage(@PathVariable(value = "id") int id, Model model, Pageable pageable) {
 
-        model.addAttribute("listaDeProgramas", programaSvc.findAll(pageable).map(ListarProgramaDto::new));
+        model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
         model.addAttribute("addProgramaNaImagemDto", new AddProgramaNaImagemDto(id));
         model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
 
