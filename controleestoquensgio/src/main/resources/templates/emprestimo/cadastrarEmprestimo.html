@@ -9,10 +9,11 @@
     </div>
 
     <div class="body">
-      Formulário
-      <form th:object="${emprestimoDto}" method="post">
+      <h4 id="body-title">Empréstimos</h4>
+      <form class="register-div" th:object="${emprestimoDto}" method="post">
         <div th:replace="~{emprestimo/layoutBaseEmprestimo :: form}"></div>
-        <button type="submit"> Salvar </button>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
+        <button id="submit-btn" type="submit"> Salvar </button>
       </form>
 
       <div th:each="emprestimo : ${listaDeEmprestimos}">

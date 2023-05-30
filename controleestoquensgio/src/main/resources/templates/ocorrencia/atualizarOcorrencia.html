@@ -5,11 +5,12 @@
     <div th:replace="~{layoutBase :: mensagem}"></div>
     <div th:replace="~{layoutBase :: menu}"></div>
 
-    Formulário
+    <h4 id="body-title">Ocorrências</h4>
 
-    <form th:object="${ocorrenciaDto}" method="post">
+    <form class="register-div" th:object="${ocorrenciaDto}" method="post">
       <div th:replace="~{ocorrencia/layoutBaseOcorrencia :: form}"></div>
-      <button type="submit"> Atualizar </button>
+      <h5 id="fields-message">*Campos obrigatórios</h5>
+        <button id="submit-btn" type="submit"> Atualizar </button>
     </form>
 
   </body>

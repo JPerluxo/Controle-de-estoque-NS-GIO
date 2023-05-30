@@ -9,11 +9,12 @@
     </div>
 
     <div class="body">
-      Formulário
+      <h4 id="body-title">Tipos de Colaborador</h4>
 
-      <form th:object="${tipoColaboradorDto}" method="post">
+      <form class="register-div" th:object="${tipoColaboradorDto}" method="post">
         <div th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: form}"></div>
-        <button type="submit"> Atualizar </button>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
+        <button id="submit-btn" type="submit"> Atualizar </button>
       </form>
     </div>
 

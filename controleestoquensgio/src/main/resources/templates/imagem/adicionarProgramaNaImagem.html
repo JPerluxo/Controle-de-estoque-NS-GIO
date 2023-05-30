@@ -9,14 +9,17 @@
     </div>
 
     <div class="body">
-      <form th:object="${addProgramaNaImagemDto}" method="post">
-        <select th:field="*{programaId}">
-          <option value="-1">Selecione...</option>
-          <option th:each="programa : ${listaDeProgramas}" th:value="${programa.id}" th:text="${programa.descricao}"/>
-        </select>
-        <div th:errors="*{programaId}">Erro programaId</div>
+      <form class="register-div" th:object="${addProgramaNaImagemDto}" method="post">
+        <div class="mb-3">
+          <label for="programaId" class="form-label register-label">Programa:</label>
+          <select th:field="*{programaId}" class="form-select" id="programaId">
+              <option value="-1">Selecione...</option>
+              <option th:each="programa : ${listaDeProgramas}" th:value="${programa.id}" th:text="${programa.descricao}"></option>
+          </select>
+          <div th:errors="*{programaId}" class="error-feedback">Erro programaId</div>
+        </div>
 
-        <button type="submit"> Adicionar </button>
+        <button id="submit-btn" type="submit"> Adicionar </button>
       </form>
 
       Programas:

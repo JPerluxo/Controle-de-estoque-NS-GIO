@@ -5,71 +5,93 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="/css/Body.css" rel="stylesheet"/>
     <link href="/css/Navbar.css" rel="stylesheet"/>
-    <title>Equipamentos</title>
+    <title>Colaborador</title>
 </head>
 
-<div th:fragment="form">
+<div class="register-form" th:fragment="form">
 
-    Registro de funcionário (RF):  <input th:field="*{rf}"  type="text">
-    <div th:errors="*{rf}">Erro rf</div>
+    <div class="mb-3">
+        <label for="rf" class="form-label register-label">*Registro de funcionário (RF):</label>
+        <input th:field="*{rf}" type="text" class="form-control" id="rf">
+        <div th:errors="*{rf}" class="error-feedback">Erro rf</div>
+    </div>
 
-    Nome:  <input th:field="*{nome}"  type="text">
-    <div th:errors="*{nome}">Erro nome</div>
+    <div class="mb-3">
+        <label for="nome" class="form-label register-label">*Nome:</label>
+        <input th:field="*{nome}" type="text" class="form-control" id="nome">
+        <div th:errors="*{nome}" class="error-feedback">Erro nome</div>
+    </div>
 
-    Imagem:
-    <select th:field="*{imagemId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="imagem : ${listaDeImagens}" th:value="${imagem.id}" th:text="${imagem.descricao}"/>
-    </select>
-    <div th:errors="*{imagemId}">Erro tipoEquipamentoId</div>
+    <div class="mb-3">
+        <label for="imagemId" class="form-label register-label">*Imagem:</label>
+        <select th:field="*{imagemId}" class="form-select" id="imagemId">
+            <option value="-1">Selecione...</option>
+            <option th:each="imagem : ${listaDeImagens}" th:value="${imagem.id}" th:text="${imagem.descricao}"></option>
+        </select>
+        <div th:errors="*{imagemId}" class="error-feedback">Erro imagemId</div>
+    </div>
 
-    Tipo de acesso:
-    <select th:field="*{tipoAcessoId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="tipoAcesso : ${listaDeTiposDeAcesso}" th:value="${tipoAcesso.id}" th:text="${tipoAcesso.descricao}"/>
-    </select>
-    <div th:errors="*{tipoAcessoId}">Erro notaFiscalId</div>
+    <div class="mb-3">
+        <label for="tipoAcessoId" class="form-label register-label">*Tipo de acesso:</label>
+        <select th:field="*{tipoAcessoId}" class="form-select" id="tipoAcessoId">
+            <option value="-1">Selecione...</option>
+            <option th:each="tipoAcesso : ${listaDeTiposDeAcesso}" th:value="${tipoAcesso.id}" th:text="${tipoAcesso.descricao}"></option>
+        </select>
+        <div th:errors="*{tipoAcessoId}" class="error-feedback">Erro tipoAcessoId</div>
+    </div>
 
-    Tipo de colaborador:
-    <select th:field="*{tipoColaboradorId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="tipoColaborador : ${listaDeTiposDeColaborador}" th:value="${tipoColaborador.id}" th:text="${tipoColaborador.descricao}"/>
-    </select>
-    <div th:errors="*{tipoColaboradorId}">Erro localizacaoId</div>
+    <div class="mb-3">
+        <label for="tipoColaboradorId" class="form-label register-label">*Tipo de colaborador:</label>
+        <select th:field="*{tipoColaboradorId}" class="form-select" id="tipoColaboradorId">
+            <option value="-1">Selecione...</option>
+            <option th:each="tipoColaborador : ${listaDeTiposDeColaborador}" th:value="${tipoColaborador.id}" th:text="${tipoColaborador.descricao}"></option>
+        </select>
+        <div th:errors="*{tipoColaboradorId}" class="error-feedback">Erro tipoColaboradorId</div>
+    </div>
 
-    Regime de trabalho:
-    <select th:field="*{regimeTrabalhoId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="regimeTrabalho : ${listaDeRegimesDeTrabalho}" th:value="${regimeTrabalho.id}" th:text="${regimeTrabalho.descricao}"/>
-    </select>
-    <div th:errors="*{regimeTrabalhoId}">Erro contratoEquipamentoTerceiroId</div>
+    <div class="mb-3">
+        <label for="regimeTrabalhoId" class="form-label register-label">*Regime de trabalho:</label>
+        <select th:field="*{regimeTrabalhoId}" class="form-select" id="regimeTrabalhoId">
+            <option value="-1">Selecione...</option>
+            <option th:each="regimeTrabalho : ${listaDeRegimesDeTrabalho}" th:value="${regimeTrabalho.id}" th:text="${regimeTrabalho.descricao}"></option>
+        </select>
+        <div th:errors="*{regimeTrabalhoId}" class="error-feedback">Erro regimeTrabalhoId</div>
+    </div>
 
-    Presidencia:
-    <select th:field="*{presidenciaId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="presidencia : ${listaDePresidencias}" th:value="${presidencia.id}" th:text="${presidencia.descricao}"/>
-    </select>
-    <div th:errors="*{presidenciaId}">Erro presidenciaId</div>
+    <div class="mb-3">
+        <label for="presidenciaId" class="form-label register-label">Presidencia:</label>
+        <select th:field="*{presidenciaId}" class="form-select" id="presidenciaId">
+            <option value="-1">Selecione...</option>
+            <option th:each="presidencia : ${listaDePresidencias}" th:value="${presidencia.id}" th:text="${presidencia.descricao}"></option>
+        </select>
+        <div th:errors="*{presidenciaId}" class="error-feedback">Erro presidenciaId</div>
+    </div>
 
-    Diretoria:
-    <select th:field="*{diretoriaId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="diretoria : ${listaDeDiretorias}" th:value="${diretoria.id}" th:text="${diretoria.descricao}"/>
-    </select>
-    <div th:errors="*{diretoriaId}">Erro diretoriaId</div>
+    <div class="mb-3">
+        <label for="diretoriaId" class="form-label register-label">Diretoria:</label>
+        <select th:field="*{diretoriaId}" class="form-select" id="diretoriaId">
+            <option value="-1">Selecione...</option>
+            <option th:each="diretoria : ${listaDeDiretorias}" th:value="${diretoria.id}" th:text="${diretoria.descricao}"></option>
+        </select>
+        <div th:errors="*{diretoriaId}" class="error-feedback">Erro diretoriaId</div>
+    </div>
 
-    Gerencia:
-    <select th:field="*{gerenciaId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="gerencia : ${listaDeGerencias}" th:value="${gerencia.id}" th:text="${gerencia.descricao}"/>
-    </select>
-    <div th:errors="*{gerenciaId}">Erro gerenciaId</div>
+    <div class="mb-3">
+        <label for="gerenciaId" class="form-label register-label">Gerencia:</label>
+        <select th:field="*{gerenciaId}" class="form-select" id="gerenciaId">
+            <option value="-1">Selecione...</option>
+            <option th:each="gerencia : ${listaDeGerencias}" th:value="${gerencia.id}" th:text="${gerencia.descricao}"></option>
+        </select>
+        <div th:errors="*{gerenciaId}" class="error-feedback">Erro gerenciaId</div>
+    </div>
 
-    Núcleo:
-    <select th:field="*{nucleoId}">
-        <option value="-1">Selecione...</option>
-        <option th:each="nucleo : ${listaDeNucleos}" th:value="${nucleo.id}" th:text="${nucleo.descricao}"/>
-    </select>
-    <div th:errors="*{nucleoId}">Erro nucleoId</div>
+    <div class="mb-3">
+        <label for="nucleoId" class="form-label register-label">Núcleo:</label>
+        <select th:field="*{nucleoId}" class="form-select" id="nucleoId">
+            <option value="-1">Selecione...</option>
+            <option th:each="nucleo : ${listaDeNucleos}" th:value="${nucleo.id}" th:text="${nucleo.descricao}"></option>
+        </select>
+        <div th:errors="*{nucleoId}" class="error-feedback">Erro nucleoId</div>
+    </div>
 </div>
 

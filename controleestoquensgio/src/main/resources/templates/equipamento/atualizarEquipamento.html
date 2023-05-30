@@ -13,6 +13,7 @@
 
       <form class="register-div" th:object="${equipamentoDto}" method="post">
         <div th:replace="~{equipamento/layoutBaseEquipamento :: form}"></div>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
         <button id="submit-btn" type="submit"> Atualizar </button>
       </form>
     </div>

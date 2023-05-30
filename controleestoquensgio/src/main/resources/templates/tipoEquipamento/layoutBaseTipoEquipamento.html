@@ -8,21 +8,36 @@
     <title>Tipo de equipamento</title>
 </head>
 
-<div th:fragment="form">
+<div class="register-form" th:fragment="form">
 
-    Descricao:  <input th:field="*{descricao}"  type="text">
-    <div th:errors="*{descricao}">Erro descricao</div>
-
-    Marca:      <input th:field="*{marca}"      type="text">
-    <div th:errors="*{marca}">Erro marca</div>
-
-    Modelo:     <input th:field="*{modelo}"     type="text">
-    <div th:errors="*{modelo}">Erro modelo</div>
-
-    Fornecedor: <input th:field="*{fornecedor}" type="text">
-    <div th:errors="*{fornecedor}">Erro fornecedor</div>
-
-    Polegadas:  <input th:field="*{polegadas}"  type="text">
-    <div th:errors="*{polegadas}">Erro polegadas</div>
+    <div class="mb-3">
+        <label for="descricao" class="form-label register-label">*Descrição:</label>
+        <input th:field="*{descricao}" type="text" class="form-control" id="descricao">
+        <div th:errors="*{descricao}" class="error-feedback">Erro descricao</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="marca" class="form-label register-label">*Marca:</label>
+        <input th:field="*{marca}" type="text" class="form-control" id="marca">
+        <div th:errors="*{marca}" class="error-feedback">Erro marca</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="modelo" class="form-label register-label">*Modelo:</label>
+        <input th:field="*{modelo}" type="text" class="form-control" id="modelo">
+        <div th:errors="*{modelo}" class="error-feedback">Erro modelo</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="fornecedor" class="form-label register-label">*Fornecedor:</label>
+        <input th:field="*{fornecedor}" type="text" class="form-control" id="fornecedor">
+        <div th:errors="*{fornecedor}" class="error-feedback">Erro fornecedor</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="polegadas" class="form-label register-label">Polegadas:</label>
+        <input th:field="*{polegadas}" type="text" class="form-control" id="polegadas">
+        <div th:errors="*{polegadas}" class="error-feedback">Erro polegadas</div>
+    </div>
 </div>
 

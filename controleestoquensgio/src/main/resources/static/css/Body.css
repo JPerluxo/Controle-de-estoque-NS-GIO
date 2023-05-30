@@ -45,3 +45,15 @@ body {
     font-weight: 500;
     justify-self: flex-end;
 }
+
+.error-feedback {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: var(--bs-form-invalid-color);
+}
+
+#fields-message {
+    font-size: small;
+    opacity: 0.6;
+}

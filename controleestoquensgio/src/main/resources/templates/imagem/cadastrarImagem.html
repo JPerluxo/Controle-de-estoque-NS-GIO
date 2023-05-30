@@ -9,10 +9,11 @@
     </div>
 
     <div class="body">
-      Formulário
-      <form th:object="${criarImagemDto}" method="post">
+      <h4 id="body-title">Imagens</h4>
+      <form class="register-div" th:object="${criarImagemDto}" method="post">
         <div th:replace="~{imagem/layoutBaseImagem :: form}"></div>
-        <button type="submit"> Salvar </button>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
+        <button id="submit-btn" type="submit"> Salvar </button>
       </form>
 
       <div th:each="imagem : ${listaDeImagens}">

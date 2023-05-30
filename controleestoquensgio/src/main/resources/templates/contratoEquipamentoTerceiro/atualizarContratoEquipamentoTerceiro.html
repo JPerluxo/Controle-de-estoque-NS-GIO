@@ -9,11 +9,12 @@
     </div>
 
     <div class="body">
-      Formulário
+      <h4 id="body-title">Contratos de equipamento de terceiros</h4>
 
-      <form th:object="${contratoEquipamentoTerceiroDto}" method="post">
+      <form class="register-div" th:object="${contratoEquipamentoTerceiroDto}" method="post">
         <div th:replace="~{contratoEquipamentoTerceiro/layoutBaseContratoEquipamentoTerceiro :: form}"></div>
-        <button type="submit"> Atualizar </button>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
+        <button id="submit-btn" type="submit"> Atualizar </button>
       </form>
     </div>
 

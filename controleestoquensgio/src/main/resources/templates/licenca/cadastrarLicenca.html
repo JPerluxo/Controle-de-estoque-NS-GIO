@@ -9,10 +9,11 @@
     </div>
 
     <div class="body">
-      Formulário
-      <form th:object="${licencaDto}" method="post">
+      <h4 id="body-title">Licenças</h4>
+      <form class="register-div" th:object="${licencaDto}" method="post">
         <div th:replace="~{licenca/layoutBaseLicenca :: form}"></div>
-        <button type="submit"> Salvar </button>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
+        <button id="submit-btn" type="submit"> Salvar </button>
       </form>
 
       <div th:each="licenca : ${listaDeLicencas}">

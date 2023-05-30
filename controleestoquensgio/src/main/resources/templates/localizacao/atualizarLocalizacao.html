@@ -9,11 +9,12 @@
     </div>
 
     <div class="body">
-      Formulário
+      <h4 id="body-title">Localizações</h4>
 
-      <form th:object="${localizacaoDto}" method="post">
+      <form class="register-div" th:object="${localizacaoDto}" method="post">
         <div th:replace="~{localizacao/layoutBaseLocalizacao :: form}"></div>
-        <button type="submit"> Atualizar </button>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
+        <button id="submit-btn" type="submit"> Atualizar </button>
       </form>
     </div>
 

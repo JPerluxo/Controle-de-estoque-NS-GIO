@@ -8,18 +8,30 @@
     <title>Localizacao</title>
 </head>
 
-<div th:fragment="form">
+<div class="register-form" th:fragment="form">
 
-    Descricao:  <input th:field="*{referencia}"  type="text">
-    <div th:errors="*{referencia}">Erro referencia</div>
-
-    Lado:  <input th:field="*{lado}"  type="text">
-    <div th:errors="*{lado}">Erro lado</div>
-
-    Andar:  <input th:field="*{andar}"  type="text">
-    <div th:errors="*{andar}">Erro andar</div>
-
-    Prédio:  <input th:field="*{predio}"  type="text">
-    <div th:errors="*{predio}">Erro predio</div>
+    <div class="mb-3">
+        <label for="referencia" class="form-label register-label">Descrição:</label>
+        <input th:field="*{referencia}" type="text" class="form-control" id="referencia">
+        <div th:errors="*{referencia}" class="error-feedback">Erro referencia</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="lado" class="form-label register-label">*Lado:</label>
+        <input th:field="*{lado}" type="text" class="form-control" id="lado">
+        <div th:errors="*{lado}" class="error-feedback">Erro lado</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="andar" class="form-label register-label">*Andar:</label>
+        <input th:field="*{andar}" type="text" class="form-control" id="andar">
+        <div th:errors="*{andar}" class="error-feedback">Erro andar</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="predio" class="form-label register-label">*Prédio:</label>
+        <input th:field="*{predio}" type="text" class="form-control" id="predio">
+        <div th:errors="*{predio}" class="error-feedback">Erro predio</div>
+    </div>    
 </div>
 

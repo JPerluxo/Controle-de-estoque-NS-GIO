@@ -8,16 +8,24 @@
     <title>Contrato de equipamento de terceiro</title>
 </head>
 
-<div th:fragment="form">
+<div class="register-form" th:fragment="form">
 
-    Data final:     <input th:field="*{dataFinal}"  type="date">
-    <div th:errors="*{dataFinal}">Erro dataFinal</div>
+    <div class="mb-3">
+        <label for="dataFinal" class="form-label register-label">*Data final:</label>
+        <input th:field="*{dataFinal}" type="date" class="form-control" id="dataFinal">
+        <div th:errors="*{dataFinal}" class="error-feedback">Erro dataFinal</div>
+    </div>
 
-    Data Inicio:    <input th:field="*{dataInicio}" type="date">
-    <div th:errors="*{dataInicio}">Erro dataInicio</div>
+    <div class="mb-3">
+        <label for="dataInicio" class="form-label register-label">*Data Inicio:</label>
+        <input th:field="*{dataInicio}" type="date" class="form-control" id="dataInicio">
+        <div th:errors="*{dataInicio}" class="error-feedback">Erro dataInicio</div>
+    </div>
 
-    Fornecedor:     <input th:field="*{fornecedor}" type="text">
-    <div th:errors="*{fornecedor}">Erro fornecedor</div>
-
+    <div class="mb-3">
+        <label for="fornecedor" class="form-label register-label">*Fornecedor:</label>
+        <input th:field="*{fornecedor}" type="text" class="form-control" id="fornecedor">
+        <div th:errors="*{fornecedor}" class="error-feedback">Erro fornecedor</div>
+    </div>
 </div>
 

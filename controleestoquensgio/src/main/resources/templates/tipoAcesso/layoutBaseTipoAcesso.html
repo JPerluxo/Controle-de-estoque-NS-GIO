@@ -8,8 +8,12 @@
     <title>Tipo de acesso</title>
 </head>
 
-<div th:fragment="form">
-    Descricao:  <input th:field="*{descricao}"  type="text">
-    <div th:errors="*{descricao}">Erro descricao</div>
+<div class="register-form" th:fragment="form">
+    
+    <div class="mb-3">
+        <label for="descricao" class="form-label register-label">*Descrição:</label>
+        <input th:field="*{descricao}" type="text" class="form-control" id="descricao">
+        <div th:errors="*{descricao}" class="error-feedback">Erro descricao</div>
+    </div>
 </div>
 

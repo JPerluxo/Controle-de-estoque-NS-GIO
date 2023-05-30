@@ -8,11 +8,18 @@
     <title>Nota Fiscal</title>
 </head>
 
-<div th:fragment="form">
-    Número:  <input th:field="*{numero}"  type="text">
-    <div th:errors="*{numero}">Erro numero</div>
-
-    Data:    <input th:field="*{data}" type="date">
-    <div th:errors="*{data}">Erro data</div>
+<div class="register-form" th:fragment="form">
+    
+    <div class="mb-3">
+        <label for="numero" class="form-label register-label">*Número:</label>
+        <input th:field="*{numero}" type="text" class="form-control" id="numero">
+        <div th:errors="*{numero}" class="error-feedback">Erro numero</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="data" class="form-label register-label">*Data:</label>
+        <input th:field="*{data}" type="date" class="form-control" id="data">
+        <div th:errors="*{data}" class="error-feedback">Erro data</div>
+    </div>
 </div>
 
