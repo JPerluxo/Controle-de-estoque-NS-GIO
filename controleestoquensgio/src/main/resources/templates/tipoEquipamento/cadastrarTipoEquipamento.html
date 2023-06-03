@@ -10,11 +10,19 @@
 
     <div class="body">
       <h4 id="body-title">Tipos de Equipamento</h4>
-      <form class="register-div" th:object="${tipoEquipamentoDto}" method="post">
+      <form class="register-div" th:object="${tipoEquipamentoDto}" method="post" th:action="@{/tiposDeEquipamento}">
         <div th:replace="~{tipoEquipamento/layoutBaseTipoEquipamento :: form}"></div>
         <h5 id="fields-message">*Campos obrigatórios</h5>
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
+
+      Filtros
+      <form class="register-div" th:object="${filtrarTipoEquipamentoDto}" method="post" th:action="@{/tiposDeEquipamento/filtrar}">
+        <div th:replace="~{tipoEquipamento/layoutBaseTipoEquipamento :: form}"></div>
+        <button id="submit-btn" type="submit"> Buscar </button>
+      </form>
+
+      Quantidade: <div th:text="${listaDeTiposDeEquipamento.getTotalElements}"></div>
 
       <div th:each="tipoEquipamento : ${listaDeTiposDeEquipamento}">
         <p>
@@ -27,11 +35,11 @@
         Polegadas:  <span th:text="${tipoEquipamento.polegadas}"></span>
         Ativo:      <span th:text="${tipoEquipamento.ativo}"></span>
 
-          <form action="#" th:action="@{tiposDeEquipamento/delete/{id}(id=${tipoEquipamento.id})}" method="post">
+          <form action="#" th:action="@{/tiposDeEquipamento/delete/{id}(id=${tipoEquipamento.id})}" method="post">
             <button type="submit"> Deletar </button>
           </form>
 
-          <form th:action="@{tiposDeEquipamento/update/{id}(id=${tipoEquipamento.id})}" method="get">
+          <form th:action="@{/tiposDeEquipamento/update/{id}(id=${tipoEquipamento.id})}" method="get">
             <button type="submit"> Editar </button>
           </form>
         </div>

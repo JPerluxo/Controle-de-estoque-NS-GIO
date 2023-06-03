@@ -10,11 +10,19 @@
 
     <div class="body">
       <h4 id="body-title">Ocorrências</h4>
-      <form class="register-div" th:object="${ocorrenciaDto}" method="post">
+      <form class="register-div" th:object="${ocorrenciaDto}" method="post" th:action="@{/ocorrencias}">
         <div th:replace="~{ocorrencia/layoutBaseOcorrencia :: form}"></div>
         <h5 id="fields-message">*Campos obrigatórios</h5>
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
+
+      Filtros
+      <form class="register-div" th:object="${filtrarOcorrenciaDto}" method="post" th:action="@{/ocorrencias/filtrar}">
+        <div th:replace="~{ocorrencia/layoutBaseOcorrencia :: form}"></div>
+        <button id="submit-btn" type="submit"> Buscar </button>
+      </form>
+
+      Quantidade: <div th:text="${listaDeOcorrencias.getTotalElements}"></div>
 
       <div th:each="ocorrencia : ${listaDeOcorrencias}">
         <p>
@@ -26,11 +34,11 @@
         Equipamento:     <span th:text="${ocorrencia.equipamento}"></span>
         Ativo:           <span th:text="${ocorrencia.ativo}"></span>
 
-          <form action="#" th:action="@{ocorrencias/delete/{id}(id=${ocorrencia.id})}" method="post">
+          <form action="#" th:action="@{/ocorrencias/delete/{id}(id=${ocorrencia.id})}" method="post">
             <button type="submit"> Deletar </button>
           </form>
 
-          <form th:action="@{ocorrencias/update/{id}(id=${ocorrencia.id})}" method="get">
+          <form th:action="@{/ocorrencias/update/{id}(id=${ocorrencia.id})}" method="get">
             <button type="submit"> Editar </button>
           </form>
         </div>

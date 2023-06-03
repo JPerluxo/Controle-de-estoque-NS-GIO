@@ -3,6 +3,9 @@ package com.controleestoquensgio.controllers;
 import com.controleestoquensgio.dtos.regimeTrabalho.ListarRegimeTrabalhoDto;
 import com.controleestoquensgio.dtos.regimeTrabalho.RegimeTrabalhoDto;
 import com.controleestoquensgio.dtos.regimeTrabalho.VisualizarRegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.regimeTrabalho.FiltrarRegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.regimeTrabalho.ListarRegimeTrabalhoDto;
+import com.controleestoquensgio.dtos.regimeTrabalho.RegimeTrabalhoDto;
 import com.controleestoquensgio.models.RegimeTrabalhoModel;
 import com.controleestoquensgio.services.RegimeTrabalhoService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -36,6 +39,7 @@ public class RegimeTrabalhoController {
         if (result.hasErrors()) {
             model.addAttribute("regimeTrabalhoDto", regimeTrabalhoDto);
             model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarRegimeTrabalhoDto::new));
+            model.addAttribute("filtrarRegimeTrabalhoDto", new FiltrarRegimeTrabalhoDto());
             return "regimeTrabalho/cadastrarRegimeTrabalho";
         }
 
@@ -96,6 +100,7 @@ public class RegimeTrabalhoController {
 
         model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarRegimeTrabalhoDto::new));
         model.addAttribute("regimeTrabalhoDto", new RegimeTrabalhoDto());
+        model.addAttribute("filtrarRegimeTrabalhoDto", new FiltrarRegimeTrabalhoDto());
 
         return "regimeTrabalho/cadastrarRegimeTrabalho";
     }
@@ -117,5 +122,15 @@ public class RegimeTrabalhoController {
         model.addAttribute("regimeTrabalhoDto", new VisualizarRegimeTrabalhoDto(regimeTrabalhoModelOptional.get()));
 
         return "regimeTrabalho/atualizarRegimeTrabalho";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarRegimeTrabalhoDto filtrarRegimeTrabalhoDto) {
+
+        model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllByFilter(pageable, filtrarRegimeTrabalhoDto).map(ListarRegimeTrabalhoDto::new));
+        model.addAttribute("regimeTrabalhoDto", new RegimeTrabalhoDto());
+        model.addAttribute("filtrarRegimeTrabalhoDto", new FiltrarRegimeTrabalhoDto());
+
+        return "regimeTrabalho/cadastrarRegimeTrabalho";
     }
 }

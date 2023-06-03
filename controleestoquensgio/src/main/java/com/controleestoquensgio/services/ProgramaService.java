@@ -3,10 +3,10 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.dtos.programa.ProgramaDto;
-import com.controleestoquensgio.models.LicencaModel;
+import com.controleestoquensgio.dtos.programa.FiltrarProgramaDto;
+import com.controleestoquensgio.models.*;
 import com.controleestoquensgio.models.ProgramaModel;
-import com.controleestoquensgio.models.ProgramaModel;
-import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.repositories.ProgramaQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
@@ -17,6 +17,7 @@ import com.controleestoquensgio.repositories.ProgramaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,11 @@ public class ProgramaService {
 
     final ProgramaRepository programaRpt;
 
-    public ProgramaService (ProgramaRepository programaRpt){
+    final ProgramaQueryRepository programaQueryRpt;
+
+    public ProgramaService (ProgramaRepository programaRpt, ProgramaQueryRepository programaQueryRpt){
         this.programaRpt = programaRpt;
+        this.programaQueryRpt = programaQueryRpt;
     }
 
     @Transactional
@@ -71,6 +75,19 @@ public class ProgramaService {
 
     public Page<ProgramaModel> findAllAtivo(Pageable pageable, String ativo) {
         return programaRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<ProgramaModel> findAllByFilter(Pageable pageable, FiltrarProgramaDto filtrarProgramaDto) {
+
+        Optional<LicencaModel> licencaModelOptional = licencaService.findById(filtrarProgramaDto.getLicencaId());
+        licencaModelOptional.ifPresent(filtrarProgramaDto::setLicencaModel);
+
+        var programas = programaQueryRpt.customQuery(filtrarProgramaDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), programas.size());
+
+        return new PageImpl<>(programas.subList(start, end), pageable, programas.size());
     }
 
     public Optional<ProgramaModel> findById(Integer id) {

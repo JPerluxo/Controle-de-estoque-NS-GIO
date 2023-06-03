@@ -25,7 +25,7 @@ public class LocalizacaoModel {
     @Column(name="loc_lado", nullable = false, length = 200)
     private String lado;
     
-    @Column(name="loc_referencia", nullable = true, length = 200)
+    @Column(name="loc_referencia", length = 200)
     private String referencia;
 
     @Column(name="loc_ativo", nullable = false, length = 4)

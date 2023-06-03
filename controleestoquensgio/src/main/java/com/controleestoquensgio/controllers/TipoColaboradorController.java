@@ -3,6 +3,7 @@ package com.controleestoquensgio.controllers;
 import com.controleestoquensgio.dtos.tipoColaborador.ListarTipoColaboradorDto;
 import com.controleestoquensgio.dtos.tipoColaborador.TipoColaboradorDto;
 import com.controleestoquensgio.dtos.tipoColaborador.VisualizarTipoColaboradorDto;
+import com.controleestoquensgio.dtos.tipoColaborador.FiltrarTipoColaboradorDto;
 import com.controleestoquensgio.models.TipoColaboradorModel;
 import com.controleestoquensgio.services.TipoColaboradorService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -28,14 +29,15 @@ import java.util.Optional;
 public class TipoColaboradorController {
 
     @Autowired
-    TipoColaboradorService tipoColaboradorService;
+    TipoColaboradorService tipoColaboradorSvc;
 
     @PostMapping
     public String save(@Valid TipoColaboradorDto tipoColaboradorDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoColaboradorDto", tipoColaboradorDto);
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
+            model.addAttribute("filtrarTipoColaboradorDto", new FiltrarTipoColaboradorDto());
             return "tipoColaborador/cadastrarTipoColaborador";
         }
 
@@ -43,7 +45,7 @@ public class TipoColaboradorController {
 
         BeanUtils.copyProperties(tipoColaboradorDto, tipoColaboradorModel);
 
-        var resultado = tipoColaboradorService.save(tipoColaboradorModel);
+        var resultado = tipoColaboradorSvc.save(tipoColaboradorModel);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -53,7 +55,7 @@ public class TipoColaboradorController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id") int id, RedirectAttributes redirectAttributes) {
 
-        var resultado = tipoColaboradorService.deleteById(id);
+        var resultado = tipoColaboradorSvc.deleteById(id);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -65,11 +67,11 @@ public class TipoColaboradorController {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoColaboradorDto", tipoColaboradorDto);
-            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
+            model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
             return "tipoColaborador/atualizarTipoColaborador";
         }
 
-        Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorService.findById(id);
+        Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorSvc.findById(id);
 
         if (tipoColaboradorModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -84,7 +86,7 @@ public class TipoColaboradorController {
 
         BeanUtils.copyProperties(tipoColaboradorDto, tipoColaboradorModel);
 
-        var resultado = tipoColaboradorService.update(tipoColaboradorModel);
+        var resultado = tipoColaboradorSvc.update(tipoColaboradorModel);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -94,8 +96,9 @@ public class TipoColaboradorController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
         model.addAttribute("tipoColaboradorDto", new TipoColaboradorDto());
+        model.addAttribute("filtrarTipoColaboradorDto", new FiltrarTipoColaboradorDto());
 
         return "tipoColaborador/cadastrarTipoColaborador";
     }
@@ -103,7 +106,7 @@ public class TipoColaboradorController {
     @GetMapping("/update/{id}")
     public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes) {
 
-        Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorService.findById(id);
+        Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorSvc.findById(id);
 
         if (tipoColaboradorModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -117,5 +120,15 @@ public class TipoColaboradorController {
         model.addAttribute("tipoColaboradorDto", new VisualizarTipoColaboradorDto(tipoColaboradorModelOptional.get()));
 
         return "tipoColaborador/atualizarTipoColaborador";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarTipoColaboradorDto filtrarTipoColaboradorDto) {
+
+        model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAllByFilter(pageable, filtrarTipoColaboradorDto).map(ListarTipoColaboradorDto::new));
+        model.addAttribute("tipoColaboradorDto", new TipoColaboradorDto());
+        model.addAttribute("filtrarTipoColaboradorDto", new FiltrarTipoColaboradorDto());
+
+        return "tipoColaborador/cadastrarTipoColaborador";
     }
 }

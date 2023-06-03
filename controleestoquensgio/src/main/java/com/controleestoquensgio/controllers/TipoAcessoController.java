@@ -3,6 +3,7 @@ package com.controleestoquensgio.controllers;
 import com.controleestoquensgio.dtos.tipoAcesso.ListarTipoAcessoDto;
 import com.controleestoquensgio.dtos.tipoAcesso.TipoAcessoDto;
 import com.controleestoquensgio.dtos.tipoAcesso.VisualizarTipoAcessoDto;
+import com.controleestoquensgio.dtos.tipoAcesso.FiltrarTipoAcessoDto;
 import com.controleestoquensgio.models.TipoAcessoModel;
 import com.controleestoquensgio.services.TipoAcessoService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -36,6 +37,7 @@ public class TipoAcessoController {
         if (result.hasErrors()) {
             model.addAttribute("tipoAcessoDto", tipoAcessoDto);
             model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoAcessoDto::new));
+            model.addAttribute("filtrarTipoAcessoDto", new FiltrarTipoAcessoDto());
             return "tipoAcesso/cadastrarTipoAcesso";
         }
         
@@ -96,6 +98,7 @@ public class TipoAcessoController {
 
         model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoAcessoDto::new));
         model.addAttribute("tipoAcessoDto", new TipoAcessoDto());
+        model.addAttribute("filtrarTipoAcessoDto", new FiltrarTipoAcessoDto());
 
         return "tipoAcesso/cadastrarTipoAcesso";
     }
@@ -118,4 +121,14 @@ public class TipoAcessoController {
 
         return "tipoAcesso/atualizarTipoAcesso";
     }
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarTipoAcessoDto filtrarTipoAcessoDto) {
+
+        model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllByFilter(pageable, filtrarTipoAcessoDto).map(ListarTipoAcessoDto::new));
+        model.addAttribute("tipoAcessoDto", new TipoAcessoDto());
+        model.addAttribute("filtrarTipoAcessoDto", new FiltrarTipoAcessoDto());
+
+        return "tipoAcesso/cadastrarTipoAcesso";
+    }
+
 }

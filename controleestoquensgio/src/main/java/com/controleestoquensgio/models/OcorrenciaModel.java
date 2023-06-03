@@ -23,9 +23,11 @@ public class OcorrenciaModel {
     private String descricao;
     
     @ManyToOne
+    @JoinColumn(name="oco_eqp_id")
     private EquipamentoModel equipamento;
     
     @ManyToOne
+    @JoinColumn(name="oco_col_id")
     private ColaboradorModel colaborador;
 
     @Column(name="oco_ativo", nullable = false, length = 4)

@@ -26,15 +26,19 @@ public class EquipamentoModel {
     private String observacao;
 
     @ManyToOne
+    @JoinColumn(name="eqp_teq_id")
     private TipoEquipamentoModel tipoEquipamento; 
     
     @ManyToOne
+    @JoinColumn(name="eqp_nof_id")
     private NotaFiscalModel notaFiscal;
 
     @ManyToOne
+    @JoinColumn(name="eqp_loc_id")
     private LocalizacaoModel localizacao;
 
     @ManyToOne
+    @JoinColumn(name="eqp_cet_id")
     private ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiro;
 
     @Column(name="eqp_ativo", nullable = false, length = 4)

@@ -2,9 +2,9 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.licenca.FiltrarLicencaDto;
 import com.controleestoquensgio.models.LicencaModel;
-import com.controleestoquensgio.models.LicencaModel;
-import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.repositories.LicencaQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
@@ -14,15 +14,18 @@ import jakarta.transaction.Transactional;
 import com.controleestoquensgio.repositories.LicencaRepository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LicencaService {
     final LicencaRepository licencaRpt;
+    final LicencaQueryRepository licencaQueryRpt;
 
-    public LicencaService (LicencaRepository licencaRpt){
+    public LicencaService (LicencaRepository licencaRpt, LicencaQueryRepository licencaQueryRpt){
         this.licencaRpt = licencaRpt;
+        this.licencaQueryRpt = licencaQueryRpt;
     }
 
     @Transactional
@@ -42,6 +45,15 @@ public class LicencaService {
 
     public Page<LicencaModel> findAllAtivo(Pageable pageable, String ativo) {
         return licencaRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<LicencaModel> findAllByFilter(Pageable pageable, FiltrarLicencaDto filtrarLicencaDto) {
+        var licencas = licencaQueryRpt.customQuery(filtrarLicencaDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), licencas.size());
+
+        return new PageImpl<>(licencas.subList(start, end), pageable, licencas.size());
     }
 
     public Optional<LicencaModel> findById(Integer id) {

@@ -2,9 +2,9 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
-import com.controleestoquensgio.models.ProgramaModel;
-import com.controleestoquensgio.models.ImagemModel;
-import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.dtos.imagem.FiltrarImagemDto;
+import com.controleestoquensgio.models.*;
+import com.controleestoquensgio.repositories.ImagemQueryRepository;
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
@@ -16,6 +16,7 @@ import com.controleestoquensgio.repositories.ImagemRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,11 @@ public class ImagemService {
 
     final ImagemRepository imagemRpt;
 
-    public ImagemService (ImagemRepository imagemRpt){
+    final ImagemQueryRepository imagemQueryRpt;
+
+    public ImagemService (ImagemRepository imagemRpt, final ImagemQueryRepository imagemQueryRpt){
         this.imagemRpt = imagemRpt;
+        this.imagemQueryRpt = imagemQueryRpt;
     }
 
     @Transactional
@@ -48,6 +52,15 @@ public class ImagemService {
 
     public Page<ImagemModel> findAllAtivo(Pageable pageable, String ativo) {
         return imagemRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<ImagemModel> findAllByFilter(Pageable pageable, FiltrarImagemDto filtrarImagemDto) {
+        var imagens = imagemQueryRpt.customQuery(filtrarImagemDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), imagens.size());
+
+        return new PageImpl<>(imagens.subList(start, end), pageable, imagens.size());
     }
 
     public Optional<ImagemModel> findById(Integer id) {

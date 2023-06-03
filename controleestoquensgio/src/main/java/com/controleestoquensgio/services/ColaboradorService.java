@@ -3,7 +3,9 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.dtos.colaborador.ColaboradorDto;
+import com.controleestoquensgio.dtos.colaborador.FiltrarColaboradorDto;
 import com.controleestoquensgio.models.*;
+import com.controleestoquensgio.repositories.ColaboradorQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
@@ -15,6 +17,7 @@ import com.controleestoquensgio.repositories.ColaboradorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ import org.springframework.stereotype.Service;
 public class ColaboradorService {
     @Autowired
     ColaboradorRepository colaboradorRpt;
+
+    @Autowired
+    ColaboradorQueryRepository colaboradorQueryRpt;
 
     @Autowired
     ImagemService imagemSvc;
@@ -145,6 +151,40 @@ public class ColaboradorService {
 
     public Page<ColaboradorModel> findAllAtivo(Pageable pageable, String ativo) {
         return colaboradorRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<ColaboradorModel> findAllByFilter(Pageable pageable, FiltrarColaboradorDto filtrarColaboradorDto) {
+
+        Optional<ImagemModel> imagemModelOptional = imagemSvc.findById(filtrarColaboradorDto.getImagemId());
+        imagemModelOptional.ifPresent(filtrarColaboradorDto::setImagem);
+
+        Optional<TipoAcessoModel> tipoAcessoModelOptional = tipoAcessoSvc.findById(filtrarColaboradorDto.getTipoAcessoId());
+        tipoAcessoModelOptional.ifPresent(filtrarColaboradorDto::setTipoAcesso);
+
+        Optional<TipoColaboradorModel> tipoColaboradorModelOptional = tipoColaboradorSvc.findById(filtrarColaboradorDto.getTipoColaboradorId());
+        tipoColaboradorModelOptional.ifPresent(filtrarColaboradorDto::setTipoColaborador);
+
+        Optional<RegimeTrabalhoModel> regimeTrabalhoModel = regimeTrabalhoSvc.findById(filtrarColaboradorDto.getRegimeTrabalhoId());
+        regimeTrabalhoModel.ifPresent(filtrarColaboradorDto::setRegimeTrabalho);
+
+        Optional<SetorModel> presidenciaModelOptional = setorSvc.findById(filtrarColaboradorDto.getPresidenciaId());
+        presidenciaModelOptional.ifPresent(filtrarColaboradorDto::setPresidencia);
+
+        Optional<SetorModel> diretoriaModelOptional = setorSvc.findById(filtrarColaboradorDto.getDiretoriaId());
+        diretoriaModelOptional.ifPresent(filtrarColaboradorDto::setDiretoria);
+
+        Optional<SetorModel> gerenciaModelOptional = setorSvc.findById(filtrarColaboradorDto.getGerenciaId());
+        gerenciaModelOptional.ifPresent(filtrarColaboradorDto::setGerencia);
+
+        Optional<SetorModel> nucleoModelOptional = setorSvc.findById(filtrarColaboradorDto.getNucleoId());
+        nucleoModelOptional.ifPresent(filtrarColaboradorDto::setNucleo);
+
+        var colaboradores = colaboradorQueryRpt.customQuery(filtrarColaboradorDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), colaboradores.size());
+
+        return new PageImpl<>(colaboradores.subList(start, end), pageable, colaboradores.size());
     }
 
     public Optional<ColaboradorModel> findById(Integer id) {

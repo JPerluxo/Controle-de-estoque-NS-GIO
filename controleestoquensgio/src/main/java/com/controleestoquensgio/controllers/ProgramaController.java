@@ -4,6 +4,7 @@ import com.controleestoquensgio.dtos.licenca.ListarLicencaDto;
 import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
 import com.controleestoquensgio.dtos.programa.ProgramaDto;
 import com.controleestoquensgio.dtos.programa.VisualizarProgramaDto;
+import com.controleestoquensgio.dtos.programa.FiltrarProgramaDto;
 import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.services.ProgramaService;
@@ -42,6 +43,7 @@ public class ProgramaController {
             model.addAttribute("programaDto", programaDto);
             model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
             model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
+            model.addAttribute("filtrarProgramaDto", new FiltrarProgramaDto());
             return "programa/cadastrarPrograma";
         }
 
@@ -104,6 +106,7 @@ public class ProgramaController {
         model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
         model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
         model.addAttribute("programaDto", new ProgramaDto());
+        model.addAttribute("filtrarProgramaDto", new FiltrarProgramaDto());
 
         return "programa/cadastrarPrograma";
     }
@@ -126,6 +129,17 @@ public class ProgramaController {
         model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
 
         return "programa/atualizarPrograma";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarProgramaDto filtrarProgramaDto) {
+
+        model.addAttribute("listaDeProgramas", programaSvc.findAllByFilter(pageable, filtrarProgramaDto).map(ListarProgramaDto::new));
+        model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
+        model.addAttribute("programaDto", new ProgramaDto());
+        model.addAttribute("filtrarProgramaDto", new FiltrarProgramaDto());
+
+        return "programa/cadastrarPrograma";
     }
 
 }

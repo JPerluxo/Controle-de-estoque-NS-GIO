@@ -24,6 +24,7 @@ public class SetorModel {
     private String descricao;
 
     @ManyToOne
+    @JoinColumn(name="set_col_id")
     private ColaboradorModel responsavel;
 
     @Column(name="set_nivel", nullable = false, length = 50)

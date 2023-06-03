@@ -3,6 +3,9 @@ package com.controleestoquensgio.controllers;
 import com.controleestoquensgio.dtos.licenca.LicencaDto;
 import com.controleestoquensgio.dtos.licenca.ListarLicencaDto;
 import com.controleestoquensgio.dtos.licenca.VisualizarLicencaDto;
+import com.controleestoquensgio.dtos.licenca.FiltrarLicencaDto;
+import com.controleestoquensgio.dtos.licenca.ListarLicencaDto;
+import com.controleestoquensgio.dtos.licenca.LicencaDto;
 import com.controleestoquensgio.models.LicencaModel;
 import com.controleestoquensgio.services.LicencaService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -36,6 +39,7 @@ public class LicencaController {
         if (result.hasErrors()) {
             model.addAttribute("licencaDto", licencaDto);
             model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
+            model.addAttribute("filtrarLicencaDto", new FiltrarLicencaDto());
             return "licenca/cadastrarLicenca";
         }
 
@@ -96,6 +100,7 @@ public class LicencaController {
 
         model.addAttribute("listaDeLicencas", licencaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLicencaDto::new));
         model.addAttribute("licencaDto", new LicencaDto());
+        model.addAttribute("filtrarLicencaDto", new FiltrarLicencaDto());
 
         return "licenca/cadastrarLicenca";
     }
@@ -117,5 +122,15 @@ public class LicencaController {
         model.addAttribute("licencaDto", new VisualizarLicencaDto(licencaModelOptional.get()));
 
         return "licenca/atualizarLicenca";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarLicencaDto filtrarLicencaDto) {
+
+        model.addAttribute("listaDeLicencas", licencaSvc.findAllByFilter(pageable, filtrarLicencaDto).map(ListarLicencaDto::new));
+        model.addAttribute("licencaDto", new LicencaDto());
+        model.addAttribute("filtrarLicencaDto", new FiltrarLicencaDto());
+
+        return "licenca/cadastrarLicenca";
     }
 }

@@ -10,6 +10,7 @@ import com.controleestoquensgio.dtos.imagem.ListarImagemDto;
 import com.controleestoquensgio.dtos.setor.ListarSetorDto;
 import com.controleestoquensgio.dtos.tipoAcesso.ListarTipoAcessoDto;
 import com.controleestoquensgio.dtos.tipoColaborador.ListarTipoColaboradorDto;
+import com.controleestoquensgio.dtos.colaborador.FiltrarColaboradorDto;
 import com.controleestoquensgio.models.ColaboradorModel;
 import com.controleestoquensgio.services.*;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -45,13 +46,14 @@ public class ColaboradorController {
     RegimeTrabalhoService regimeTrabalhoSvc;
 
     @Autowired
-    SetorService setorService;
+    SetorService setorSvc;
 
     @PostMapping
     public String save(@Valid ColaboradorDto colaboradorDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes){
 
         if (result.hasErrors()) {
             model.addAttribute("colaboradorDto", colaboradorDto);
+            model.addAttribute("filtrarColaboradorDto", new FiltrarColaboradorDto());
             setDominios(pageable, model, true);
             return "colaborador/cadastrarColaborador";
         }
@@ -105,6 +107,7 @@ public class ColaboradorController {
     public String getAll(Pageable pageable, Model model) {
 
         model.addAttribute("colaboradorDto", new ColaboradorDto());
+        model.addAttribute("filtrarColaboradorDto", new FiltrarColaboradorDto());
         setDominios(pageable, model, true);
 
         return "colaborador/cadastrarColaborador";
@@ -129,6 +132,17 @@ public class ColaboradorController {
 
         return "colaborador/atualizarColaborador";
     }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarColaboradorDto filtrarColaboradorDto) {
+
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllByFilter(pageable, filtrarColaboradorDto).map(ListarColaboradoresDto::new));
+        model.addAttribute("colaboradorDto", new ColaboradorDto());
+        model.addAttribute("filtrarColaboradorDto", new FiltrarColaboradorDto());
+        setDominios(pageable, model, false);
+
+        return "colaborador/cadastrarColaborador";
+    }
     
     private void setDominios(Pageable pageable, Model model, Boolean getAllColaboradoresToo) {
 
@@ -140,9 +154,9 @@ public class ColaboradorController {
         model.addAttribute("listaDeTiposDeAcesso", tipoAcessoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoAcessoDto::new));
         model.addAttribute("listaDeTiposDeColaborador", tipoColaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoColaboradorDto::new));
         model.addAttribute("listaDeRegimesDeTrabalho", regimeTrabalhoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarRegimeTrabalhoDto::new));
-        model.addAttribute("listaDePresidencias", setorService.findAllByNivel(pageable, NivelSetores.PRESIDENCIA.name()).map(ListarSetorDto::new));
-        model.addAttribute("listaDeDiretorias", setorService.findAllByNivel(pageable, NivelSetores.DIRETORIA.name()).map(ListarSetorDto::new));
-        model.addAttribute("listaDeGerencias", setorService.findAllByNivel(pageable, NivelSetores.GERENCIA.name()).map(ListarSetorDto::new));
-        model.addAttribute("listaDeNucleos", setorService.findAllByNivel(pageable, NivelSetores.NUCLEO.name()).map(ListarSetorDto::new));
+        model.addAttribute("listaDePresidencias", setorSvc.findAllByNivel(pageable, NivelSetores.PRESIDENCIA.name()).map(ListarSetorDto::new));
+        model.addAttribute("listaDeDiretorias", setorSvc.findAllByNivel(pageable, NivelSetores.DIRETORIA.name()).map(ListarSetorDto::new));
+        model.addAttribute("listaDeGerencias", setorSvc.findAllByNivel(pageable, NivelSetores.GERENCIA.name()).map(ListarSetorDto::new));
+        model.addAttribute("listaDeNucleos", setorSvc.findAllByNivel(pageable, NivelSetores.NUCLEO.name()).map(ListarSetorDto::new));
     }
 }

@@ -2,6 +2,7 @@ package com.controleestoquensgio.controllers;
 
 import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.ListarContratoEquipamentoTerceiroDto;
 import com.controleestoquensgio.dtos.equipamento.EquipamentoDto;
+import com.controleestoquensgio.dtos.equipamento.FiltrarEquipamentoDto;
 import com.controleestoquensgio.dtos.equipamento.ListarEquipamentosDto;
 import com.controleestoquensgio.dtos.equipamento.VisualizarEquipamentoDto;
 import com.controleestoquensgio.dtos.localizacao.ListarLocalizacaoDto;
@@ -55,6 +56,7 @@ public class EquipamentoController {
             model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarNotaFiscalDto::new));
             model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
             model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
+            model.addAttribute("filtrarEquipamentoDto", new FiltrarEquipamentoDto());
             return "equipamento/cadastrarEquipamento";
         }
 
@@ -114,6 +116,7 @@ public class EquipamentoController {
         model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarNotaFiscalDto::new));
         model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
         model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
+        model.addAttribute("filtrarEquipamentoDto", new FiltrarEquipamentoDto());
 
         return "equipamento/cadastrarEquipamento";
     }
@@ -139,5 +142,19 @@ public class EquipamentoController {
         model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
 
         return "equipamento/atualizarEquipamento";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarEquipamentoDto filtrarEquipamentoDto) {
+
+        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
+        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarNotaFiscalDto::new));
+        model.addAttribute("listaDeLocalizacoes", localizacaoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
+        model.addAttribute("listaDeContratosDeEquipamentosDeTerceiros", contratoEquipamentoTerceiroSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllByFilter(pageable, filtrarEquipamentoDto).map(ListarEquipamentosDto::new));
+        model.addAttribute("equipamentoDto", new EquipamentoDto());
+        model.addAttribute("filtrarEquipamentoDto", new FiltrarEquipamentoDto());
+
+        return "equipamento/cadastrarEquipamento";
     }
 }

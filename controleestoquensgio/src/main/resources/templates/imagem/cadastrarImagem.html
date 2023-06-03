@@ -10,11 +10,19 @@
 
     <div class="body">
       <h4 id="body-title">Imagens</h4>
-      <form class="register-div" th:object="${criarImagemDto}" method="post">
+      <form class="register-div" th:object="${criarImagemDto}" method="post" th:action="@{/imagens}">
         <div th:replace="~{imagem/layoutBaseImagem :: form}"></div>
         <h5 id="fields-message">*Campos obrigatórios</h5>
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
+
+      Filtros
+      <form class="register-div" th:object="${filtrarImagemDto}" method="post" th:action="@{/imagens/filtrar}">
+        <div th:replace="~{imagem/layoutBaseImagem :: form}"></div>
+        <button id="submit-btn" type="submit"> Buscar </button>
+      </form>
+
+      Quantidade: <div th:text="${listaDeImagens.getTotalElements}"></div>
 
       <div th:each="imagem : ${listaDeImagens}">
         <p>
@@ -23,15 +31,15 @@
         Descricao:  <span th:text="${imagem.descricao}"></span>
         Ativo:      <span th:text="${imagem.ativo}"></span>
 
-          <form action="#" th:action="@{imagens/delete/{id}(id=${imagem.id})}" method="post">
+          <form action="#" th:action="@{/imagens/delete/{id}(id=${imagem.id})}" method="post">
             <button type="submit"> Deletar </button>
           </form>
 
-          <form th:action="@{imagens/update/{id}(id=${imagem.id})}" method="get">
+          <form th:action="@{/imagens/update/{id}(id=${imagem.id})}" method="get">
             <button type="submit"> Editar </button>
           </form>
 
-          <form th:action="@{imagens/update/{id}/addPrograma(id=${imagem.id})}" method="get">
+          <form th:action="@{/imagens/update/{id}/addPrograma(id=${imagem.id})}" method="get">
             <button type="submit"> Adicionar programa </button>
           </form>
         </div>

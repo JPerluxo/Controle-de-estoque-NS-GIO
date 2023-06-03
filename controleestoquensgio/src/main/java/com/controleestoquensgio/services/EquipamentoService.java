@@ -3,7 +3,9 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.dtos.equipamento.EquipamentoDto;
+import com.controleestoquensgio.dtos.equipamento.FiltrarEquipamentoDto;
 import com.controleestoquensgio.models.*;
+import com.controleestoquensgio.repositories.EquipamentoQueryRepository;
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.transaction.Transactional;
 
@@ -15,6 +17,7 @@ import com.controleestoquensgio.repositories.EquipamentoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +39,11 @@ public class EquipamentoService {
     @Autowired
     ContratoEquipamentoTerceiroService contratoEquipamentoTerceiroSvc;
 
-    public EquipamentoService (EquipamentoRepository equipamentoRpt){
+    final EquipamentoQueryRepository equipamentoQueryRpt;
+
+    public EquipamentoService (EquipamentoRepository equipamentoRpt, EquipamentoQueryRepository equipamentoQueryRpt){
         this.equipamentoRpt = equipamentoRpt;
+        this.equipamentoQueryRpt = equipamentoQueryRpt;
     }
 
     @Transactional
@@ -86,7 +92,7 @@ public class EquipamentoService {
         equipamentoModel.setLocalizacao(localizacaoModelOption.get());
 
         if (equipamentoDto.getNotaFiscalId() > 0) {
-            Optional<NotaFiscalModel> notaFiscalModelOption = notaFiscalSvc.findById(equipamentoDto.getLocalizacaoId());
+            Optional<NotaFiscalModel> notaFiscalModelOption = notaFiscalSvc.findById(equipamentoDto.getNotaFiscalId());
 
             if (notaFiscalModelOption.isEmpty()) {
                 return new Resultado(
@@ -99,7 +105,7 @@ public class EquipamentoService {
         }
 
         if (equipamentoDto.getContratoEquipamentoTerceiroId() > 0) {
-            Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(equipamentoDto.getLocalizacaoId());
+            Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(equipamentoDto.getContratoEquipamentoTerceiroId());
 
             if (contratoEquipamentoTerceiroModelOptional.isEmpty()) {
                 return new Resultado(
@@ -125,6 +131,28 @@ public class EquipamentoService {
 
     public Page<EquipamentoModel> findAllAtivo(Pageable pageable, String ativo) {
         return equipamentoRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<EquipamentoModel> findAllByFilter(Pageable pageable, FiltrarEquipamentoDto filtrarEquipamentoDto) {
+
+        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(filtrarEquipamentoDto.getTipoEquipamentoId());
+        tipoEquipamentoModelOptional.ifPresent(filtrarEquipamentoDto::setTipoEquipamento);
+
+        Optional<NotaFiscalModel> notaFiscalModelOptional = notaFiscalSvc.findById(filtrarEquipamentoDto.getNotaFiscalId());
+        notaFiscalModelOptional.ifPresent(filtrarEquipamentoDto::setNotaFiscal);
+
+        Optional<LocalizacaoModel> localizacaoModelOptional = localizacaoSvc.findById(filtrarEquipamentoDto.getLocalizacaoId());
+        localizacaoModelOptional.ifPresent(filtrarEquipamentoDto::setLocalizacao);
+
+        Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(filtrarEquipamentoDto.getContratoEquipamentoTerceiroId());
+        contratoEquipamentoTerceiroModelOptional.ifPresent(filtrarEquipamentoDto::setContratoEquipamentoTerceiro);
+
+        var equipamentos = equipamentoQueryRpt.customQuery(filtrarEquipamentoDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), equipamentos.size());
+
+        return new PageImpl<>(equipamentos.subList(start, end), pageable, equipamentos.size());
     }
 
     public Optional<EquipamentoModel> findById(Integer id) {

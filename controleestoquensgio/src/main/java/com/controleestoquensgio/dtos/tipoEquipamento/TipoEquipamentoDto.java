@@ -1,7 +1,11 @@
 package com.controleestoquensgio.dtos.tipoEquipamento;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TipoEquipamentoDto {
     
     @NotBlank(message = "Insira uma descrição!")
@@ -13,40 +17,9 @@ public class TipoEquipamentoDto {
     @NotBlank(message = "Insira um modelo!")
     private String modelo;
     
-    @NotBlank(message = "Insira um modelo!")
+    @NotBlank(message = "Insira um fornecedor!")
     private String fornecedor;
     
     private String polegadas;
-
-    public String getDescricao() {
-        return descricao;
-    }
-    public String getPolegadas() {
-        return polegadas;
-    }
-    public void setPolegadas(String polegadas) {
-        this.polegadas = polegadas;
-    }
-    public String getFornecedor() {
-        return fornecedor;
-    }
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-    public String getModelo() {
-        return modelo;
-    }
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-    public String getMarca() {
-        return marca;
-    }
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
 }

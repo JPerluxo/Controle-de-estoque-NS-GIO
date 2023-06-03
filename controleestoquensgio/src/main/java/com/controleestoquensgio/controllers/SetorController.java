@@ -4,6 +4,7 @@ import com.controleestoquensgio.dtos.colaborador.ListarColaboradoresDto;
 import com.controleestoquensgio.dtos.setor.ListarSetorDto;
 import com.controleestoquensgio.dtos.setor.SetorDto;
 import com.controleestoquensgio.dtos.setor.VisualizarSetorDto;
+import com.controleestoquensgio.dtos.setor.FiltrarSetorDto;
 import com.controleestoquensgio.models.SetorModel;
 import com.controleestoquensgio.services.ColaboradorService;
 import com.controleestoquensgio.services.SetorService;
@@ -42,6 +43,7 @@ public class SetorController {
             model.addAttribute("setorDto", setorDto);
             model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
             model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+            model.addAttribute("filtrarSetorDto", new FiltrarSetorDto());
             return "setor/cadastrarSetor";
         }
 
@@ -103,6 +105,7 @@ public class SetorController {
         model.addAttribute("listaDeSetores", setorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarSetorDto::new));
         model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
         model.addAttribute("setorDto", new SetorDto());
+        model.addAttribute("filtrarSetorDto", new FiltrarSetorDto());
 
         return "setor/cadastrarSetor";
     }
@@ -125,6 +128,17 @@ public class SetorController {
         model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
 
         return "setor/atualizarSetor";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarSetorDto filtrarSetorDto) {
+
+        model.addAttribute("listaDeSetores", setorSvc.findAllByFilter(pageable, filtrarSetorDto).map(ListarSetorDto::new));
+        model.addAttribute("setorDto", new SetorDto());
+        model.addAttribute("filtrarSetorDto", new FiltrarSetorDto());
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+
+        return "setor/cadastrarSetor";
     }
 
 }

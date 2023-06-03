@@ -1,7 +1,11 @@
 package com.controleestoquensgio.dtos.imagem;
 
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class AddProgramaNaImagemDto {
 
     @Positive(message = "Insira um programa!")
@@ -14,19 +18,4 @@ public class AddProgramaNaImagemDto {
         this.imagemId = imagemId;
     }
 
-    public int getProgramaId() {
-        return programaId;
-    }
-
-    public void setProgramaId(int programaId) {
-        this.programaId = programaId;
-    }
-
-    public int getImagemId() {
-        return imagemId;
-    }
-
-    public void setImagemId(int imagemId) {
-        this.imagemId = imagemId;
-    }
 }

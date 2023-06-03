@@ -5,6 +5,7 @@ import com.controleestoquensgio.dtos.equipamento.ListarEquipamentosDto;
 import com.controleestoquensgio.dtos.ocorrencia.ListarOcorrenciasDto;
 import com.controleestoquensgio.dtos.ocorrencia.OcorrenciaDto;
 import com.controleestoquensgio.dtos.ocorrencia.VisualizarOcorrenciaDto;
+import com.controleestoquensgio.dtos.ocorrencia.FiltrarOcorrenciaDto;
 import com.controleestoquensgio.models.OcorrenciaModel;
 import com.controleestoquensgio.services.ColaboradorService;
 import com.controleestoquensgio.services.EquipamentoService;
@@ -48,6 +49,7 @@ public class OcorrenciaController {
             model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarOcorrenciasDto::new));
             model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
             model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+            model.addAttribute("filtrarOcorrenciaDto", new FiltrarOcorrenciaDto());
             return "ocorrencia/cadastrarOcorrencia";
         }
 
@@ -111,6 +113,7 @@ public class OcorrenciaController {
         model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarOcorrenciasDto::new));
         model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
         model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+        model.addAttribute("filtrarOcorrenciaDto", new FiltrarOcorrenciaDto());
 
         return "ocorrencia/cadastrarOcorrencia";
     }
@@ -134,5 +137,17 @@ public class OcorrenciaController {
         model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
 
         return "ocorrencia/atualizarOcorrencia";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarOcorrenciaDto filtrarOcorrenciaDto) {
+
+        model.addAttribute("listaDeEquipamentos", equipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarEquipamentosDto::new));
+        model.addAttribute("listaDeColaboradores", colaboradorSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarColaboradoresDto::new));
+        model.addAttribute("listaDeOcorrencias", ocorrenciaSvc.findAllByFilter(pageable, filtrarOcorrenciaDto).map(ListarOcorrenciasDto::new));
+        model.addAttribute("ocorrenciaDto", new OcorrenciaDto());
+        model.addAttribute("filtrarOcorrenciaDto", new FiltrarOcorrenciaDto());
+
+        return "ocorrencia/cadastrarOcorrencia";
     }
 }

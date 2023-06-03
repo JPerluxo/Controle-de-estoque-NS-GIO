@@ -2,6 +2,8 @@ package com.controleestoquensgio.controllers;
 
 import com.controleestoquensgio.dtos.imagem.*;
 import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
+import com.controleestoquensgio.dtos.imagem.FiltrarImagemDto;
+import com.controleestoquensgio.dtos.imagem.ListarImagemDto;
 import com.controleestoquensgio.models.ImagemModel;
 import com.controleestoquensgio.models.ProgramaModel;
 import com.controleestoquensgio.services.ImagemService;
@@ -43,6 +45,7 @@ public class ImagemController {
         if (result.hasErrors()) {
             model.addAttribute("criarImagemDto", criarImagemDto);
             model.addAttribute("listaDeImagens", imagemSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarImagemDto::new));
+            model.addAttribute("filtrarImagemDto", new FiltrarImagemDto());
             return "imagem/cadastrarImagem";
         }
 
@@ -107,6 +110,7 @@ public class ImagemController {
             model.addAttribute("addProgramaNaImagemDto", addProgramaNaImagemDto);
             model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
             model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
+            model.addAttribute("filtrarImagemDto", new FiltrarImagemDto());
             return "imagem/adicionarProgramaNaImagem";
         }
 
@@ -132,7 +136,7 @@ public class ImagemController {
 
         model.addAttribute("listaDeImagens", imagemSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarImagemDto::new));
         model.addAttribute("criarImagemDto",new CriarImagemDto());
-
+        model.addAttribute("filtrarImagemDto", new FiltrarImagemDto());
         return "imagem/cadastrarImagem";
     }
 
@@ -162,6 +166,7 @@ public class ImagemController {
         model.addAttribute("listaDeProgramas", programaSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarProgramaDto::new));
         model.addAttribute("addProgramaNaImagemDto", new AddProgramaNaImagemDto(id));
         model.addAttribute("listarProgramasDaImagemDto", getListarProgramasDaImagemDto(id));
+        model.addAttribute("filtrarImagemDto", new FiltrarImagemDto());
 
         return "imagem/adicionarProgramaNaImagem";
     }
@@ -182,6 +187,16 @@ public class ImagemController {
         }
 
         return listarProgramasDaImagemDto;
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarImagemDto filtrarImagemDto) {
+
+        model.addAttribute("listaDeImagens", imagemSvc.findAllByFilter(pageable, filtrarImagemDto).map(ListarImagemDto::new));
+        model.addAttribute("criarImagemDto",new CriarImagemDto());
+        model.addAttribute("filtrarImagemDto", new FiltrarImagemDto());
+
+        return "imagem/cadastrarImagem";
     }
 
 }

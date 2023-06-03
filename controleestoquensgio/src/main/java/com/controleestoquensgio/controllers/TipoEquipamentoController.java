@@ -1,5 +1,6 @@
 package com.controleestoquensgio.controllers;
 
+import com.controleestoquensgio.dtos.tipoEquipamento.FiltrarTipoEquipamentoDto;
 import com.controleestoquensgio.dtos.tipoEquipamento.ListarTipoEquipamentoDto;
 import com.controleestoquensgio.dtos.tipoEquipamento.TipoEquipamentoDto;
 import com.controleestoquensgio.dtos.tipoEquipamento.VisualizarTipoEquipamentoDto;
@@ -15,10 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
@@ -28,14 +26,15 @@ import java.util.Optional;
 public class TipoEquipamentoController {
 
     @Autowired
-    TipoEquipamentoService tipoEquipamentoService;
+    TipoEquipamentoService tipoEquipamentoSvc;
 
     @PostMapping
     public String save(@Valid TipoEquipamentoDto tipoEquipamentoDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             model.addAttribute("tipoEquipamentoDto", tipoEquipamentoDto);
-            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
+            model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
+            model.addAttribute("filtrarTipoEquipamentoDto", new FiltrarTipoEquipamentoDto());
             return "tipoEquipamento/cadastrarTipoEquipamento";
         }
 
@@ -43,7 +42,7 @@ public class TipoEquipamentoController {
 
         BeanUtils.copyProperties(tipoEquipamentoDto, tipoEquipamentoModel);
 
-        var resultado = tipoEquipamentoService.save(tipoEquipamentoModel);
+        var resultado = tipoEquipamentoSvc.save(tipoEquipamentoModel);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -53,7 +52,7 @@ public class TipoEquipamentoController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id") int id, RedirectAttributes redirectAttributes) {
 
-        var resultado = tipoEquipamentoService.deleteById(id);
+        var resultado = tipoEquipamentoSvc.deleteById(id);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -68,7 +67,7 @@ public class TipoEquipamentoController {
             return "tipoEquipamento/atualizarTipoEquipamento";
         }
 
-        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoService.findById(id);
+        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
 
         if (tipoEquipamentoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -83,7 +82,7 @@ public class TipoEquipamentoController {
 
         BeanUtils.copyProperties(tipoEquipamentoDto, tipoEquipamentoModel);
 
-        var resultado = tipoEquipamentoService.update(tipoEquipamentoModel);
+        var resultado = tipoEquipamentoSvc.update(tipoEquipamentoModel);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -93,8 +92,9 @@ public class TipoEquipamentoController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
+        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarTipoEquipamentoDto::new));
         model.addAttribute("tipoEquipamentoDto", new TipoEquipamentoDto());
+        model.addAttribute("filtrarTipoEquipamentoDto", new FiltrarTipoEquipamentoDto());
 
         return "tipoEquipamento/cadastrarTipoEquipamento";
     }
@@ -102,7 +102,7 @@ public class TipoEquipamentoController {
     @GetMapping("/update/{id}")
     public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes) {
 
-        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoService.findById(id);
+        Optional<TipoEquipamentoModel> tipoEquipamentoModelOptional = tipoEquipamentoSvc.findById(id);
 
         if (tipoEquipamentoModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -116,5 +116,15 @@ public class TipoEquipamentoController {
         model.addAttribute("tipoEquipamentoDto", new VisualizarTipoEquipamentoDto(tipoEquipamentoModelOptional.get()));
 
         return "tipoEquipamento/atualizarTipoEquipamento";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarTipoEquipamentoDto filtrarTipoEquipamentoDto) {
+
+        model.addAttribute("listaDeTiposDeEquipamento", tipoEquipamentoSvc.findAllByFilter(pageable, filtrarTipoEquipamentoDto).map(ListarTipoEquipamentoDto::new));
+        model.addAttribute("tipoEquipamentoDto", new TipoEquipamentoDto());
+        model.addAttribute("filtrarTipoEquipamentoDto", new FiltrarTipoEquipamentoDto());
+
+        return "tipoEquipamento/cadastrarTipoEquipamento";
     }
 }

@@ -41,13 +41,38 @@
     </div>
 
     <div class="mb-3">
-        <label for="vigente" class="form-label register-label">Está vigente:</label>
-        <select th:field="*{vigente}" class="form-select" id="vigente">
+        <label for="finalidade" class="form-label register-label">*Finalidade:</label>
+        <input th:field="*{finalidade}" type="text" class="form-control" id="finalidade">
+        <div th:errors="*{finalidade}" class="error-feedback">Erro finalidade</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="respEntregaId" class="form-label register-label">*Responsável pela entrega:</label>
+        <select th:field="*{respEntregaId}" class="form-select" id="respEntregaId">
             <option value="-1">Selecione...</option>
-            <option value="1">Sim</option>
-            <option value="0">Nao</option>
+            <option th:each="respEntrega : ${listaDeColaboradores}" th:value="${respEntrega.id}" th:text="${respEntrega.nome}"></option>
         </select>
-        <div th:errors="*{vigente}" class="error-feedback">Erro vigente</div>
+        <div th:errors="*{respEntregaId}" class="error-feedback">Erro respEntregaId</div>
+    </div>
+</div>
+
+<div class="register-form" th:fragment="filter-form">
+    <div class="mb-3">
+        <label for="colaboradorId" class="form-label register-label">*Colaborador:</label>
+        <select th:field="*{colaboradorId}" class="form-select" id="colaboradorId">
+            <option value="-1">Selecione...</option>
+            <option th:each="colaborador : ${listaDeColaboradores}" th:value="${colaborador.id}" th:text="${colaborador.nome}"></option>
+        </select>
+        <div th:errors="*{colaboradorId}" class="error-feedback">Erro colaboradorId</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="equipamentoId" class="form-label register-label">*Equipamento:</label>
+        <select th:field="*{equipamentoId}" class="form-select" id="equipamentoId">
+            <option value="-1">Selecione...</option>
+            <option th:each="equipamento : ${listaDeEquipamentos}" th:value="${equipamento.id}" th:text="${equipamento.numPatrimonio}"></option>
+        </select>
+        <div th:errors="*{equipamentoId}" class="error-feedback">Erro equipamentoId</div>
     </div>
 
     <div class="mb-3">

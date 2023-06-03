@@ -1,18 +1,19 @@
 package com.controleestoquensgio.services;
 
 import com.controleestoquensgio.dtos.setor.SetorDto;
-import com.controleestoquensgio.models.ColaboradorModel;
-import com.controleestoquensgio.models.LicencaModel;
-import com.controleestoquensgio.models.SetorModel;
-import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.dtos.setor.FiltrarSetorDto;
+import com.controleestoquensgio.models.*;
 import com.controleestoquensgio.repositories.ColaboradorRepository;
 import com.controleestoquensgio.repositories.SetorRepository;
+import com.controleestoquensgio.repositories.SetorQueryRepository;
+import com.controleestoquensgio.repositories.TipoAcessoQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,12 @@ public class SetorService {
 
     @Autowired
     private ColaboradorRepository colaboradorRepository;
+
+    @Autowired
+    SetorQueryRepository setorQueryRpt;
+
+    @Autowired
+    SetorQueryRepository tipoAcessoQueryRpt;
 
     @Transactional
     public Resultado save(SetorModel setorMdl){
@@ -67,6 +74,19 @@ public class SetorService {
 
     public Page<SetorModel> findAllAtivo(Pageable pageable, String ativo) {
         return setorRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<SetorModel> findAllByFilter(Pageable pageable, FiltrarSetorDto filtrarSetorDto) {
+
+        Optional<ColaboradorModel> colaboradorModelOptional = colaboradorRepository.findById(filtrarSetorDto.getResponsavelId());
+        colaboradorModelOptional.ifPresent(filtrarSetorDto::setResponsavel);
+
+        var setoress = setorQueryRpt.customQuery(filtrarSetorDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), setoress.size());
+
+        return new PageImpl<>(setoress.subList(start, end), pageable, setoress.size());
     }
 
     public Page<SetorModel> findAllByNivel(Pageable pageable, String nivel) {

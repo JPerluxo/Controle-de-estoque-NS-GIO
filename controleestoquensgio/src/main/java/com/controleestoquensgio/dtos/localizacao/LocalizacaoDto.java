@@ -1,7 +1,11 @@
 package com.controleestoquensgio.dtos.localizacao;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class LocalizacaoDto{
 
     @NotBlank(message = "Insira um prédio!")
@@ -14,30 +18,5 @@ public class LocalizacaoDto{
     private String lado;
     
     private String referencia;
-
-    public String getPredio() {
-        return predio;
-    }
-    public String getReferencia() {
-        return referencia;
-    }
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
-    }
-    public String getLado() {
-        return lado;
-    }
-    public void setLado(String lado) {
-        this.lado = lado;
-    }
-    public String getAndar() {
-        return andar;
-    }
-    public void setAndar(String andar) {
-        this.andar = andar;
-    }
-    public void setPredio(String predio) {
-        this.predio = predio;
-    }
        
 }

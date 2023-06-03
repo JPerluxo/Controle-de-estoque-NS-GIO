@@ -2,16 +2,20 @@
 <html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="~{ocorrencia/layoutBaseOcorrencia :: head}"></head>
   <body>
-    <div th:replace="~{layoutBase :: mensagem}"></div>
-    <div th:replace="~{layoutBase :: menu}"></div>
+    <div class="sidebar">
+      <div th:replace="~{layoutBase :: mensagem}"></div>
+      <div th:replace="~{layoutBase :: CENS-GIO}"></div>
+      <div th:replace="~{layoutBase :: menu}"></div>
+    </div>
 
-    <h4 id="body-title">Ocorrências</h4>
+    <div class="body">
+      <h4 id="body-title">Ocorrências</h4>
 
-    <form class="register-div" th:object="${ocorrenciaDto}" method="post">
-      <div th:replace="~{ocorrencia/layoutBaseOcorrencia :: form}"></div>
-      <h5 id="fields-message">*Campos obrigatórios</h5>
-        <button id="submit-btn" type="submit"> Atualizar </button>
-    </form>
-
+      <form class="register-div" th:object="${ocorrenciaDto}" method="post">
+        <div th:replace="~{ocorrencia/layoutBaseOcorrencia :: form}"></div>
+        <h5 id="fields-message">*Campos obrigatórios</h5>
+          <button id="submit-btn" type="submit"> Atualizar </button>
+      </form>
+    </div>
   </body>
 </html>

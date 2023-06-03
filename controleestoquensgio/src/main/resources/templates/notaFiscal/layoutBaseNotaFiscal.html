@@ -23,3 +23,12 @@
     </div>
 </div>
 
+<div class="register-form" th:fragment="filter-form">
+
+    <div class="mb-3">
+        <label for="numero" class="form-label register-label">*Número:</label>
+        <input th:field="*{numero}" type="text" class="form-control" id="numero">
+        <div th:errors="*{numero}" class="error-feedback">Erro numero</div>
+    </div>
+</div>
+

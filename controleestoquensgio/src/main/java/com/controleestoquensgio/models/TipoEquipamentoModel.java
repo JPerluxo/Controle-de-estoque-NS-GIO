@@ -1,5 +1,6 @@
 package com.controleestoquensgio.models;
 
+import com.controleestoquensgio.dtos.tipoEquipamento.FiltrarTipoEquipamentoDto;
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -36,5 +37,14 @@ public class TipoEquipamentoModel {
 
     public TipoEquipamentoModel () {
         this.ativo = SimOuNao.SIM.name();
+    }
+
+    public TipoEquipamentoModel (FiltrarTipoEquipamentoDto filtrarTipoEquipamentoDto) {
+        this.descricao = filtrarTipoEquipamentoDto.getDescricao();
+        this.marca = filtrarTipoEquipamentoDto.getMarca();
+        this.modelo = filtrarTipoEquipamentoDto.getModelo();
+        this.fornecedor = filtrarTipoEquipamentoDto.getFornecedor();
+        this.polegadas = filtrarTipoEquipamentoDto.getPolegadas();
+        this.ativo = filtrarTipoEquipamentoDto.getAtivo();
     }
 }

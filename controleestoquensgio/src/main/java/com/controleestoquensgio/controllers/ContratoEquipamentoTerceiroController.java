@@ -3,6 +3,7 @@ package com.controleestoquensgio.controllers;
 import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.ContratoEquipamentoTerceiroDto;
 import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.ListarContratoEquipamentoTerceiroDto;
 import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.VisualizarContratoEquipamentoTerceiroDto;
+import com.controleestoquensgio.dtos.contratoEquipamentoTerceiro.FiltrarContratoEquipamentoTerceiroDto;
 import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
 import com.controleestoquensgio.services.ContratoEquipamentoTerceiroService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -28,14 +29,15 @@ import java.util.Optional;
 public class ContratoEquipamentoTerceiroController {
 
     @Autowired
-    ContratoEquipamentoTerceiroService contratoEquipamentoTerceiroService;
+    ContratoEquipamentoTerceiroService contratoEquipamentoTerceiroSvc;
 
     @PostMapping
     public String save(@Valid ContratoEquipamentoTerceiroDto contratoEquipamentoTerceiroDto, BindingResult result, Model model, Pageable pageable, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             model.addAttribute("contratoEquipamentoTerceiroDto", contratoEquipamentoTerceiroDto);
-            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
+            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
+            model.addAttribute("filtrarContratoEquipamentoTerceiroDto", new FiltrarContratoEquipamentoTerceiroDto());
             return "contratoEquipamentoTerceiro/cadastrarContratoEquipamentoTerceiro";
         }
 
@@ -46,7 +48,7 @@ public class ContratoEquipamentoTerceiroController {
         contratoEquipamentoTerceiroModel.setDataInicio(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataInicio().getTime()));
         contratoEquipamentoTerceiroModel.setDataFinal(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataFinal().getTime()));
 
-        var resultado = contratoEquipamentoTerceiroService.save(contratoEquipamentoTerceiroModel);
+        var resultado = contratoEquipamentoTerceiroSvc.save(contratoEquipamentoTerceiroModel);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -56,7 +58,7 @@ public class ContratoEquipamentoTerceiroController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id") int id, RedirectAttributes redirectAttributes) {
 
-        var resultado = contratoEquipamentoTerceiroService.deleteById(id);
+        var resultado = contratoEquipamentoTerceiroSvc.deleteById(id);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -68,11 +70,11 @@ public class ContratoEquipamentoTerceiroController {
 
         if (result.hasErrors()) {
             model.addAttribute("contratoEquipamentoTerceiroDto", contratoEquipamentoTerceiroDto);
-            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
+            model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
             return "contratoEquipamentoTerceiro/atualizarContratoEquipamentoTerceiro";
         }
 
-        Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroService.findById(id);
+        Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(id);
 
         if (contratoEquipamentoTerceiroModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -90,7 +92,7 @@ public class ContratoEquipamentoTerceiroController {
         contratoEquipamentoTerceiroModel.setDataInicio(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataInicio().getTime()));
         contratoEquipamentoTerceiroModel.setDataFinal(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataFinal().getTime()));
 
-        var resultado = contratoEquipamentoTerceiroService.update(contratoEquipamentoTerceiroModel);
+        var resultado = contratoEquipamentoTerceiroSvc.update(contratoEquipamentoTerceiroModel);
 
         redirectAttributes.addFlashAttribute(resultado.getErroOuSucesso(), resultado.getMensagem());
 
@@ -100,8 +102,9 @@ public class ContratoEquipamentoTerceiroController {
     @GetMapping
     public String getAll(Pageable pageable, Model model) {
 
-        model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
+        model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarContratoEquipamentoTerceiroDto::new));
         model.addAttribute("contratoEquipamentoTerceiroDto", new ContratoEquipamentoTerceiroDto());
+        model.addAttribute("filtrarContratoEquipamentoTerceiroDto", new FiltrarContratoEquipamentoTerceiroDto());
 
         return "contratoEquipamentoTerceiro/cadastrarContratoEquipamentoTerceiro";
     }
@@ -109,7 +112,7 @@ public class ContratoEquipamentoTerceiroController {
     @GetMapping("/update/{id}")
     public String showFormUpdate(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirectAttributes) {
 
-        Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroService.findById(id);
+        Optional<ContratoEquipamentoTerceiroModel> contratoEquipamentoTerceiroModelOptional = contratoEquipamentoTerceiroSvc.findById(id);
 
         if (contratoEquipamentoTerceiroModelOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute(
@@ -123,5 +126,15 @@ public class ContratoEquipamentoTerceiroController {
         model.addAttribute("contratoEquipamentoTerceiroDto", new VisualizarContratoEquipamentoTerceiroDto(contratoEquipamentoTerceiroModelOptional.get()));
 
         return "contratoEquipamentoTerceiro/atualizarContratoEquipamentoTerceiro";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarContratoEquipamentoTerceiroDto filtrarContratoEquipamentoTerceiroDto) {
+
+        model.addAttribute("listaDeContratosDeEquipamentoDeTerceiro", contratoEquipamentoTerceiroSvc.findAllByFilter(pageable, filtrarContratoEquipamentoTerceiroDto).map(ListarContratoEquipamentoTerceiroDto::new));
+        model.addAttribute("contratoEquipamentoTerceiroDto", new ContratoEquipamentoTerceiroDto());
+        model.addAttribute("filtrarContratoEquipamentoTerceiroDto", new FiltrarContratoEquipamentoTerceiroDto());
+
+        return "contratoEquipamentoTerceiro/cadastrarContratoEquipamentoTerceiro";
     }
 }

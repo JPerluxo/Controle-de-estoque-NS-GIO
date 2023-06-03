@@ -3,7 +3,9 @@ package com.controleestoquensgio.services;
 import java.util.Optional;
 
 import com.controleestoquensgio.dtos.emprestimo.EmprestimoDto;
+import com.controleestoquensgio.dtos.emprestimo.FiltrarEmprestimoDto;
 import com.controleestoquensgio.models.*;
+import com.controleestoquensgio.repositories.EmprestimoQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
@@ -14,6 +16,7 @@ import com.controleestoquensgio.repositories.EmprestimoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +24,18 @@ import org.springframework.stereotype.Service;
 public class EmprestimoService {
     final EmprestimoRepository emprestimoRpt;
 
+    final EmprestimoQueryRepository emprestimoQueryRpt;
+    
+
     @Autowired
     ColaboradorService colaboradorSvc;
 
     @Autowired
     EquipamentoService equipamentoSvc;
 
-    public EmprestimoService (EmprestimoRepository emprestimoRpt){
+    public EmprestimoService (EmprestimoRepository emprestimoRpt, EmprestimoQueryRepository emprestimoQueryRpt){
         this.emprestimoRpt = emprestimoRpt;
+        this.emprestimoQueryRpt = emprestimoQueryRpt;
     }
 
     @Transactional
@@ -57,7 +64,7 @@ public class EmprestimoService {
         if (equipamentoModelOptional.isEmpty()) {
             return new Resultado(
                     ErroOuSucesso.ERRO.name(),
-                    Mensagens.tipoDeAcessoNaoEncontrado()
+                    Mensagens.equipamentoNaoEncontrado()
             );
         }
 
@@ -65,7 +72,7 @@ public class EmprestimoService {
 
         Optional<ColaboradorModel> respEntregaModelOption = colaboradorSvc.findById(emprestimoDto.getRespEntregaId());
 
-        if (colaboradorModelOption.isEmpty()) {
+        if (respEntregaModelOption.isEmpty()) {
             return new Resultado(
                     ErroOuSucesso.ERRO.name(),
                     Mensagens.respEntregaNaoEncontrado()
@@ -75,7 +82,6 @@ public class EmprestimoService {
         emprestimoModel.setRespEntrega(respEntregaModelOption.get());
 
         emprestimoModel.setDataDisponibilizacao(new java.sql.Date(emprestimoDto.getDataDisponibilizacao().getTime()));
-        emprestimoModel.setVigente(emprestimoDto.getVigente());
 
         if (emprestimoDto.getDataDevolucao() != null) {
             emprestimoModel.setDataDevolucao(new java.sql.Date(emprestimoDto.getDataDevolucao().getTime()));
@@ -96,6 +102,29 @@ public class EmprestimoService {
 
     public Optional<EmprestimoModel> findById(Integer id) {
         return emprestimoRpt.findById(id);
+    }
+
+    public Page<EmprestimoModel> findAllAtivo(Pageable pageable, String ativo) {
+        return emprestimoRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<EmprestimoModel> findAllByFilter(Pageable pageable, FiltrarEmprestimoDto filtrarEmprestimoDto) {
+
+        Optional<ColaboradorModel> colaboradorModelOptional = colaboradorSvc.findById(filtrarEmprestimoDto.getColaboradorId());
+        colaboradorModelOptional.ifPresent(filtrarEmprestimoDto::setColaborador);
+
+        Optional<EquipamentoModel> equipamentoModelOptional = equipamentoSvc.findById(filtrarEmprestimoDto.getEquipamentoId());
+        equipamentoModelOptional.ifPresent(filtrarEmprestimoDto::setEquipamento);
+
+        Optional<ColaboradorModel> respEntregaModelOptional = colaboradorSvc.findById(filtrarEmprestimoDto.getRespEntregaId());
+        respEntregaModelOptional.ifPresent(filtrarEmprestimoDto::setRespEntrega);
+
+        var emprestimos = emprestimoQueryRpt.customQuery(filtrarEmprestimoDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), emprestimos.size());
+
+        return new PageImpl<>(emprestimos.subList(start, end), pageable, emprestimos.size());
     }
 
     @Transactional

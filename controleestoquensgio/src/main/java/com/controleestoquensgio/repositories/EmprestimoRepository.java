@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface EmprestimoRepository extends JpaRepository<EmprestimoModel, Integer>{
     Page<EmprestimoModel> findAll(Pageable pageable);
 
+    Page<EmprestimoModel> findAllByAtivo(Pageable pageable, String ativo);
+
 }

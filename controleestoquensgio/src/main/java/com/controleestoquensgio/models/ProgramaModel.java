@@ -23,6 +23,7 @@ public class ProgramaModel {
     private String observacao;
     
     @ManyToOne
+    @JoinColumn(name="prg_lic_id")
     private LicencaModel licenca;
 
     @Column(name="prg_ativo", nullable = false, length = 4)

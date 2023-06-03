@@ -10,11 +10,19 @@
 
     <div class="body">
       <h4 id="body-title">Licenças</h4>
-      <form class="register-div" th:object="${licencaDto}" method="post">
+      <form class="register-div" th:object="${licencaDto}" method="post" th:action="@{/licencas}">
         <div th:replace="~{licenca/layoutBaseLicenca :: form}"></div>
         <h5 id="fields-message">*Campos obrigatórios</h5>
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
+
+      Filtros
+      <form class="register-div" th:object="${filtrarLicencaDto}" method="post" th:action="@{/licencas/filtrar}">
+        <div th:replace="~{licenca/layoutBaseLicenca :: form}"></div>
+        <button id="submit-btn" type="submit"> Buscar </button>
+      </form>
+
+      Quantidade: <div th:text="${listaDeLicencas.getTotalElements}"></div>
 
       <div th:each="licenca : ${listaDeLicencas}">
         <p>
@@ -23,11 +31,11 @@
         Descricao:  <span th:text="${licenca.descricao}"></span>
         Ativo:      <span th:text="${licenca.ativo}"></span>
 
-          <form action="#" th:action="@{licencas/delete/{id}(id=${licenca.id})}" method="post">
+          <form action="#" th:action="@{/licencas/delete/{id}(id=${licenca.id})}" method="post">
             <button type="submit"> Deletar </button>
           </form>
 
-          <form th:action="@{licencas/update/{id}(id=${licenca.id})}" method="get">
+          <form th:action="@{/licencas/update/{id}(id=${licenca.id})}" method="get">
             <button type="submit"> Editar </button>
           </form>
         </div>

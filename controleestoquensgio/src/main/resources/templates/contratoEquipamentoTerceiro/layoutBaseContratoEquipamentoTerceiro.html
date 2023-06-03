@@ -29,3 +29,11 @@
     </div>
 </div>
 
+<div class="register-form" th:fragment="filter-form">
+    <div class="mb-3">
+        <label for="fornecedor" class="form-label register-label">*Fornecedor:</label>
+        <input th:field="*{fornecedor}" type="text" class="form-control" id="fornecedor">
+        <div th:errors="*{fornecedor}" class="error-feedback">Erro fornecedor</div>
+    </div>
+</div>
+

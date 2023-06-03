@@ -1,7 +1,11 @@
 package com.controleestoquensgio.services;
 
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.tipoEquipamento.FiltrarTipoEquipamentoDto;
+import com.controleestoquensgio.repositories.TipoEquipamentoQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
@@ -11,16 +15,18 @@ import jakarta.transaction.Transactional;
 import com.controleestoquensgio.models.TipoEquipamentoModel;
 import com.controleestoquensgio.repositories.TipoEquipamentoRepository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TipoEquipamentoService {
     final TipoEquipamentoRepository tipoEquipamentoRpt;
 
-    public TipoEquipamentoService (TipoEquipamentoRepository tipoEquipamentoRpt){
+    final TipoEquipamentoQueryRepository tipoEquipamentoQueryRpt;
+
+    public TipoEquipamentoService (TipoEquipamentoRepository tipoEquipamentoRpt, TipoEquipamentoQueryRepository tipoEquipamentoQueryRpt){
         this.tipoEquipamentoRpt = tipoEquipamentoRpt;
+        this.tipoEquipamentoQueryRpt = tipoEquipamentoQueryRpt;
     }
 
     @Transactional
@@ -40,6 +46,15 @@ public class TipoEquipamentoService {
     public Page<TipoEquipamentoModel> findAllAtivo(Pageable pageable, String ativo) {
         return tipoEquipamentoRpt.findAllByAtivo(pageable, ativo);
     }
+    public Page<TipoEquipamentoModel> findAllByFilter(Pageable pageable, FiltrarTipoEquipamentoDto filtrarTipoEquipamentoDto) {
+        var tiposEquipamentos = tipoEquipamentoQueryRpt.customQuery(filtrarTipoEquipamentoDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), tiposEquipamentos.size());
+
+        return new PageImpl<>(tiposEquipamentos.subList(start, end), pageable, tiposEquipamentos.size());
+    }
+
 
     public Optional<TipoEquipamentoModel> findById(Integer id) {
         return tipoEquipamentoRpt.findById(id);

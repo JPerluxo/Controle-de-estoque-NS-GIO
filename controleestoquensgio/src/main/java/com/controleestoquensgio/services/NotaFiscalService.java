@@ -2,9 +2,12 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.notaFiscal.FiltrarNotaFiscalDto;
 import com.controleestoquensgio.models.NotaFiscalModel;
 import com.controleestoquensgio.models.NotaFiscalModel;
 import com.controleestoquensgio.models.TipoAcessoModel;
+import com.controleestoquensgio.models.NotaFiscalModel;
+import com.controleestoquensgio.repositories.NotaFiscalQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
@@ -14,6 +17,7 @@ import jakarta.transaction.Transactional;
 import com.controleestoquensgio.repositories.NotaFiscalRepository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +25,11 @@ import org.springframework.stereotype.Service;
 public class NotaFiscalService {
     final NotaFiscalRepository notaFiscalRpt;
 
-    public NotaFiscalService (NotaFiscalRepository notaFiscalRpt){
+    final NotaFiscalQueryRepository notaFiscalQueryRpt;
+
+    public NotaFiscalService (NotaFiscalRepository notaFiscalRpt, NotaFiscalQueryRepository notaFiscalQueryRpt){
         this.notaFiscalRpt = notaFiscalRpt;
+        this.notaFiscalQueryRpt = notaFiscalQueryRpt;
     }
 
     @Transactional
@@ -42,6 +49,15 @@ public class NotaFiscalService {
 
     public Page<NotaFiscalModel> findAllAtivo(Pageable pageable, String ativo) {
         return notaFiscalRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<NotaFiscalModel> findAllByFilter(Pageable pageable, FiltrarNotaFiscalDto filtrarNotaFiscalDto) {
+        var notasFiscais = notaFiscalQueryRpt.customQuery(filtrarNotaFiscalDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), notasFiscais.size());
+
+        return new PageImpl<>(notasFiscais.subList(start, end), pageable, notasFiscais.size());
     }
 
     public Optional<NotaFiscalModel> findById(Integer id) {

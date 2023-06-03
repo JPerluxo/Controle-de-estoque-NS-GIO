@@ -10,11 +10,19 @@
 
     <div class="body">
       <h4 id="body-title">Regimes de trabalho</h4>
-      <form class="register-div" th:object="${regimeTrabalhoDto}" method="post">
+      <form class="register-div" th:object="${regimeTrabalhoDto}" method="post" th:action="@{/regimesDeTrabalho}">
         <div th:replace="~{regimeTrabalho/layoutBaseRegimeTrabalho :: form}"></div>
         <h5 id="fields-message">*Campos obrigatórios</h5>
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
+
+      Filtros
+      <form class="register-div" th:object="${filtrarRegimeTrabalhoDto}" method="post" th:action="@{/regimesDeTrabalho/filtrar}">
+        <div th:replace="~{regimeTrabalho/layoutBaseRegimeTrabalho :: form}"></div>
+        <button id="submit-btn" type="submit"> Buscar </button>
+      </form>
+
+      Quantidade: <div th:text="${listaDeRegimesDeTrabalho.getTotalElements}"></div>
 
       <div th:each="regimeTrabalho : ${listaDeRegimesDeTrabalho}">
         <p>
@@ -23,11 +31,11 @@
         Descricao:  <span th:text="${regimeTrabalho.descricao}"></span>
         Ativo:      <span th:text="${regimeTrabalho.ativo}"></span>
 
-          <form action="#" th:action="@{regimesDeTrabalho/delete/{id}(id=${regimeTrabalho.id})}" method="post">
+          <form action="#" th:action="@{/regimesDeTrabalho/delete/{id}(id=${regimeTrabalho.id})}" method="post">
             <button type="submit"> Deletar </button>
           </form>
 
-          <form th:action="@{regimesDeTrabalho/update/{id}(id=${regimeTrabalho.id})}" method="get">
+          <form th:action="@{/regimesDeTrabalho/update/{id}(id=${regimeTrabalho.id})}" method="get">
             <button type="submit"> Editar </button>
           </form>
         </div>

@@ -25,25 +25,24 @@ public class EmprestimoModel {
     private Date dataDevolucao;
 
     @ManyToOne
+    @JoinColumn(name="emp_col_id")
     private ColaboradorModel colaborador;
     
     @ManyToOne
+    @JoinColumn(name="emp_eqp_id")
     private EquipamentoModel equipamento;
 
-    @Column(name="emp_vigente", nullable = false)
-    private boolean isVigente;
+    @Column(name="emp_ativo", nullable = false, length = 4)
+    private String ativo;
     
     @Column(name="emp_finalidade", nullable = false, length = 200)
     private String finalidade;
     
     @ManyToOne
+    @JoinColumn(name="emp_col_resp_id")
     private ColaboradorModel respEntrega;
 
-    public void setVigente(int isVigente) {
-        if (isVigente == 1) {
-            this.isVigente = true;
-        } else {
-            this.isVigente = false;
-        }
+    public EmprestimoModel() {
+        this.ativo = SimOuNao.SIM.name();
     }
 }

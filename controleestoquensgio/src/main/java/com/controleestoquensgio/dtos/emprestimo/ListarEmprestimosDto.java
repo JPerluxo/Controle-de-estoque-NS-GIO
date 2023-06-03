@@ -15,9 +15,9 @@ public class ListarEmprestimosDto {
     private Date dataDevolucao;
     private String colaborador;
     private String equipamento;
-    private String isVigente;
     private String finalidade;
     private String respEntrega;
+    private String ativo;
 
     public ListarEmprestimosDto (EmprestimoModel emprestimoModel) {
         this.id = emprestimoModel.getId();
@@ -25,16 +25,8 @@ public class ListarEmprestimosDto {
         this.dataDevolucao = emprestimoModel.getDataDevolucao();
         this.colaborador = emprestimoModel.getColaborador().getNome();
         this.equipamento = emprestimoModel.getEquipamento().getNumPatrimonio();
-        this.isVigente = getIsVigente(emprestimoModel.isVigente());
         this.finalidade = emprestimoModel.getFinalidade();
         this.respEntrega = emprestimoModel.getRespEntrega().getNome();
-    }
-
-    public String getIsVigente (boolean isVigente) {
-        if (isVigente) {
-            return "Sim";
-        } else {
-            return "Nao";
-        }
+        this.ativo = emprestimoModel.getAtivo();
     }
 }

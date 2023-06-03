@@ -2,7 +2,11 @@ package com.controleestoquensgio.dtos.imagem;
 
 import com.controleestoquensgio.dtos.programa.ListarProgramaDto;
 import com.controleestoquensgio.models.ProgramaModel;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ListarProgramaDaImagemDto extends ListarProgramaDto {
 
     private int imagemId;
@@ -14,11 +18,4 @@ public class ListarProgramaDaImagemDto extends ListarProgramaDto {
 
     public ListarProgramaDaImagemDto() {}
 
-    public int getImagemId() {
-        return imagemId;
-    }
-
-    public void setImagemId(int imagemId) {
-        this.imagemId = imagemId;
-    }
 }

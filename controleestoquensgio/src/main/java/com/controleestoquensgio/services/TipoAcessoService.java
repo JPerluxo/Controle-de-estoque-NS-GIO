@@ -2,9 +2,9 @@ package com.controleestoquensgio.services;
 
 import java.util.Optional;
 
+import com.controleestoquensgio.dtos.tipoAcesso.FiltrarTipoAcessoDto;
 import com.controleestoquensgio.models.TipoAcessoModel;
-import com.controleestoquensgio.models.TipoAcessoModel;
-import com.controleestoquensgio.models.TipoEquipamentoModel;
+import com.controleestoquensgio.repositories.TipoAcessoQueryRepository;
 import com.controleestoquensgio.util.ErroOuSucesso;
 import com.controleestoquensgio.util.Mensagens;
 import com.controleestoquensgio.util.Resultado;
@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import com.controleestoquensgio.repositories.TipoAcessoRepository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,11 @@ import org.springframework.stereotype.Service;
 public class TipoAcessoService {
     final TipoAcessoRepository tipoAcessoRpt;
 
-    public TipoAcessoService (TipoAcessoRepository tipoAcessoRpt){
+    final TipoAcessoQueryRepository tipoAcessoQueryRpt;
+
+    public TipoAcessoService (TipoAcessoRepository tipoAcessoRpt, TipoAcessoQueryRepository tipoAcessoQueryRpt){
         this.tipoAcessoRpt = tipoAcessoRpt;
+        this.tipoAcessoQueryRpt = tipoAcessoQueryRpt;
     }
 
     @Transactional
@@ -42,6 +46,15 @@ public class TipoAcessoService {
 
     public Page<TipoAcessoModel> findAllAtivo(Pageable pageable, String ativo) {
         return tipoAcessoRpt.findAllByAtivo(pageable, ativo);
+    }
+
+    public Page<TipoAcessoModel> findAllByFilter(Pageable pageable, FiltrarTipoAcessoDto filtrarTipoAcessoDto) {
+        var tiposAcessos = tipoAcessoQueryRpt.customQuery(filtrarTipoAcessoDto);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), tiposAcessos.size());
+
+        return new PageImpl<>(tiposAcessos.subList(start, end), pageable, tiposAcessos.size());
     }
 
     public Optional<TipoAcessoModel> findById(Integer id) {

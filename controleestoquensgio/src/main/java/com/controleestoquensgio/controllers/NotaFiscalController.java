@@ -3,6 +3,7 @@ package com.controleestoquensgio.controllers;
 import com.controleestoquensgio.dtos.notaFiscal.ListarNotaFiscalDto;
 import com.controleestoquensgio.dtos.notaFiscal.NotaFiscalDto;
 import com.controleestoquensgio.dtos.notaFiscal.VisualizarNotaFiscalDto;
+import com.controleestoquensgio.dtos.notaFiscal.FiltrarNotaFiscalDto;
 import com.controleestoquensgio.models.NotaFiscalModel;
 import com.controleestoquensgio.services.NotaFiscalService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -36,6 +37,7 @@ public class NotaFiscalController {
         if (result.hasErrors()) {
             model.addAttribute("notaFiscalDto", notaFiscalDto);
             model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarNotaFiscalDto::new));
+            model.addAttribute("filtrarNotaFiscalDto", new FiltrarNotaFiscalDto());
             return "notaFiscal/cadastrarNotaFiscal";
         }
 
@@ -99,6 +101,7 @@ public class NotaFiscalController {
 
         model.addAttribute("notaFiscalDto", new NotaFiscalDto());
         model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarNotaFiscalDto::new));
+        model.addAttribute("filtrarNotaFiscalDto", new FiltrarNotaFiscalDto());
 
         return "notaFiscal/cadastrarNotaFiscal";
     }
@@ -120,5 +123,15 @@ public class NotaFiscalController {
         model.addAttribute("notaFiscalDto", new VisualizarNotaFiscalDto(notaFiscalModelOptional.get()));
 
         return "notaFiscal/atualizarNotaFiscal";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarNotaFiscalDto filtrarNotaFiscalDto) {
+
+        model.addAttribute("listaDeNotasFiscais", notaFiscalSvc.findAllByFilter(pageable, filtrarNotaFiscalDto).map(ListarNotaFiscalDto::new));
+        model.addAttribute("notaFiscalDto", new NotaFiscalDto());
+        model.addAttribute("filtrarNotaFiscalDto", new FiltrarNotaFiscalDto());
+
+        return "notaFiscal/cadastrarNotaFiscal";
     }
 }

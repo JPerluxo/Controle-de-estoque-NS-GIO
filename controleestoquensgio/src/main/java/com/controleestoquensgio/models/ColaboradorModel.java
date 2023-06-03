@@ -23,27 +23,35 @@ public class ColaboradorModel {
     private String nome;
 
     @ManyToOne
+    @JoinColumn(name="col_img_id")
     private ImagemModel imagem;
     
     @ManyToOne
+    @JoinColumn(name="col_tac_id")
     private TipoAcessoModel tipoAcesso;
     
     @ManyToOne
+    @JoinColumn(name="col_tco_id")
     private TipoColaboradorModel tipoColaborador;
     
     @ManyToOne
+    @JoinColumn(name="col_rgt_id")
     private RegimeTrabalhoModel regimeTrabalho;
 
     @OneToOne
+    @JoinColumn(name="col_pre_set_id")
     private SetorModel presidencia;
 
     @OneToOne
+    @JoinColumn(name="col_dir_set_id")
     private SetorModel diretoria;
 
     @OneToOne
+    @JoinColumn(name="col_ger_set_id")
     private SetorModel gerencia;
 
     @OneToOne
+    @JoinColumn(name="col_nuc_set_id")
     private SetorModel nucleo;
 
     @Column(name="col_ativo", nullable = false, length = 4)

@@ -10,11 +10,19 @@
 
     <div class="body">
       <h4 id="body-title">Tipos de Colaborador</h4>
-      <form class="register-div" th:object="${tipoColaboradorDto}" method="post">
+      <form class="register-div" th:object="${tipoColaboradorDto}" method="post" th:action="@{/tiposDeColaborador}">
         <div th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: form}"></div>
         <h5 id="fields-message">*Campos obrigatórios</h5>
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
+
+      Filtros
+      <form class="register-div" th:object="${filtrarTipoColaboradorDto}" method="post" th:action="@{/tiposDeColaborador/filtrar}">
+        <div th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: form}"></div>
+        <button id="submit-btn" type="submit"> Buscar </button>
+      </form>
+
+      Quantidade: <div th:text="${listaDeTiposDeColaborador.getTotalElements}"></div>
 
       <div th:each="tipoColaborador : ${listaDeTiposDeColaborador}">
         <p>
@@ -23,11 +31,11 @@
         Descricao:  <span th:text="${tipoColaborador.descricao}"></span>
         Ativo:      <span th:text="${tipoColaborador.ativo}"></span>
 
-          <form action="#" th:action="@{tiposDeColaborador/delete/{id}(id=${tipoColaborador.id})}" method="post">
+          <form action="#" th:action="@{/tiposDeColaborador/delete/{id}(id=${tipoColaborador.id})}" method="post">
             <button type="submit"> Deletar </button>
           </form>
 
-          <form th:action="@{tiposDeColaborador/update/{id}(id=${tipoColaborador.id})}" method="get">
+          <form th:action="@{/tiposDeColaborador/update/{id}(id=${tipoColaborador.id})}" method="get">
             <button type="submit"> Editar </button>
           </form>
         </div>

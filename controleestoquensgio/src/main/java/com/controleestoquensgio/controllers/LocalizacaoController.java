@@ -3,6 +3,7 @@ package com.controleestoquensgio.controllers;
 import com.controleestoquensgio.dtos.localizacao.ListarLocalizacaoDto;
 import com.controleestoquensgio.dtos.localizacao.LocalizacaoDto;
 import com.controleestoquensgio.dtos.localizacao.VisualizarLocalizacaoDto;
+import com.controleestoquensgio.dtos.localizacao.FiltrarLocalizacaoDto;
 import com.controleestoquensgio.models.LocalizacaoModel;
 import com.controleestoquensgio.services.LocalizacaoService;
 import com.controleestoquensgio.util.ErroOuSucesso;
@@ -66,6 +67,7 @@ public class LocalizacaoController {
         if (result.hasErrors()) {
             model.addAttribute("localizacaoDto", localizacaoDto);
             model.addAttribute("listaDeLocalizacoes", localizacaoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
+            model.addAttribute("filtrarLocalizacaoDto", new FiltrarLocalizacaoDto());
             return "localizacao/atualizarLocalizacao";
         }
 
@@ -96,6 +98,7 @@ public class LocalizacaoController {
 
         model.addAttribute("listaDeLocalizacoes", localizacaoService.findAllAtivo(pageable, SimOuNao.SIM.name()).map(ListarLocalizacaoDto::new));
         model.addAttribute("localizacaoDto", new LocalizacaoDto());
+        model.addAttribute("filtrarLocalizacaoDto", new FiltrarLocalizacaoDto());
 
         return "localizacao/cadastrarLocalizacao";
     }
@@ -117,5 +120,15 @@ public class LocalizacaoController {
         model.addAttribute("localizacaoDto", new VisualizarLocalizacaoDto(localizacaoModelOptional.get()));
 
         return "localizacao/atualizarLocalizacao";
+    }
+
+    @PostMapping("/filtrar")
+    public String filter(Pageable pageable, Model model, FiltrarLocalizacaoDto filtrarLocalizacaoDto) {
+
+        model.addAttribute("listaDeLocalizacoes", localizacaoService.findAllByFilter(pageable, filtrarLocalizacaoDto).map(ListarLocalizacaoDto::new));
+        model.addAttribute("localizacaoDto", new LocalizacaoDto());
+        model.addAttribute("filtrarLocalizacaoDto", new FiltrarLocalizacaoDto());
+
+        return "localizacao/cadastrarLocalizacao";
     }
 }
