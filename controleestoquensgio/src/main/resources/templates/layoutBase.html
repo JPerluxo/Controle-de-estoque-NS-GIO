@@ -1,8 +1,15 @@
 <!--suppress ALL -->
 
 <div th:fragment="mensagem">
-    <div th:text="${SUCESSO}" th:if="${SUCESSO}"></div>
-    <div th:text="${ERRO}" th:if="${ERRO}"></div>
+    <div id="success-message" th:if="${SUCESSO}">
+        <img th:src="@{/images/success-icon.svg}" alt="Ícone de Sucesso"/>
+        <span th:text="${SUCESSO}"></span>
+    </div>
+
+    <div id="error-message" th:if="${ERRO}">
+        <img th:src="@{/images/error-icon.svg}" alt="Ícone de Erro"/>
+        <span th:text="${ERRO}"></span>
+    </div>
 </div>
 
 <div th:fragment="CENS-GIO" id="CENS-GIO">CENS-GIO</div>

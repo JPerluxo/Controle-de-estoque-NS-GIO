@@ -57,3 +57,50 @@ body {
     font-size: small;
     opacity: 0.6;
 }
+
+#filters-title {
+    padding-top: 2vh;
+    color: #716c6c;
+    font-weight: 400;
+}
+
+.quantity-div {
+    padding-top: 2vh;
+}
+
+.quantity-num {
+    max-width: fit-content;
+}
+
+.itens-table {
+    overflow: hidden;
+    border-collapse: collapse;
+    border-radius: 1vh;
+}
+
+#itens-head {
+    background-color: #e9e4e4;
+    border-bottom: 2px solid #bcbcbc;
+    vertical-align: middle;
+}
+
+.table-item {
+    background-color: white;
+    border-bottom: solid 1.5px #e9e4e4;
+}
+
+.table-item:hover {
+    background-color: #f4f1f1;
+}
+
+.item-buttons {
+    display: flex;
+    gap: 1vh;
+    justify-content: flex-end;
+    border: none;
+}
+
+.item-button {
+    border: none;
+    background: none;
+}

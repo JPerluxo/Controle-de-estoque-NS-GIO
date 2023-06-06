@@ -16,31 +16,41 @@
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
 
-      Filtros
+      <h5 id="filters-title">Filtros</h5>
       <form class="register-div" th:object="${filtrarTipoColaboradorDto}" method="post" th:action="@{/tiposDeColaborador/filtrar}">
         <div th:replace="~{tipoColaborador/layoutBaseTipoColaborador :: form}"></div>
         <button id="submit-btn" type="submit"> Buscar </button>
       </form>
 
-      Quantidade: <div th:text="${listaDeTiposDeColaborador.getTotalElements}"></div>
-
-      <div th:each="tipoColaborador : ${listaDeTiposDeColaborador}">
-        <p>
-        <div>
-
-        Descricao:  <span th:text="${tipoColaborador.descricao}"></span>
-        Ativo:      <span th:text="${tipoColaborador.ativo}"></span>
-
-          <form action="#" th:action="@{/tiposDeColaborador/delete/{id}(id=${tipoColaborador.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/tiposDeColaborador/update/{id}(id=${tipoColaborador.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
+      <div class="input-group mb-3 quantity-div">
+        <span class="input-group-text">Quantidade</span>
+        <div class="form-control quantity-num" th:text="${listaDeTiposDeColaborador.getTotalElements}"></div>
       </div>
+
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="tipoColaborador : ${listaDeTiposDeColaborador}">
+            <td><span th:text="${tipoColaborador.descricao}"></span></td>
+            <td><span th:text="${tipoColaborador.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/tiposDeColaborador/delete/{id}(id=${tipoColaborador.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
+
+              <form th:action="@{/tiposDeColaborador/update/{id}(id=${tipoColaborador.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

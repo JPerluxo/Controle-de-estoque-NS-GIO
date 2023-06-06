@@ -16,13 +16,17 @@
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
 
-      Filtros
+      <h5 id="filters-title">Filtros</h5>
       <form class="register-div" th:object="${filtrarSetorDto}" method="post" th:action="@{/setores/filtrar}">
         <div th:replace="~{setor/layoutBaseSetor :: form}"></div>
         <button id="submit-btn" type="submit"> Buscar </button>
       </form>
 
-      Quantidade: <div th:text="${listaDeSetores.getTotalElements}"></div>
+      <div class="input-group mb-3 quantity-div">
+        <span class="input-group-text">Quantidade</span>
+        <div class="form-control quantity-num" th:text="${listaDeSetores.getTotalElements}"></div>
+      </div>
+      Quantidade: <div th:text=""></div>
 
       <div th:each="setor : ${listaDeSetores}">
         <p>

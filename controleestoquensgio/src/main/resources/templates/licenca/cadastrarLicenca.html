@@ -16,13 +16,16 @@
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
 
-      Filtros
+      <h5 id="filters-title">Filtros</h5>
       <form class="register-div" th:object="${filtrarLicencaDto}" method="post" th:action="@{/licencas/filtrar}">
         <div th:replace="~{licenca/layoutBaseLicenca :: form}"></div>
         <button id="submit-btn" type="submit"> Buscar </button>
       </form>
 
-      Quantidade: <div th:text="${listaDeLicencas.getTotalElements}"></div>
+      <div class="input-group mb-3 quantity-div">
+        <span class="input-group-text">Quantidade</span>
+        <div class="form-control quantity-num" th:text="${listaDeLicencas.getTotalElements}"></div>
+      </div>
 
       <div th:each="licenca : ${listaDeLicencas}">
         <p>

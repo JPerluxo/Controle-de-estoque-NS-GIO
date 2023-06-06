@@ -16,36 +16,51 @@
         <button id="submit-btn" type="submit"> Salvar </button>
       </form>
 
-      Filtros
+      <h5 id="filters-title">Filtros</h5>
       <form class="register-div" th:object="${filtrarColaboradorDto}" method="post" th:action="@{/colaboradores/filtrar}">
         <div th:replace="~{colaborador/layoutBaseColaborador :: form}"></div>
         <button id="submit-btn" type="submit"> Buscar </button>
       </form>
 
-      Quantidade: <div th:text="${listaDeColaboradores.getTotalElements}"></div>
-
-      <div th:each="colaborador : ${listaDeColaboradores}">
-        <p>
-        <div>
-
-        Registro de funcionário (RF):   <span th:text="${colaborador.rf}"></span>
-        Nome:                           <span th:text="${colaborador.nome}"></span>
-        Imagem:                         <span th:text="${colaborador.imagem}"></span>
-        Tipo de Acesso:                 <span th:text="${colaborador.tipoAcesso}"></span>
-        Tipo de Colaborador:            <span th:text="${colaborador.tipoColaborador}"></span>
-        Regime de Trabalho:             <span th:text="${colaborador.regimeTrabalho}"></span>
-        Ativo:                          <span th:text="${colaborador.ativo}"></span>
-
-          <form action="#" th:action="@{/colaboradores/delete/{id}(id=${colaborador.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/colaboradores/update/{id}(id=${colaborador.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
+      <div class="input-group mb-3 quantity-div">
+        <span class="input-group-text">Quantidade</span>
+        <div class="form-control quantity-num" th:text="${listaDeColaboradores.getTotalElements}"></div>
       </div>
+
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Registro de funcionário (RF)</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Imagem</th>
+            <th scope="col">Tipo de Acesso</th>
+            <th scope="col">Tipo de Colaborador</th>
+            <th scope="col">Regime de Trabalho</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="colaborador : ${listaDeColaboradores}">
+            <td><span th:text="${colaborador.rf}"></span></span></td>
+            <td><span th:text="${colaborador.nome}"></span></td>
+            <td><span th:text="${colaborador.imagem}"></span></td>
+            <td><span th:text="${colaborador.tipoAcesso}"></span></td>
+            <td><span th:text="${colaborador.tipoColaborador}"></span></td>
+            <td><span th:text="${colaborador.regimeTrabalho}"></span></td>
+            <td><span th:text="${colaborador.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/colaboradores/delete/{id}(id=${colaborador.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
+
+              <form th:action="@{/colaboradores/update/{id}(id=${colaborador.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>
