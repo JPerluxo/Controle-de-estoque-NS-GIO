@@ -1,6 +1,6 @@
 package com.controleestoquensgio.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
@@ -19,10 +19,10 @@ public class EmprestimoModel {
     private int id;
 
     @Column(name="emp_dtDisponibilizacao", nullable = false)
-    private Date dataDisponibilizacao;
+    private LocalDate dataDisponibilizacao;
     
     @Column(name="emp_dtDevolucao", nullable = false)
-    private Date dataDevolucao;
+    private LocalDate dataDevolucao;
 
     @ManyToOne
     @JoinColumn(name="emp_col_id")

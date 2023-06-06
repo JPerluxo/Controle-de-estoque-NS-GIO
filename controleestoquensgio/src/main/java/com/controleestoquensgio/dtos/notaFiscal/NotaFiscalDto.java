@@ -1,6 +1,6 @@
 package com.controleestoquensgio.dtos.notaFiscal;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ public class NotaFiscalDto {
     private String numero;
 
     @NotNull(message = "Insira uma data!")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date data;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate data;
 
 }

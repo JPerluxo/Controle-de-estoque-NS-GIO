@@ -45,7 +45,7 @@ public class NotaFiscalController {
 
         BeanUtils.copyProperties(notaFiscalDto, notaFiscalModel);
 
-        notaFiscalModel.setData(new java.sql.Date(notaFiscalDto.getData().getTime()));
+        notaFiscalModel.setData(notaFiscalDto.getData());
 
         var resultado = notaFiscalSvc.save(notaFiscalModel);
 
@@ -87,7 +87,7 @@ public class NotaFiscalController {
 
         BeanUtils.copyProperties(notaFiscalDto, notaFiscalModel);
 
-        notaFiscalModel.setData(new java.sql.Date(notaFiscalDto.getData().getTime()));
+        notaFiscalModel.setData(notaFiscalDto.getData());
 
         var resultado = notaFiscalSvc.update(notaFiscalModel);
 

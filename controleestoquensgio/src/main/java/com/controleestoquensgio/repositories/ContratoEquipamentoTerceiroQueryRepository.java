@@ -25,15 +25,6 @@ public class ContratoEquipamentoTerceiroQueryRepository {
             query.append(" AND fornecedor = :cet_fornecedor");
         }
 
-        if (filtrarContratoEquipamentoTerceiroDto.getDataInicio() != null) {
-            query.append(" AND dataInicio = :cet_dt_inicio");
-        }
-
-        if (filtrarContratoEquipamentoTerceiroDto.getDataFinal() != null) {
-            query.append(" AND dataFinal = :cet_dt_termino");
-        }
-
-
         TypedQuery<ContratoEquipamentoTerceiroModel> typedQuery = em.createQuery(query.toString(), ContratoEquipamentoTerceiroModel.class);
 
         if (!filtrarContratoEquipamentoTerceiroDto.getAtivo().isEmpty()) {
@@ -42,14 +33,6 @@ public class ContratoEquipamentoTerceiroQueryRepository {
 
         if (!filtrarContratoEquipamentoTerceiroDto.getFornecedor().isEmpty()) {
             typedQuery.setParameter("cet_fornecedor", filtrarContratoEquipamentoTerceiroDto.getFornecedor());
-        }
-
-        if (filtrarContratoEquipamentoTerceiroDto.getDataInicio() != null) {
-            typedQuery.setParameter("cet_dt_inicio", filtrarContratoEquipamentoTerceiroDto.getDataInicio());
-        }
-
-        if (filtrarContratoEquipamentoTerceiroDto.getDataFinal() != null) {
-            typedQuery.setParameter("cet_dt_termino", filtrarContratoEquipamentoTerceiroDto.getDataFinal());
         }
 
         return typedQuery.getResultList();

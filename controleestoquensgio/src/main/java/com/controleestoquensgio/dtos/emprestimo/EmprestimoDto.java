@@ -1,6 +1,6 @@
 package com.controleestoquensgio.dtos.emprestimo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,11 +14,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class EmprestimoDto {
 
     @NotNull(message = "Insira uma data de disponibilizacao!")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataDisponibilizacao;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataDisponibilizacao;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataDevolucao;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataDevolucao;
 
     @Positive(message = "Insira um colaborador!")
     private int colaboradorId;

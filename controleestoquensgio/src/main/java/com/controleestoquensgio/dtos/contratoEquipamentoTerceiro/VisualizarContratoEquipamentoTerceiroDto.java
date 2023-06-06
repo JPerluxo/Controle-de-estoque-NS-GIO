@@ -4,6 +4,7 @@ import com.controleestoquensgio.models.ContratoEquipamentoTerceiroModel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -12,8 +13,8 @@ public class VisualizarContratoEquipamentoTerceiroDto {
 
     private int id;
     private String fornecedor;
-    private Date dataInicio;
-    private Date dataFinal;
+    private LocalDate dataInicio;
+    private LocalDate dataFinal;
 
     public VisualizarContratoEquipamentoTerceiroDto(ContratoEquipamentoTerceiroModel contratoEquipamentoTerceiroModel) {
         this.id = contratoEquipamentoTerceiroModel.getId();

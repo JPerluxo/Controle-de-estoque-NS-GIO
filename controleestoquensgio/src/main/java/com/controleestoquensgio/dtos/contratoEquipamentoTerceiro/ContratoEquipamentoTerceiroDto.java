@@ -1,5 +1,6 @@
 package com.controleestoquensgio.dtos.contratoEquipamentoTerceiro;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
@@ -16,10 +17,10 @@ public class ContratoEquipamentoTerceiroDto {
     private String fornecedor;
 
     @NotNull(message = "Insira uma data de início!")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataInicio;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataInicio;
 
     @NotNull(message = "Insira uma data final!")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataFinal;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataFinal;
 }

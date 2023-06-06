@@ -4,14 +4,14 @@ import com.controleestoquensgio.util.SimOuNao;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 public class FiltrarNotaFiscalDto {
 
     private String numero;
-    private Date data;
+    private LocalDate data;
     private String ativo = SimOuNao.SIM.name();
 
 }

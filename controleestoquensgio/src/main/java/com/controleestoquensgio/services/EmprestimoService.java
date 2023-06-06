@@ -81,10 +81,10 @@ public class EmprestimoService {
 
         emprestimoModel.setRespEntrega(respEntregaModelOption.get());
 
-        emprestimoModel.setDataDisponibilizacao(new java.sql.Date(emprestimoDto.getDataDisponibilizacao().getTime()));
+        emprestimoModel.setDataDisponibilizacao(emprestimoDto.getDataDisponibilizacao());
 
         if (emprestimoDto.getDataDevolucao() != null) {
-            emprestimoModel.setDataDevolucao(new java.sql.Date(emprestimoDto.getDataDevolucao().getTime()));
+            emprestimoModel.setDataDevolucao(emprestimoDto.getDataDevolucao());
         }
 
         emprestimoRpt.save(emprestimoModel);

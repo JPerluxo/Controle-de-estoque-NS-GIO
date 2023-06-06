@@ -1,6 +1,7 @@
 package com.controleestoquensgio.models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
@@ -22,10 +23,10 @@ public class ContratoEquipamentoTerceiroModel {
     private String fornecedor;
 
     @Column(name = "cet_dt_inicio", nullable = false)
-    private Date dataInicio;
+    private LocalDate dataInicio;
 
     @Column(name = "cet_dt_termino", nullable = false)
-    private Date dataFinal;
+    private LocalDate dataFinal;
 
     @Column(name = "cet_ativo", nullable = false, length = 4)
     private String ativo;

@@ -21,14 +21,6 @@ public class EmprestimoQueryRepository {
             query.append(" ativo = :emp_ativo");
         }
 
-        if (filtrarEmprestimoDto.getDataDisponibilizacao() != null) {
-            query.append(" AND dataDisponibilizacao = :emp_dtDisponibilizacao");
-        }
-
-        if (filtrarEmprestimoDto.getDataDevolucao() != null) {
-            query.append(" AND dataDevolucao = :emp_dtDevolucao");
-        }
-
         if (filtrarEmprestimoDto.getColaboradorId() > 0) {
             query.append(" AND colaborador = :emp_col_id");
         }
@@ -49,14 +41,6 @@ public class EmprestimoQueryRepository {
 
         if (!filtrarEmprestimoDto.getAtivo().isEmpty()) {
             typedQuery.setParameter("emp_ativo", filtrarEmprestimoDto.getAtivo());
-        }
-
-        if (filtrarEmprestimoDto.getDataDisponibilizacao() != null) {
-            typedQuery.setParameter("emp_dtDisponibilizacao", filtrarEmprestimoDto.getDataDisponibilizacao());
-        }
-
-        if (filtrarEmprestimoDto.getDataDevolucao() != null) {
-            typedQuery.setParameter("emp_dtDevolucao", filtrarEmprestimoDto.getDataDevolucao());
         }
 
         if (filtrarEmprestimoDto.getColaboradorId() > 0) {

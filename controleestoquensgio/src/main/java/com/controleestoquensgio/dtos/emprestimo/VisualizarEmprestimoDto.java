@@ -3,15 +3,16 @@ package com.controleestoquensgio.dtos.emprestimo;
 import com.controleestoquensgio.models.EmprestimoModel;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
 public class VisualizarEmprestimoDto {
 
     private int id;
-    private Date dataDisponibilizacao;
-    private Date dataDevolucao;
+    private LocalDate dataDisponibilizacao;
+    private LocalDate dataDevolucao;
     private int colaboradorId;
     private int equipamentoId;
     private String finalidade;

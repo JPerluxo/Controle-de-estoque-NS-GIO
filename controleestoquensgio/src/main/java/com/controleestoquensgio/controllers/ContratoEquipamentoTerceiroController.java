@@ -45,8 +45,8 @@ public class ContratoEquipamentoTerceiroController {
 
         BeanUtils.copyProperties(contratoEquipamentoTerceiroDto, contratoEquipamentoTerceiroModel);
 
-        contratoEquipamentoTerceiroModel.setDataInicio(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataInicio().getTime()));
-        contratoEquipamentoTerceiroModel.setDataFinal(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataFinal().getTime()));
+        contratoEquipamentoTerceiroModel.setDataInicio(contratoEquipamentoTerceiroDto.getDataInicio());
+        contratoEquipamentoTerceiroModel.setDataFinal(contratoEquipamentoTerceiroDto.getDataFinal());
 
         var resultado = contratoEquipamentoTerceiroSvc.save(contratoEquipamentoTerceiroModel);
 
@@ -89,8 +89,8 @@ public class ContratoEquipamentoTerceiroController {
 
         BeanUtils.copyProperties(contratoEquipamentoTerceiroDto, contratoEquipamentoTerceiroModel);
 
-        contratoEquipamentoTerceiroModel.setDataInicio(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataInicio().getTime()));
-        contratoEquipamentoTerceiroModel.setDataFinal(new java.sql.Date(contratoEquipamentoTerceiroDto.getDataFinal().getTime()));
+        contratoEquipamentoTerceiroModel.setDataInicio(contratoEquipamentoTerceiroDto.getDataInicio());
+        contratoEquipamentoTerceiroModel.setDataFinal(contratoEquipamentoTerceiroDto.getDataFinal());
 
         var resultado = contratoEquipamentoTerceiroSvc.update(contratoEquipamentoTerceiroModel);
 

@@ -12,8 +12,6 @@ import java.util.Date;
 @Setter
 public class FiltrarEmprestimoDto {
 
-    private Date dataDisponibilizacao;
-    private Date dataDevolucao;
     private int colaboradorId;
     private int equipamentoId;
     private String ativo = SimOuNao.SIM.name();

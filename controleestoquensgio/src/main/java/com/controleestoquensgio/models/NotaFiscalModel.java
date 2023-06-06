@@ -1,6 +1,6 @@
 package com.controleestoquensgio.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.controleestoquensgio.util.SimOuNao;
 import jakarta.persistence.*;
@@ -22,7 +22,7 @@ public class NotaFiscalModel {
     private String numero;
     
     @Column(name="nof_dt")
-    private Date data;
+    private LocalDate data;
 
     @Column(name="nof_ativo", nullable = false, length = 4)
     private String ativo;

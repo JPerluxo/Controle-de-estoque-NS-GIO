@@ -4,7 +4,7 @@ import com.controleestoquensgio.models.NotaFiscalModel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -12,7 +12,7 @@ public class VisualizarNotaFiscalDto {
 
     private int id;
     private String numero;
-    private Date data;
+    private LocalDate data;
 
     public VisualizarNotaFiscalDto(NotaFiscalModel notaFiscalModel) {
         this.id = notaFiscalModel.getId();

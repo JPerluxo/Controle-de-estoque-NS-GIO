@@ -11,7 +11,5 @@ import java.util.Date;
 public class FiltrarContratoEquipamentoTerceiroDto {
 
     private String fornecedor;
-    private Date dataInicio;
-    private Date dataFinal;
     private String ativo = SimOuNao.SIM.name();
 }
