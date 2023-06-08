@@ -3,6 +3,7 @@ package com.controleestoquensgio.dtos.emprestimo;
 import com.controleestoquensgio.models.EmprestimoModel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -11,7 +12,9 @@ import java.time.LocalDate;
 public class VisualizarEmprestimoDto {
 
     private int id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataDisponibilizacao;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataDevolucao;
     private int colaboradorId;
     private int equipamentoId;
