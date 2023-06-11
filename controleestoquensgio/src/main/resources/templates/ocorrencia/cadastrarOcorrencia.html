@@ -27,26 +27,36 @@
         <div class="form-control quantity-num" th:text="${listaDeOcorrencias.getTotalElements}"></div>
       </div>
 
-      <div th:each="ocorrencia : ${listaDeOcorrencias}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">OS</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Colaborador</th>
+            <th scope="col">Equipamento</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="ocorrencia : ${listaDeOcorrencias}">
+            <td><span th:text="${ocorrencia.os}"></span></td>
+            <td><span th:text="${ocorrencia.descricao}"></span></td>
+            <td><span th:text="${ocorrencia.colaborador}"></span></td>
+            <td><span th:text="${ocorrencia.equipamento}"></span></td>
+            <td><span th:text="${ocorrencia.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/ocorrencias/delete/{id}(id=${ocorrencia.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        OS:              <span th:text="${ocorrencia.os}"></span>
-        Descriçao:       <span th:text="${ocorrencia.descricao}"></span>
-        Colaborador:     <span th:text="${ocorrencia.colaborador}"></span>
-        Equipamento:     <span th:text="${ocorrencia.equipamento}"></span>
-        Ativo:           <span th:text="${ocorrencia.ativo}"></span>
-
-          <form action="#" th:action="@{/ocorrencias/delete/{id}(id=${ocorrencia.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/ocorrencias/update/{id}(id=${ocorrencia.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/ocorrencias/update/{id}(id=${ocorrencia.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

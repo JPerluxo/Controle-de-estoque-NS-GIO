@@ -22,18 +22,25 @@
         <button id="submit-btn" type="submit"> Adicionar </button>
       </form>
 
-      Programas:
-
-      <div th:each="programaImagem : ${listarProgramasDaImagemDto}">
-        <p>
-        <div>
-          Descricao:  <span th:text="${programaImagem.descricao}"></span>
-          <form action="#" th:action="@{/imagens/update/{id}/removePrograma/{programaId}(id=${programaImagem.imagemId}, programaId=${programaImagem.id})}" method="post">
-            <button type="submit"> Remover </button>
-          </form>
-        </div>
-        </p>
-      </div>
+      <h5 id="filters-title">Programas</h5>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="programaImagem : ${listarProgramasDaImagemDto}">
+            <td><span th:text="${programaImagem.descricao}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/imagens/update/{id}/removePrograma/{programaId}(id=${programaImagem.imagemId}, programaId=${programaImagem.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

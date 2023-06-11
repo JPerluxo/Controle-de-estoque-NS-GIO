@@ -84,6 +84,10 @@ body {
     vertical-align: middle;
 }
 
+#itens-head tr th {
+    font-size: small;
+}
+
 .table-item {
     background-color: white;
     border-bottom: solid 1.5px #e9e4e4;

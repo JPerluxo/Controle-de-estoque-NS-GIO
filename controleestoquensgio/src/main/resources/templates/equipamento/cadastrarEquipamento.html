@@ -27,29 +27,42 @@
         <div class="form-control quantity-num" th:text="${listaDeEquipamentos.getTotalElements}"></div>
       </div>
 
-      <div th:each="equipamento : ${listaDeEquipamentos}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Número de série</th>
+            <th scope="col">Número de patrimonio</th>
+            <th scope="col">Observacao</th>
+            <th scope="col">Tipo de Equipamento</th>
+            <th scope="col">Nota fiscal</th>
+            <th scope="col">Localizacao</th>
+            <th scope="col">Contrato de equipamento de terceiro</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="equipamento : ${listaDeEquipamentos}">
+            <td><span th:text="${equipamento.serial}"></span></td>
+            <td><span th:text="${equipamento.numPatrimonio}"></span></td>
+            <td><span th:text="${equipamento.observacao}"></span></td>
+            <td><span th:text="${equipamento.tipoEquipamento}"></span></td>
+            <td><span th:text="${equipamento.notaFiscal}"></span></td>
+            <td><span th:text="${equipamento.localizacao}"></span></td>
+            <td><span th:text="${equipamento.contratoDeEquipamentoDeTerceiro}"></span></td>
+            <td><span th:text="${equipamento.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/equipamentos/delete/{id}(id=${equipamento.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        Número de série:                       <span th:text="${equipamento.serial}"></span>
-        Número de patrimonio:                  <span th:text="${equipamento.numPatrimonio}"></span>
-        Observacao:                            <span th:text="${equipamento.observacao}"></span>
-        Tipo de Equipamento:                   <span th:text="${equipamento.tipoEquipamento}"></span>
-        Nota fiscal:                           <span th:text="${equipamento.notaFiscal}"></span>
-        Localizacao:                           <span th:text="${equipamento.localizacao}"></span>
-        Contrato de equipamento de terceiro:   <span th:text="${equipamento.contratoDeEquipamentoDeTerceiro}"></span>
-        Ativo:                                 <span th:text="${equipamento.ativo}"></span>
-
-          <form action="#" th:action="@{/equipamentos/delete/{id}(id=${equipamento.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/equipamentos/update/{id}(id=${equipamento.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/equipamentos/update/{id}(id=${equipamento.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

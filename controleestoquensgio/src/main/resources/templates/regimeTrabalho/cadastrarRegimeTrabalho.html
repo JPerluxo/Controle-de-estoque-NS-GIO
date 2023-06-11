@@ -27,23 +27,30 @@
         <div class="form-control quantity-num" th:text="${listaDeRegimesDeTrabalho.getTotalElements}"></div>
       </div>
 
-      <div th:each="regimeTrabalho : ${listaDeRegimesDeTrabalho}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="regimeTrabalho : ${listaDeRegimesDeTrabalho}">
+            <td><span th:text="${regimeTrabalho.descricao}"></span></td>
+            <td><span th:text="${regimeTrabalho.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/regimesDeTrabalho/delete/{id}(id=${regimeTrabalho.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        Descricao:  <span th:text="${regimeTrabalho.descricao}"></span>
-        Ativo:      <span th:text="${regimeTrabalho.ativo}"></span>
-
-          <form action="#" th:action="@{/regimesDeTrabalho/delete/{id}(id=${regimeTrabalho.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/regimesDeTrabalho/update/{id}(id=${regimeTrabalho.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/regimesDeTrabalho/update/{id}(id=${regimeTrabalho.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

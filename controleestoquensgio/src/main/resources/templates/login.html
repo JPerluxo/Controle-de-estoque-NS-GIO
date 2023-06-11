@@ -1,48 +1,93 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
-
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
   <title>Login</title>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, hsl(0deg 12% 97%) 0%, hsl(0deg 10% 93%) 33%, hsl(162deg 41% 82%) 67%, hsl(169deg 78% 53%) 100%);
+      background-attachment: fixed;
+    }
+
+    .login-box {
+    position: absolute;
+    margin: 0;
+    left: 25%;
+    background-color: white;
+    box-shadow: 0px 4px 4px #716c6c40;
+    border-radius: 10px;
+    padding: 3vh;
+    }
+
+    #login-title {
+      text-align: center;
+    }
+
+    #buttons-div {
+      display: grid;
+      justify-items: center;
+    }
+
+    .login-button {
+      background-color: #2be5c3;
+      border: none;
+      width: 100%;
+    }
+
+    .login-button:hover, .login-button:focus{
+      background-color:  #2be5c3;
+      opacity: 0.6;
+    }
+
+    .registration-link {
+      text-decoration: none;
+      color: #2be5c3;
+    }
+
+    .registration-link:hover, .registration-link:focus {
+      color: #2be5c3;
+      opacity: 0.6;
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
-  <div class="row mt-5">
-    <div class="col-6 mx-auto">
-      <h1>Login</h1>
-      <div th:if="${param.error}">
-        <div class="alert alert-danger">Email ou senha inválidos!</div>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-6 login-box">
+        <h1 id="login-title">Login</h1>
+        <div th:if="${param.error}">
+          <div class="alert alert-danger">Email ou senha inválidos!</div>
+        </div>
+        <div th:if="${param.logout}">
+          <div class="alert alert-success">Você foi desconectado!</div>
+        </div>
+        <form class="form-horizontal" method="post" role="form" th:action="@{/login}">
+          <div class="mb-3">
+            <label class="form-label" for="password">Email</label>
+            <input class="form-control" id="username" name="username" placeholder="Digite o e-mail" type="email">
+          </div>
+          <div class="mb-3">
+            <label class="col-sm-2 col-form-label" for="password">Senha</label>
+            <input class="form-control" id="password" name="password" placeholder="Digite a senha" type="password">
+          </div>
+          <div id="buttons-div">
+            <button class="btn btn-primary mb-3 login-button" type="submit">Entrar</button>
+            <span>Não possui conta? <a class="link-primary registration-link" th:href="@{/registration}">Registrar</a></span>
+          </div>
+        </form>
       </div>
-      <div th:if="${param.logout}">
-        <div class="alert alert-success">Você foi desconectado!</div>
-      </div>
-      <form class="form-horizontal" method="post" role="form" th:action="@{/login}">
-        <div class="mb-3">
-          <label class="form-label" for="password">Email</label>
-          <input class="form-control" id="username" name="username" placeholder="Digite o e-mail"
-                 type="email">
-        </div>
-        <div class="mb-3">
-          <label class="col-sm-2 col-form-label" for="password">Senha</label>
-          <input class="form-control" id="password" name="password" placeholder="Digite a senha"
-                 type="password">
-        </div>
-        <div class="mb-3">
-          <button class="btn btn-primary mb-3" type="submit">Entrar</button>
-          ou <a class="link-primary" th:href="@{/registration}">Registrar</a>
-        </div>
-      </form>
     </div>
   </div>
-</div>
 
 
-<script crossorigin="anonymous"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
+  <script crossorigin="anonymous" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+  </script>
 </body>
+
 </html>

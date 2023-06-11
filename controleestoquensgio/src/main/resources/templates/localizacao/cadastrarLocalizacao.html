@@ -27,26 +27,36 @@
         <div class="form-control quantity-num" th:text="${listaDeLocalizacoes.getTotalElements}"></div>
       </div>
 
-      <div th:each="localizacao : ${listaDeLocalizacoes}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col">Lado</th>
+            <th scope="col">Andar</th>
+            <th scope="col">Prédio</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="localizacao : ${listaDeLocalizacoes}">
+            <td><span th:text="${localizacao.referencia}"></span></td>
+            <td><span th:text="${localizacao.lado}"></span></td>
+            <td><span th:text="${localizacao.andar}"></span></td>
+            <td><span th:text="${localizacao.predio}"></span></td>
+            <td><span th:text="${localizacao.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/localizacoes/delete/{id}(id=${localizacao.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        Descricao:  <span th:text="${localizacao.referencia}"></span>
-        Lado:       <span th:text="${localizacao.lado}"></span>
-        Andar:      <span th:text="${localizacao.andar}"></span>
-        Prédio:     <span th:text="${localizacao.predio}"></span>
-        Ativo:      <span th:text="${localizacao.ativo}"></span>
-
-          <form action="#" th:action="@{/localizacoes/delete/{id}(id=${localizacao.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/localizacoes/update/{id}(id=${localizacao.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/localizacoes/update/{id}(id=${localizacao.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

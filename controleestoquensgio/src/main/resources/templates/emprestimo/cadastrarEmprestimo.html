@@ -27,28 +27,40 @@
         <div class="form-control quantity-num" th:text="${listaDeEmprestimos.getTotalElements}"></div>
       </div>
 
-      <div th:each="emprestimo : ${listaDeEmprestimos}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Data de Disponibilização</th>
+            <th scope="col">Data de Devolução</th>
+            <th scope="col">Colaborador</th>
+            <th scope="col">Equipamento</th>
+            <th scope="col">Finalidade</th>
+            <th scope="col">Responsável pela entrega</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="emprestimo : ${listaDeEmprestimos}">
+            <td><span th:text="${emprestimo.dataDisponibilizacao}"></span></td>
+            <td><span th:text="${emprestimo.dataDevolucao}"></span></td>
+            <td><span th:text="${emprestimo.colaborador}"></span></td>
+            <td><span th:text="${emprestimo.equipamento}"></span></td>
+            <td><span th:text="${emprestimo.finalidade}"></span></td>
+            <td><span th:text="${emprestimo.respEntrega}"></span></td>
+            <td><span th:text="${emprestimo.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/emprestimos/delete/{id}(id=${emprestimo.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-          Data de Disponibilizacao:   <span th:text="${emprestimo.dataDisponibilizacao}"></span>
-          Data de Devolucao:          <span th:text="${emprestimo.dataDevolucao}"></span>
-          Colaborador:                <span th:text="${emprestimo.colaborador}"></span>
-          Equipamento:                <span th:text="${emprestimo.equipamento}"></span>
-          Finalidade:                 <span th:text="${emprestimo.finalidade}"></span>
-          Responsável pela entrega:   <span th:text="${emprestimo.respEntrega}"></span>
-          Ativo:                      <span th:text="${emprestimo.ativo}"></span>
-
-          <form action="#" th:action="@{/emprestimos/delete/{id}(id=${emprestimo.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/emprestimos/update/{id}(id=${emprestimo.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/emprestimos/update/{id}(id=${emprestimo.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

@@ -27,25 +27,34 @@
         <div class="form-control quantity-num" th:text="${listaDeContratosDeEquipamentoDeTerceiro.getTotalElements}"></div>
       </div>
 
-      <div th:each="contratoEquipamentoTerceiro : ${listaDeContratosDeEquipamentoDeTerceiro}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Data final</th>
+            <th scope="col">Data Inicio</th>
+            <th scope="col">Fornecedor</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="contratoEquipamentoTerceiro : ${listaDeContratosDeEquipamentoDeTerceiro}">
+            <td><span th:text="${contratoEquipamentoTerceiro.dataFinal}"></span></td>
+            <td><span th:text="${contratoEquipamentoTerceiro.dataInicio}"></span></td>
+            <td><span th:text="${contratoEquipamentoTerceiro.fornecedor}"></span></td>
+            <td><span th:text="${contratoEquipamentoTerceiro.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/contratosDeEquipamentoDeTerceiro/delete/{id}(id=${contratoEquipamentoTerceiro.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        Data final:  <span th:text="${contratoEquipamentoTerceiro.dataFinal}"></span>
-        Data Inicio: <span th:text="${contratoEquipamentoTerceiro.dataInicio}"></span>
-        Fornecedor:  <span th:text="${contratoEquipamentoTerceiro.fornecedor}"></span>
-        Ativo:       <span th:text="${contratoEquipamentoTerceiro.ativo}"></span>
-
-          <form action="#" th:action="@{/contratosDeEquipamentoDeTerceiro/delete/{id}(id=${contratoEquipamentoTerceiro.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/contratosDeEquipamentoDeTerceiro/update/{id}(id=${contratoEquipamentoTerceiro.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/contratosDeEquipamentoDeTerceiro/update/{id}(id=${contratoEquipamentoTerceiro.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

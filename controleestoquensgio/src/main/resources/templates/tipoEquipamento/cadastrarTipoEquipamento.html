@@ -27,27 +27,38 @@
         <div class="form-control quantity-num" th:text="${listaDeTiposDeEquipamento.getTotalElements}"></div>
       </div>
 
-      <div th:each="tipoEquipamento : ${listaDeTiposDeEquipamento}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Fornecedor</th>
+            <th scope="col">Polegadas</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="tipoEquipamento : ${listaDeTiposDeEquipamento}">
+            <td><span th:text="${tipoEquipamento.descricao}"></span></td>
+            <td><span th:text="${tipoEquipamento.marca}"></span></td>
+            <td><span th:text="${tipoEquipamento.modelo}"></span></td>
+            <td><span th:text="${tipoEquipamento.fornecedor}"></span></td>
+            <td><span th:text="${tipoEquipamento.polegadas}"></span></td>
+            <td><span th:text="${tipoEquipamento.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/tiposDeEquipamento/delete/{id}(id=${tipoEquipamento.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        Descricao:  <span th:text="${tipoEquipamento.descricao}"></span>
-        Marca:      <span th:text="${tipoEquipamento.marca}"></span>
-        Modelo:     <span th:text="${tipoEquipamento.modelo}"></span>
-        Fornecedor: <span th:text="${tipoEquipamento.fornecedor}"></span>
-        Polegadas:  <span th:text="${tipoEquipamento.polegadas}"></span>
-        Ativo:      <span th:text="${tipoEquipamento.ativo}"></span>
-
-          <form action="#" th:action="@{/tiposDeEquipamento/delete/{id}(id=${tipoEquipamento.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/tiposDeEquipamento/update/{id}(id=${tipoEquipamento.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/tiposDeEquipamento/update/{id}(id=${tipoEquipamento.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

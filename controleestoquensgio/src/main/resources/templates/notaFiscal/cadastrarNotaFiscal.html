@@ -27,24 +27,32 @@
         <div class="form-control quantity-num" th:text="${listaDeNotasFiscais.getTotalElements}"></div>
       </div>
 
-      <div th:each="notaFiscal : ${listaDeNotasFiscais}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Número</th>
+            <th scope="col">Data</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="notaFiscal : ${listaDeNotasFiscais}">
+            <td><span th:text="${notaFiscal.numero}"></span></td>
+            <td><span th:text="${notaFiscal.data}"></span></td>
+            <td><span th:text="${notaFiscal.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/notasFiscais/delete/{id}(id=${notaFiscal.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        Número:     <span th:text="${notaFiscal.numero}"></span>
-        Data:       <span th:text="${notaFiscal.data}"></span>
-        Ativo:      <span th:text="${notaFiscal.ativo}"></span>
-
-          <form action="#" th:action="@{/notasFiscais/delete/{id}(id=${notaFiscal.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/notasFiscais/update/{id}(id=${notaFiscal.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/notasFiscais/update/{id}(id=${notaFiscal.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

@@ -27,27 +27,34 @@
         <div class="form-control quantity-num" th:text="${listaDeImagens.getTotalElements}"></div>
       </div>
 
-      <div th:each="imagem : ${listaDeImagens}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Descricao</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="imagem : ${listaDeImagens}">
+            <td><span th:text="${imagem.descricao}"></span></td>
+            <td><span th:text="${imagem.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/imagens/delete/{id}(id=${imagem.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-        Descricao:  <span th:text="${imagem.descricao}"></span>
-        Ativo:      <span th:text="${imagem.ativo}"></span>
+              <form th:action="@{/imagens/update/{id}(id=${imagem.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
 
-          <form action="#" th:action="@{/imagens/delete/{id}(id=${imagem.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/imagens/update/{id}(id=${imagem.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-
-          <form th:action="@{/imagens/update/{id}/addPrograma(id=${imagem.id})}" method="get">
-            <button type="submit"> Adicionar programa </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/imagens/update/{id}/addPrograma(id=${imagem.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/add-program-icon.svg}" alt="Ícone de Adicionar Programa"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

@@ -26,28 +26,37 @@
         <span class="input-group-text">Quantidade</span>
         <div class="form-control quantity-num" th:text="${listaDeSetores.getTotalElements}"></div>
       </div>
-      Quantidade: <div th:text=""></div>
 
-      <div th:each="setor : ${listaDeSetores}">
-        <p>
-        <div>
+      <table class="table itens-table">
+        <thead id="itens-head">
+          <tr>
+            <th scope="col">Sigla</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Responsável</th>
+            <th scope="col">Nível</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-item" th:each="setor : ${listaDeSetores}">
+            <td><span th:text="${setor.sigla}"></span></td>
+            <td><span th:text="${setor.descricao}"></span></td>
+            <td><span th:text="${setor.responsavel}"></span></td>
+            <td><span th:text="${setor.nivel}"></span></td>
+            <td><span th:text="${setor.ativo}"></span></td>
+            <td class="item-buttons">
+              <form action="#" th:action="@{/setores/delete/{id}(id=${setor.id})}" method="post">
+                <button class="item-button" type="submit"><img th:src="@{/images/delete-icon.svg}" alt="Ícone de Deletar"/></button>
+              </form>
 
-          Sigla:   <span th:text="${setor.sigla}"></span>
-          Descriçao:  <span th:text="${setor.descricao}"></span>
-          Responsável:     <span th:text="${setor.responsavel}"></span>
-          Nível: <span th:text="${setor.nivel}"></span>
-          Ativo:           <span th:text="${setor.ativo}"></span>
-          
-          <form action="#" th:action="@{/setores/delete/{id}(id=${setor.id})}" method="post">
-            <button type="submit"> Deletar </button>
-          </form>
-
-          <form th:action="@{/setores/update/{id}(id=${setor.id})}" method="get">
-            <button type="submit"> Editar </button>
-          </form>
-        </div>
-        </p>
-      </div>
+              <form th:action="@{/setores/update/{id}(id=${setor.id})}" method="get">
+                <button class="item-button" type="submit"><img th:src="@{/images/edit-icon.svg}" alt="Ícone de Editar"/></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>
