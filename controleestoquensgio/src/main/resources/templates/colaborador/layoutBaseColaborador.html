@@ -59,7 +59,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="presidenciaId" class="form-label register-label">Presidencia:</label>
+        <label for="presidenciaId" class="form-label register-label">Presidência:</label>
         <select th:field="*{presidenciaId}" class="form-select" id="presidenciaId">
             <option value="-1">Selecione...</option>
             <option th:each="presidencia : ${listaDePresidencias}" th:value="${presidencia.id}" th:text="${presidencia.descricao}"></option>
@@ -77,7 +77,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="gerenciaId" class="form-label register-label">Gerencia:</label>
+        <label for="gerenciaId" class="form-label register-label">Gerência:</label>
         <select th:field="*{gerenciaId}" class="form-select" id="gerenciaId">
             <option value="-1">Selecione...</option>
             <option th:each="gerencia : ${listaDeGerencias}" th:value="${gerencia.id}" th:text="${gerencia.descricao}"></option>

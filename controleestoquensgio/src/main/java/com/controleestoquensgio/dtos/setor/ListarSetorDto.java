@@ -27,13 +27,13 @@ public class ListarSetorDto {
 
     public String getNivelDescricao (String nivel) {
         if (nivel.equals(NivelSetores.PRESIDENCIA.name())) {
-            return "Presidencia";
+            return "Presidência";
 
         } else if (nivel.equals(NivelSetores.DIRETORIA.name())) {
             return "Diretoria";
 
         } else if (nivel.equals(NivelSetores.GERENCIA.name())) {
-            return "Gerencia";
+            return "Gerência";
 
         } else {
             return "Núcleo";
