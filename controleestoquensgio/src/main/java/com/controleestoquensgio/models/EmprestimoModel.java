@@ -21,7 +21,7 @@ public class EmprestimoModel {
     @Column(name="emp_dtDisponibilizacao", nullable = false)
     private LocalDate dataDisponibilizacao;
     
-    @Column(name="emp_dtDevolucao", nullable = false)
+    @Column(name="emp_dtDevolucao")
     private LocalDate dataDevolucao;
 
     @ManyToOne

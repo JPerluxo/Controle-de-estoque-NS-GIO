@@ -11,15 +11,15 @@
 <div class="register-form" th:fragment="form">
 
     <div class="mb-3">
-        <label for="dataFinal" class="form-label register-label">*Data final:</label>
-        <input th:field="*{dataFinal}" type="date" class="form-control" id="dataFinal">
-        <div th:errors="*{dataFinal}" class="error-feedback">Erro dataFinal</div>
+        <label for="dataInicio" class="form-label register-label">*Início:</label>
+        <input th:field="*{dataInicio}" type="date" class="form-control" id="dataInicio">
+        <div th:errors="*{dataInicio}" class="error-feedback">Erro dataInicio</div>
     </div>
 
     <div class="mb-3">
-        <label for="dataInicio" class="form-label register-label">*Data Inicio:</label>
-        <input th:field="*{dataInicio}" type="date" class="form-control" id="dataInicio">
-        <div th:errors="*{dataInicio}" class="error-feedback">Erro dataInicio</div>
+        <label for="dataFinal" class="form-label register-label">*Término:</label>
+        <input th:field="*{dataFinal}" type="date" class="form-control" id="dataFinal">
+        <div th:errors="*{dataFinal}" class="error-feedback">Erro dataFinal</div>
     </div>
 
     <div class="mb-3">

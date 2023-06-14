@@ -5,6 +5,7 @@ import com.controleestoquensgio.util.ConversorData;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -23,11 +24,19 @@ public class ListarEmprestimosDto {
     public ListarEmprestimosDto (EmprestimoModel emprestimoModel) {
         this.id = emprestimoModel.getId();
         this.dataDisponibilizacao = ConversorData.converterData(emprestimoModel.getDataDisponibilizacao());
-        this.dataDevolucao = ConversorData.converterData(emprestimoModel.getDataDevolucao());
+        this.dataDevolucao = getDataDeDevolucao(emprestimoModel.getDataDevolucao());
         this.colaborador = emprestimoModel.getColaborador().getNome();
         this.equipamento = emprestimoModel.getEquipamento().getNumPatrimonio();
         this.finalidade = emprestimoModel.getFinalidade();
         this.respEntrega = emprestimoModel.getRespEntrega().getNome();
         this.ativo = emprestimoModel.getAtivo();
+    }
+
+    public String getDataDeDevolucao (LocalDate data) {
+        if (data != null) {
+            return ConversorData.converterData(data);
+        } else {
+            return "";
+        }
     }
 }
